@@ -5,6 +5,7 @@ class Stop {
 
   Stop({ this.id, required this.tripId, required this.location });
 
+  //Transforms Stop in Map
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -13,6 +14,7 @@ class Stop {
     };
   }
 
+  //Transforms Map in Stop
   factory Stop.fromMap(Map<String, dynamic> map) {
     return Stop(
       id: map['id'],

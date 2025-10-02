@@ -6,6 +6,7 @@ class User {
 
   User({ this.id, required this.name, required this.email, required this.password });
 
+  //Transforms User in Map
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -15,6 +16,7 @@ class User {
     };
   }
 
+  //Transforms Map in User
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: map['id'],

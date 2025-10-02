@@ -9,6 +9,7 @@ import 'package:trip_planner/infrastructure/presentation/trip/trip_screen.dart';
 class BottomNavigatorScreen extends StatelessWidget {
   BottomNavigatorScreen({super.key});
 
+  //Pages of the Bottom Navigator
   final List<Widget> pages = [HomeScreen(), TripScreen(), ListTripsScreen(), ConfigScreen()];
 
   @override
