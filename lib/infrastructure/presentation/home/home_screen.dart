@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final name = context.read<LoginState>().user!.name;
+    final name = context.read<UserProvider>().user!.name;
 
     return Center(
       child: Column(

@@ -10,8 +10,8 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => BottomNavigatorProvider()),
-        ChangeNotifierProvider(create: (_) => LoginState()),
-        ChangeNotifierProvider(create: (_) => TripState()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => TripProvider()),
       ],
       child: const MyApp(),
     ),

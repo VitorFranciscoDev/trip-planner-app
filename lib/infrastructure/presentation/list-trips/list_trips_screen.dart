@@ -14,7 +14,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final trips = context.read<TripState>().trips;
+    final trips = context.read<TripProvider>().trips;
 
     return Center(
       child: Column(

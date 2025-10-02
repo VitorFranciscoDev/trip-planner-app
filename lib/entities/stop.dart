@@ -1,9 +1,9 @@
 class Stop {
   final int? id;
-  final int tripId;
+  final int? tripId;
   final String location;
 
-  Stop({ this.id, required this.tripId, required this.location });
+  Stop({ this.id, this.tripId, required this.location });
 
   //Transforms Stop in Map
   Map<String, dynamic> toMap() {

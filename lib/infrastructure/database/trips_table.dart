@@ -5,11 +5,10 @@ class TripsTable {
     await db.execute('''
       CREATE TABLE trips (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT,
-        transport TEXT,
-        start_date TEXT,
-        end_date TEXT,
-        participants TEXT
+        title TEXT NOT NULL,
+        transport TEXT NOT NULL,
+        start_date TEXT NOT NULL,
+        end_date TEXT NOT NULL
       )
     ''');
   }

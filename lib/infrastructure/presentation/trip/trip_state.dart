@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:trip_planner/entities/trip.dart';
 
-class TripState with ChangeNotifier {
+class TripProvider with ChangeNotifier {
   List<Trip> trips = [];
 
   void addTrip(Trip trip) {

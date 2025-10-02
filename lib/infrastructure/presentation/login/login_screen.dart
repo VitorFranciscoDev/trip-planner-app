@@ -5,6 +5,7 @@ import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom
 import 'package:trip_planner/infrastructure/presentation/login/login_state.dart';
 import 'package:trip_planner/infrastructure/presentation/register/register_screen.dart';
 import 'package:trip_planner/modules/user/user_repository.dart';
+import 'package:trip_planner/modules/user/user_usecase.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,49 +23,56 @@ class _LoginScreenState extends State<LoginScreen> {
   String? errorEmail;
   String? errorPassword;
 
-  //Repository
-  final userRepo = UserRepository();
+  //Use Cases of the User
+  final UserUseCase userUseCase = UserUseCase(userRepository: UserRepository());
 
   //Function to Login
-  Future<void> login(String email, String password) async {
-    final user = await userRepo.login(email, password);
-
-    if(user!=null) {
-      context.read<LoginState>().registerUser(user);
-      Navigator.push(context, MaterialPageRoute(builder: (context) =>BottomNavigatorScreen()));
-    } else {
-      setState(() {
-        errorEmail = "Invalid Login";
-        errorPassword = "Invalid Login";
-      });
-    }
-  }
-
-  //Function to verify the data of the controllers
-  void verify() {
+  doLogin() async {
     setState(() {
-      //Email Verification
-      if(controllerEmail.text.isEmpty) {
-        errorEmail = "Email cannot be blank";
-      } else if(!controllerEmail.text.contains("@")) {
-        errorEmail = "Email must have @";
-      } else {
-        errorEmail = null;
-      }
-
-      //Password Verification
-      if(controllerPassword.text.isEmpty) {
-        errorPassword = "Password cannot be blank";
-      } else if(controllerPassword.text.length < 8) {
-        errorPassword = "Password needs to have, at least, 8 characters";
-      } else {
-        errorPassword = null;
-      }
+      errorEmail = userUseCase.validateEmail(controllerEmail.text);
+      errorPassword = userUseCase.validatePassword(controllerPassword.text);
     });
 
-    //If all the data is correct, navigates to the Home Page
     if(errorEmail==null && errorPassword==null) {
-      login(controllerEmail.text, controllerPassword.text);
+      try {
+        final result = await userUseCase.loginUser(controllerEmail.text, controllerPassword.text);
+
+        if(result!=null) {
+          showDialog(
+            context: context, 
+            builder: (context) => AlertDialog(
+              title: const Text("Login Successful"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavigatorScreen()));
+                    context.read<UserProvider>().registerUser(result);
+                  }, 
+                  child: const Text("Close"),
+                ),
+              ],
+            ),
+          );
+        } else {
+          showDialog(
+            context: context, 
+            builder: (context) => AlertDialog(
+              title: const Text("Error in Login"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }, 
+                  child: const Text("Close"),
+                ),
+              ],
+            ),
+          );
+        }
+      } catch(e) {
+
+      }
     }
   }
 
@@ -121,9 +129,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () => verify(),
+                        onPressed: () => doLogin(),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.yellow,
+                          backgroundColor: Color(0xFFFFA07A),
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 15),
                           shape: RoundedRectangleBorder(
@@ -136,11 +144,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 15)),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text("Forgot Your Password?", style: TextStyle(color: Color(0xFFFFA07A))),
                   ),
                   TextButton(
                     onPressed: () {
