@@ -7,6 +7,8 @@ abstract class IUserUseCase {
 
   String? validatePassword(String password);
 
+  Future<User?> validateUser(String email);
+
   Future<String?> registerUser(String name, String email, String password);
 
   Future<User?> loginUser(String email, String password);

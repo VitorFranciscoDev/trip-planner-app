@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:trip_planner/entities/user.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
+import 'package:trip_planner/infrastructure/presentation/login/login_screen.dart';
 import 'package:trip_planner/modules/user/user_repository.dart';
+import 'package:trip_planner/modules/user/user_usecase.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -21,58 +22,57 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? errorEmail;
   String? errorPassword;
 
-  bool _obscureText = true;
+  //Use Cases of the User
+  final UserUseCase userUseCase = UserUseCase(userRepository: UserRepository());
 
-  //Repository
-  final userRepo = UserRepository();
-
-  Future<void> registerUser(String name, String email, String password) async {
-    final existingUser = await userRepo.getUserByEmail(email);
-    if(existingUser!=null) {
-      setState(() {
-        errorEmail = "There's a register with this Email";
-      });
-      return;
-    }
-
-    final user = User(name: name, email: email, password: password);
-    final newUser = await userRepo.insertUser(user);
-  }
-
-  //Function to verify the data of the controllers
-  void verify() async {
+  void registerUser() async {
     setState(() {
-      //Name Verification
-      if(controllerName.text.isEmpty) {
-        errorName = "Name cannot be blank";
-      } else if(!RegExp(r'[a-zA-Z ]').hasMatch(controllerName.text)) {
-        errorName = "Name cannot contain special characters";
-      } else {
-        errorName = null;
-      }
-
-      //Email Verification
-      if(controllerEmail.text.isEmpty) {
-        errorEmail = "Email cannot be blank";
-      } else if(!controllerEmail.text.contains("@")) {
-        errorEmail = "Email must have @";
-      } else {
-        errorEmail = null;
-      }
-
-      //Password Verification
-      if(controllerPassword.text.isEmpty) {
-        errorPassword = "Password cannot be blank";
-      } else if(controllerPassword.text.length < 8) {
-        errorPassword = "Password needs to have, at least, 8 characters";
-      } else {
-        errorPassword = null;
-      }
+      errorName = userUseCase.validateName(controllerName.text);
+      errorEmail = userUseCase.validateEmail(controllerEmail.text);
+      errorPassword = userUseCase.validatePassword(controllerPassword.text);
     });
 
-    //If all the data is correct, navigates to the Login Page
-    if(errorName == null && errorEmail == null && errorPassword == null) {
-      await registerUser(controllerName.text, controllerEmail.text, controllerPassword.text);
+    if(errorName==null && errorEmail==null && errorPassword==null) {
+      try {
+        final resultUser = await userUseCase.validateUser(controllerEmail.text);
+
+        if(resultUser==null) {
+          showDialog(
+            context: context, 
+            builder: (context) => AlertDialog(
+              title: const Text("Register Successful"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                  }, 
+                  child: const Text("Close"),
+                ),
+              ],
+            ),
+          );
+        } else {
+          setState(() {
+            errorEmail = "Email already exists";
+          });
+        }
+      } catch(e) {
+        showDialog(
+          context: context, 
+          builder: (context) => AlertDialog(
+            title: const Text("Unexpected Error"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }, 
+                child: const Text("Close"),
+              ),
+            ],
+          ),
+        );
+      }
     }
   }
 
@@ -125,49 +125,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Padding(padding: EdgeInsets.only(top: 20)),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: TextField(
-                      controller: controllerPassword,
-                      obscureText: _obscureText,
-                      decoration: InputDecoration(
-                        hintText: "Password",
-                        errorText: errorPassword,
-                        suffixIcon: IconButton(
-                          icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
-                          onPressed: () {
-                            setState(() {
-                              _obscureText = !_obscureText;
-                            });
-                          },
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                      ),
+                    child: TextFieldComponent(
+                      controller: controllerPassword, 
+                      hint: "Password",
+                      error: errorPassword,
+                      isPassword: true,
                     ),
                   ),
                   Padding(padding: EdgeInsets.only(top: 20)),
@@ -176,9 +138,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () => verify(),
+                        onPressed: () => registerUser(),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.yellow,
+                          backgroundColor: Color(0xFFFFA07A),
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 15),
                           shape: RoundedRectangleBorder(

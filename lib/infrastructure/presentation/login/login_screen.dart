@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final UserUseCase userUseCase = UserUseCase(userRepository: UserRepository());
 
   //Function to Login
-  doLogin() async {
+  void doLogin() async {
     setState(() {
       errorEmail = userUseCase.validateEmail(controllerEmail.text);
       errorPassword = userUseCase.validatePassword(controllerPassword.text);
@@ -54,24 +54,22 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           );
-        } else {
-          showDialog(
-            context: context, 
-            builder: (context) => AlertDialog(
-              title: const Text("Error in Login"),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  }, 
-                  child: const Text("Close"),
-                ),
-              ],
-            ),
-          );
         }
       } catch(e) {
-
+        showDialog(
+          context: context, 
+          builder: (context) => AlertDialog(
+            title: const Text("Unexpected Error"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }, 
+                child: const Text("Close"),
+              ),
+            ],
+          ),
+        );
       }
     }
   }
@@ -145,18 +143,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (context) => RegisterScreen()),
-                      );
-                    },
-                    child: const Text(
-                      "Doesn't have an account? Click here to create one!",
-                      style: TextStyle(
-                        color: Color(0xFFFFA07A),
-                        fontSize: 12,
+                  Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (context) => RegisterScreen()),
+                        );
+                      },
+                      child: const Text(
+                        "Doesn't have an account? Click here to create one!",
+                        style: TextStyle(
+                          color: Color(0xFFFFA07A),
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                   ),

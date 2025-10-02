@@ -45,6 +45,16 @@ class UserUseCase implements IUserUseCase {
     return null;
   }
 
+  //Function to validate the User
+  @override
+  Future<User?> validateUser(String email) async {
+    final result = await userRepository.getUserByEmail(email);
+
+    if(result!=null) return result;
+
+    return null;
+  }
+
   //Function to register the User
   @override
   Future<String?> registerUser(String name, String email, String password) async {
