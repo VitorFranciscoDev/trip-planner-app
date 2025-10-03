@@ -14,10 +14,11 @@ class BottomNavigatorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final index = context.watch<BottomNavigatorProvider>().index;
     
     return Scaffold(
-      backgroundColor: Color(0xFFFFF8DC),
+      backgroundColor: theme.colorScheme.background,
       body: pages[index],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
@@ -25,11 +26,11 @@ class BottomNavigatorScreen extends StatelessWidget {
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.black,
         onTap: (newIndex) => context.read<BottomNavigatorProvider>().setIndex(newIndex),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home", backgroundColor: Color(0xFF8B4513)),
-          BottomNavigationBarItem(icon: Icon(Icons.map), label: "Trip", backgroundColor: Color(0xFF8B4513)),
-          BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "List of Trips", backgroundColor: Color(0xFF8B4513)),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings", backgroundColor: Color(0xFF8B4513)),
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home", backgroundColor: theme.colorScheme.primary),
+          BottomNavigationBarItem(icon: Icon(Icons.map), label: "Trip", backgroundColor: theme.colorScheme.primary),
+          BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "List of Trips", backgroundColor: theme.colorScheme.primary),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings", backgroundColor: theme.colorScheme.primary),
         ],
       ),
     );

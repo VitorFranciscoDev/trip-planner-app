@@ -54,6 +54,21 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           );
+        } else {
+          showDialog(
+            context: context, 
+            builder: (context) => AlertDialog(
+              title: const Text("User Not Found"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }, 
+                  child: const Text("Close"),
+                ),
+              ],
+            ),
+          );
         }
       } catch(e) {
         showDialog(
@@ -76,8 +91,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      backgroundColor: Color(0xFFFFF8DC),
+      backgroundColor: theme.colorScheme.background,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -98,9 +115,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(padding: EdgeInsets.only(bottom: 50)),
-                  const Text(
+                  Text(
                     "Welcome Back!",
-                    style: TextStyle(fontSize: 20, color: Color(0xFF8B4513)),
+                    style: TextStyle(fontSize: 20, color: theme.colorScheme.primary),
                   ),
                   Padding(padding: EdgeInsets.only(top: 30)),
                   Padding(
@@ -129,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: ElevatedButton(
                         onPressed: () => doLogin(),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFFFA07A),
+                          backgroundColor: theme.colorScheme.secondary,
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 15),
                           shape: RoundedRectangleBorder(
@@ -152,10 +169,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           MaterialPageRoute(builder: (context) => RegisterScreen()),
                         );
                       },
-                      child: const Text(
+                      child: Text(
                         "Doesn't have an account? Click here to create one!",
                         style: TextStyle(
-                          color: Color(0xFFFFA07A),
+                          color: theme.colorScheme.secondary,
                           fontSize: 12,
                         ),
                       ),

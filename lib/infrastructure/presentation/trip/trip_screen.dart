@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trip_planner/entities/person.dart';
+import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_screen.dart';
 
 class TripScreen extends StatefulWidget {
@@ -135,7 +136,9 @@ class _TripScreenState extends State<TripScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView ( 
+    final theme = Theme.of(context);
+
+    return SingleChildScrollView( 
       child: Center(
         child: Column(
           children: [
@@ -150,7 +153,7 @@ class _TripScreenState extends State<TripScreen> {
             Container(
               width: 340,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: theme.colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
@@ -158,40 +161,10 @@ class _TripScreenState extends State<TripScreen> {
                   Padding(padding: EdgeInsets.only(top: 20)),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: TextField(
-                      controller: controllerTripTitle,
-                      decoration: InputDecoration(
-                        hintText: "Trip Title",
-                        errorText: errorTripTitle,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                      ),
+                    child: TextFieldComponent(
+                      controller: controllerTripTitle, 
+                      hint: "Trip Title",
+                      error: errorTripTitle,
                     ),
                   ),
                   Padding(padding: EdgeInsets.only(top: 20)),
@@ -201,15 +174,15 @@ class _TripScreenState extends State<TripScreen> {
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
+                          borderSide: BorderSide(
+                            color: theme.colorScheme.primary,
                             width: 2,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
+                          borderSide: BorderSide(
+                            color: theme.colorScheme.primary,
                             width: 2,
                           ),
                         ),
@@ -257,29 +230,29 @@ class _TripScreenState extends State<TripScreen> {
                         prefixIcon: Icon(Icons.calendar_today),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
+                          borderSide: BorderSide(
+                            color: theme.colorScheme.primary,
                             width: 2,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
+                          borderSide: BorderSide(
+                            color: theme.colorScheme.primary,
                             width: 2,
                           ),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
+                          borderSide: BorderSide(
+                            color: theme.colorScheme.primary,
                             width: 2,
                           ),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
+                          borderSide: BorderSide(
+                            color: theme.colorScheme.primary,
                             width: 2,
                           ),
                         ),
@@ -299,29 +272,29 @@ class _TripScreenState extends State<TripScreen> {
                         prefixIcon: Icon(Icons.calendar_today),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
+                          borderSide: BorderSide(
+                            color: theme.colorScheme.primary,
                             width: 2,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
+                          borderSide: BorderSide(
+                            color: theme.colorScheme.primary,
                             width: 2,
                           ),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
+                          borderSide: BorderSide(
+                            color: theme.colorScheme.primary,
                             width: 2,
                           ),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
+                          borderSide: BorderSide(
+                            color: theme.colorScheme.primary,
                             width: 2,
                           ),
                         ),
@@ -339,7 +312,7 @@ class _TripScreenState extends State<TripScreen> {
             Container(
               width: 340,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: theme.colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
@@ -347,79 +320,19 @@ class _TripScreenState extends State<TripScreen> {
                   Padding(padding: EdgeInsets.only(top: 20)),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: TextField(
+                    child: TextFieldComponent(
                       controller: controllerName,
-                      decoration: InputDecoration(
-                        hintText: "Name",
-                        errorText: errorName,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                      ),
+                      hint: "Name",
+                      error: errorName,
                     ),
                   ),
                   Padding(padding: EdgeInsets.only(top: 20)),
                   Padding(
                     padding: EdgeInsets.only(left: 30, right: 30, bottom: 20),
-                    child: TextField(
-                      controller: controllerAge,
-                      decoration: InputDecoration(
-                        hintText: "Age",
-                        errorText: errorAge,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF8B4513),
-                            width: 2,
-                          ),
-                        ),
-                      ),
+                    child: TextFieldComponent(
+                      controller: controllerAge, 
+                      hint: "Age",
+                      error: errorAge,
                     ),
                   ),
                   Padding(
@@ -429,8 +342,8 @@ class _TripScreenState extends State<TripScreen> {
                       child: ElevatedButton(
                         onPressed: () => addPerson(),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.yellow,
-                          foregroundColor: Colors.white,
+                          backgroundColor: theme.colorScheme.secondary,
+                          foregroundColor: theme.colorScheme.tertiary,
                           padding: const EdgeInsets.symmetric(vertical: 15),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -443,7 +356,7 @@ class _TripScreenState extends State<TripScreen> {
                       ),
                     ),
                   ),
-                  if (group.isNotEmpty) ...[
+                  if (group.isNotEmpty) ... [
                     Padding(padding: EdgeInsets.only(top: 15)),
                     Wrap(
                       children: [
@@ -476,7 +389,7 @@ class _TripScreenState extends State<TripScreen> {
             Container(
               width: 340,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: theme.colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
@@ -504,15 +417,8 @@ class _TripScreenState extends State<TripScreen> {
                             top: 8,
                             right: 8,
                             child: IconButton(
-                              icon: const Icon(Icons.fullscreen, color: Colors.white),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const MapScreen(),
-                                  ),
-                                );
-                              },
+                              icon: Icon(Icons.fullscreen, color: theme.colorScheme.tertiary),
+                              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MapScreen())),
                               style: IconButton.styleFrom(
                                 backgroundColor: Colors.black54,
                               ),
@@ -532,8 +438,8 @@ class _TripScreenState extends State<TripScreen> {
                 child: ElevatedButton(
                   onPressed: () => registerGroup(),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.yellow,
-                    foregroundColor: Colors.white,
+                    backgroundColor: theme.colorScheme.secondary,
+                    foregroundColor: theme.colorScheme.tertiary,
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),

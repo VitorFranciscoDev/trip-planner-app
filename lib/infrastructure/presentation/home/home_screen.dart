@@ -12,12 +12,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  //Controller
   final TextEditingController controllerSearch = TextEditingController();
 
+  //bool to show the log out container
   bool showLogOut = false;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final name = context.read<UserProvider>().user!.name;
 
     return Center(
@@ -54,15 +57,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 prefixIcon: Icon(Icons.search),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(
-                    color: Color(0xFF8B4513),
+                  borderSide: BorderSide(
+                    color: theme.colorScheme.primary,
                     width: 2,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(
-                    color: Color(0xFF8B4513),
+                  borderSide: BorderSide(
+                    color: theme.colorScheme.primary,
                     width: 2,
                   ),
                 ),

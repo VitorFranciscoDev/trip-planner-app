@@ -78,8 +78,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      backgroundColor: Color(0xFFFFF8DC),
+      backgroundColor: theme.colorScheme.background,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -100,9 +102,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(padding: EdgeInsets.only(bottom: 50)),
-                  const Text(
+                  Text(
                     "Create Your Account",
-                    style: TextStyle(fontSize: 20, color: Color(0xFF8B4513)),
+                    style: TextStyle(fontSize: 20, color: theme.colorScheme.primary),
                   ),
                   Padding(padding: EdgeInsets.only(top: 30)),
                   Padding(
@@ -140,7 +142,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: ElevatedButton(
                         onPressed: () => registerUser(),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFFFA07A),
+                          backgroundColor: theme.colorScheme.secondary,
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 15),
                           shape: RoundedRectangleBorder(
@@ -159,9 +161,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text(
+                    child: Text(
                       "Already have an account? Click here to login!",
-                      style: TextStyle(color: Color(0xFFFFA07A)),
+                      style: TextStyle(color: theme.colorScheme.secondary),
                     ),
                   ),
                   Padding(padding: EdgeInsets.only(top: 50)),

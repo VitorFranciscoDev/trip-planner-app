@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trip_planner/infrastructure/presentation/theme/theme_provider.dart';
 
 class ConfigScreen extends StatefulWidget {
   const ConfigScreen({super.key});
@@ -9,7 +11,7 @@ class ConfigScreen extends StatefulWidget {
 
 class _ConfigScreenState extends State<ConfigScreen> {
   String dropdownValue = "Portuguese";
-  bool isSwitched = false;
+  bool darkMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +28,10 @@ class _ConfigScreenState extends State<ConfigScreen> {
               const Text("Dark Mode", style: TextStyle(fontFamily: "Times New Roman", fontSize: 18)),
               Padding(padding: EdgeInsets.only(right: 10)),
               Switch(
-                value: isSwitched, 
+                value: context.watch<ThemeProvider>().themeMode == ThemeMode.dark, 
                 onChanged: (value) {
                   setState(() {
-                    isSwitched = !isSwitched;
+                    context.read<ThemeProvider>().toggleTheme(value);
                   });
                 }
               ),

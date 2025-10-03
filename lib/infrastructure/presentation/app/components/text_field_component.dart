@@ -22,6 +22,8 @@ class _TextFieldComponentState extends State<TextFieldComponent> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return TextField(
       controller: widget.controller,
       obscureText: _obscureText,
@@ -42,29 +44,29 @@ class _TextFieldComponentState extends State<TextFieldComponent> {
           : null,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xFF8B4513),
+          borderSide: BorderSide(
+            color: theme.colorScheme.primary,
             width: 2,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xFF8B4513),
+          borderSide: BorderSide(
+            color: theme.colorScheme.primary,
             width: 2,
           ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xFF8B4513),
+          borderSide: BorderSide(
+            color: theme.colorScheme.primary,
             width: 2,
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xFF8B4513),
+          borderSide: BorderSide(
+            color: theme.colorScheme.primary,
             width: 2,
           ),
         ),

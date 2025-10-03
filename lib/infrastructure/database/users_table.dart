@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 
 class UsersTable {
-  static Future<void> createTable(Database db) async {
+  static createTable(Database db) async {
     await db.execute('''
       CREATE TABLE users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

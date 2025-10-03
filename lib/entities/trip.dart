@@ -5,7 +5,7 @@ class Trip {
   final String startDate;
   final String endDate;
 
-  Trip({ this.id, required this.title, required this.transport, required this.startDate, required this.endDate});
+  Trip({ this.id, required this.title, required this.transport, required this.startDate, required this.endDate });
 
   //Transforms Trip in Map
   Map<String, dynamic> toMap() {
