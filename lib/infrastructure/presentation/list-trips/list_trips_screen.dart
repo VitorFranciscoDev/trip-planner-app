@@ -54,6 +54,8 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
             itemBuilder: (context, index) {
               final eeeeee = aaa[index];
               return Container(
+                width: 200,
+                height: 100,
                 padding: EdgeInsets.only(top: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
