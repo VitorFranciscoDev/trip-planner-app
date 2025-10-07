@@ -4,7 +4,7 @@ import 'package:trip_planner/infrastructure/database/database.dart';
 class UserRepository {
   final dbHelper = DBHelper();
 
-  //Function to get the user by email
+  // function to get the user by email
   Future<User?> getUserByEmail(String email) async {
     final db = await dbHelper.database;
 
@@ -21,13 +21,13 @@ class UserRepository {
     return null;
   }
 
-  //Function to insert the User in the Database
+  // function to insert the User in the Database
   Future<int> insertUser(User user) async {
     final db = await dbHelper.database;
     return await db.insert('users', user.toMap());
   }
 
-  //Function to do Login
+  // function to do Login
   Future<User?> doLogin(String email, String password) async {
     final db = await dbHelper.database;
 

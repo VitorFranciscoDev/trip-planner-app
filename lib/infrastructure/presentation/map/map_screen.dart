@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -12,9 +14,25 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   final MapController _mapController = MapController();
-  LatLng? _currentLocation;
-  List<Marker> _markers = [];
-  List<LatLng> _points = [];
+  LatLng? currentLocation;
+  List<Marker> markers = [];
+  List<LatLng> points = [];
+
+  Future<void> requestPermission() async {
+    final status = await Permission.location.request();
+    if(status.isGranted) {
+      Position position = await Geolocator.getCurrentPosition();
+      setState(() {
+        currentLocation = LatLng(position.latitude, position.longitude);
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    requestPermission();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +42,13 @@ class _MapScreenState extends State<MapScreen> {
           FlutterMap(
             mapController: _mapController,
             options: MapOptions(
-              initialCenter: _currentLocation ?? LatLng(0, 0),
-              initialZoom: 2,
+              initialCenter: currentLocation ?? LatLng(0, 0),
+              initialZoom: 13,
               minZoom: 0,
-              maxZoom: 100,
+              maxZoom: 19,
               onTap: (tapPosition, latlng) {
                 setState(() {
-                  _markers.add(
+                  markers.add(
                     Marker(
                       point: latlng,
                       width: 40,
@@ -38,7 +56,7 @@ class _MapScreenState extends State<MapScreen> {
                       child: Icon(Icons.location_on, color: Colors.red),
                     ),
                   );
-                  _points.add(latlng);
+                  points.add(latlng);
                 });
               },
             ),
@@ -46,23 +64,25 @@ class _MapScreenState extends State<MapScreen> {
               TileLayer(
                 urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
               ),
-              CurrentLocationLayer(
-                style: const LocationMarkerStyle(
-                  marker: DefaultLocationMarker(
-                    child: Icon(Icons.location_pin, color: Colors.red),
+              if(currentLocation != null)
+                CurrentLocationLayer(
+                  style: const LocationMarkerStyle(
+                    marker: DefaultLocationMarker(
+                      child: Icon(Icons.location_pin, color: Colors.red),
+                    ),
+                    markerSize: Size(20, 20),
+                    markerDirection: MarkerDirection.heading,
                   ),
-                  markerSize: Size(20, 20),
-                  markerDirection: MarkerDirection.heading,
                 ),
-              ),
-              MarkerLayer(markers: _markers),
+              MarkerLayer(markers: markers),
               PolylineLayer(
                 polylines: [
-                  Polyline(
-                    points: _points,
-                    strokeWidth: 4,
-                    color: Colors.red,
-                  ),
+                  if (points.isNotEmpty)
+                    Polyline(
+                      points: points,
+                      strokeWidth: 4,
+                      color: Colors.red,
+                    ),
                 ],
               ),
             ],

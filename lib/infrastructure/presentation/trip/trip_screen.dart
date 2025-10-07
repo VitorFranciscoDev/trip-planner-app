@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:trip_planner/entities/person.dart';
+import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_date_component.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_screen.dart';
+import 'package:trip_planner/modules/person/person_usecase.dart';
 import 'package:trip_planner/modules/trip/trip_usecase.dart';
 
 class TripScreen extends StatefulWidget {
@@ -13,39 +15,44 @@ class TripScreen extends StatefulWidget {
 }
 
 class _TripScreenState extends State<TripScreen> {
-  //1. Controllers
+  
+  // 1. controllers
   TextEditingController controllerTripTitle = TextEditingController();
   TextEditingController controllerStartDate = TextEditingController();
   TextEditingController controllerEndDate = TextEditingController();
 
-  //2. Controllers
+  // 2. controllers
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerAge = TextEditingController();
 
-  //Value of the DropdownButton
-  String dropdownValue = "Car";
+  String dropdownValue = "Car"; // value of the DropdownButton
 
-  //Group
-  List<Person> group = [];
-
-  // Register Group Errors
+  // 1. errors
   String? errorTripTitle;
   String? errorStartDate;
   String? errorEndDate;
   String? errorDate;
-  String? errorGroup;
-  String? errorStops;
 
-  //2. Error Text
+  // 2. errors
   String? errorName;
   String? errorAge;
+  String? errorGroup;
+  
+  String? errorStops; // 3. errors
 
-  //Use Cases of the Trip
-  TripUseCase tripUseCase = TripUseCase();
+  final List<Person> group = []; // group of participants
 
-  //Function to verify and register all the Trip Data
-  void registerGroup() {
+  final List<Stop> stops = []; // stops
+
+  final TripUseCase tripUseCase = TripUseCase(); // use cases of the trip
+
+  final PersonUseCase personUseCase = PersonUseCase(); // use cases of the group
+
+  // function to verify and register all the trip data
+  Future<void> registerGroup() async {
+
     setState(() {
+      // errors
       errorTripTitle = tripUseCase.validateTripTitle(controllerTripTitle.text);
       errorStartDate = tripUseCase.validateStartDate(controllerStartDate.text);
       errorEndDate = tripUseCase.validateEndDate(controllerEndDate.text);
@@ -53,47 +60,34 @@ class _TripScreenState extends State<TripScreen> {
         errorDate = tripUseCase.validateDates(controllerStartDate.text, controllerEndDate.text);
       }
       errorGroup = tripUseCase.validateGroup(group);
-      //errorStops = tripUseCase.validateStops(stops);
+      errorStops = tripUseCase.validateStops(stops);
     });
 
+    // if doesn't have any errors, add the trip in the db
     if(errorTripTitle==null && errorStartDate==null && errorEndDate==null && 
-      errorDate == null && errorGroup == null) {
-        
-      }
+      errorDate == null && errorGroup == null && errorStops == null) {
+      
+    }
   }
 
-  //Function to verify and add a person in the group
+  // function to verify and add a person in the group
   void addPerson() {
     setState(() {
-      //Name Verification
-      if(controllerName.text.isEmpty) {
-        errorName = "Name cannot be blank";
-      } else if(!RegExp(r'[a-zA-Z ]').hasMatch(controllerName.text)) {
-        errorName = "Name cannot have special characters";
-      } else {
-        errorName = null;
-      }
-
-      //Age Verification
-      if(controllerAge.text.isEmpty) {
-        errorAge = "Age cannot be blank";
-      } else if(!RegExp(r'[0-9]').hasMatch(controllerAge.text)) {
-        errorAge = "Age must have only numbers";
-      } else {
-        errorAge = null;
-      }
+      errorName = personUseCase.validateName(controllerName.text);
+      errorAge = personUseCase.validateAge(controllerAge.text);
     });
 
     if(errorName == null && errorAge == null) {
       group.add(Person(name: controllerName.text, age: int.parse(controllerAge.text)));
 
-      //Clear the TextFields
+      // clear the TextFields
       controllerName.clear();
       controllerAge.clear();
     }
   }
 
-  Future<void> _selectDate(TextEditingController controller) async {
+  // function to show the date picker
+  Future<void> selectDate(TextEditingController controller) async {
     DateTime? picked = await showDatePicker(
       context: context, 
       initialDate: DateTime.now(),
@@ -102,7 +96,7 @@ class _TripScreenState extends State<TripScreen> {
     );
 
     if(picked!=null) {
-        controller.text = "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+      controller.text = "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
     }
   }
 
@@ -115,15 +109,27 @@ class _TripScreenState extends State<TripScreen> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 50, right: 250),
-              child: const Text("New Trip", style: TextStyle(fontFamily: "Times New Roman", fontSize: 20)),
+              padding: EdgeInsets.only(top: 50, right: 220),
+              child: Text("New Trip", style: 
+                TextStyle(
+                  fontFamily: "Times New Roman", 
+                  fontSize: 20,
+                  color: theme.colorScheme.primary,
+                ),
+              ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 30, right: 225, bottom: 10),
-              child: const Text("1. Trip Data", style: TextStyle(fontFamily: "Times New Roman", fontSize: 20)),
+              padding: EdgeInsets.only(top: 30, right: 200, bottom: 10),
+              child: Text("1. Trip Data", style: 
+                TextStyle(
+                  fontFamily: "Times New Roman", 
+                  fontSize: 20,
+                  color: theme.colorScheme.primary,
+                ),
+              ),
             ),
             Container(
-              width: 340,
+              width: 320,
               decoration: BoxDecoration(
                 color: theme.colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(20),
@@ -196,7 +202,7 @@ class _TripScreenState extends State<TripScreen> {
                       controller: controllerStartDate, 
                       hint: "Start Date", 
                       error: errorStartDate,
-                      function: () => _selectDate(controllerStartDate),
+                      function: () => selectDate(controllerStartDate),
                     ),
                   ),
                   Padding(padding: EdgeInsets.only(top: 20)),
@@ -206,7 +212,7 @@ class _TripScreenState extends State<TripScreen> {
                       controller: controllerEndDate, 
                       hint: "End Date",
                       error: errorEndDate, 
-                      function: () => _selectDate(controllerEndDate),
+                      function: () => selectDate(controllerEndDate),
                     ),
                   ),
                   Padding(padding: EdgeInsets.only(bottom: 20)),
@@ -214,11 +220,17 @@ class _TripScreenState extends State<TripScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 30, right: 200, bottom: 10),
-              child: const Text("2. Group Data", style: TextStyle(fontFamily: "Times New Roman", fontSize: 20)),
+              padding: EdgeInsets.only(top: 30, right: 180, bottom: 10),
+              child: Text("2. Group Data", style: 
+                TextStyle(
+                  fontFamily: "Times New Roman", 
+                  fontSize: 20,
+                  color: theme.colorScheme.primary,
+                ),
+              ),
             ),
             Container(
-              width: 340,
+              width: 320,
               decoration: BoxDecoration(
                 color: theme.colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(20),
@@ -265,37 +277,54 @@ class _TripScreenState extends State<TripScreen> {
                     ),
                   ),
                   if (group.isNotEmpty) ... [
-                    Padding(padding: EdgeInsets.only(top: 15)),
-                    Wrap(
-                      children: [
-                        ...group.map((person) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 3),
-                            child: Chip(
-                              label: Text("${person.name}(${person.age})"),
-                              deleteIcon: Icon(Icons.close),
-                              onDeleted: () {
-                                group.remove(person);
-                              },
-                            ),
-                          );
-                        }),
-                      ],
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 20),
+                      child: Wrap(
+                        children: [
+                          ...group.map((person) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 3),
+                              child: Chip(
+                                label: Text("${person.name}(${person.age})"),
+                                deleteIcon: Icon(Icons.close),
+                                onDeleted: () {
+                                  setState(() {
+                                    group.remove(person);
+                                  });
+                                },
+                              ),
+                            );
+                          }),
+                        ],
+                      ),  
                     ),
                   ],
-                  if (errorGroup != null) ...[
-                    Padding(padding: EdgeInsets.only(top: 15)),
-                    Text(errorGroup!, style: TextStyle(color: Colors.red)),
+                  if (errorGroup != null) ... [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 20),
+                      child: Text(errorGroup!, style: 
+                        TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
                   ],
                 ],
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 30, right: 275, bottom: 10),
-              child: const Text("3. Map", style: TextStyle(fontFamily: "Times New Roman", fontSize: 20)),
+              padding: EdgeInsets.only(top: 30, right: 250, bottom: 10),
+              child: Text("3. Map", style: 
+                TextStyle(
+                  fontFamily: "Times New Roman", 
+                  fontSize: 20,
+                  color: theme.colorScheme.primary,
+                ),
+              ),
             ),
             Container(
-              width: 340,
+              width: 320,
               decoration: BoxDecoration(
                 color: theme.colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(20),
@@ -336,6 +365,17 @@ class _TripScreenState extends State<TripScreen> {
                       ),
                     ),
                   ),
+                  if(errorStops != null) ... [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 20),
+                      child: Text(errorStops!, style: 
+                        TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),

@@ -6,10 +6,10 @@ class UserUseCase implements IUserUseCase {
 
   UserUseCase({ required this.userRepository });
 
-  //Repository of the User
+  // repository of the User
   final UserRepository userRepository;
 
-  //Function to validate the name of the User
+  // function to validate the name of the User
   @override
   String? validateName(String name) {
     if(name.isEmpty) {
@@ -21,7 +21,7 @@ class UserUseCase implements IUserUseCase {
     return null;
   }
 
-  //Function to validate the email of the User
+  // function to validate the email of the User
   @override
   String? validateEmail(String email) {
     if(email.isEmpty) {
@@ -33,7 +33,7 @@ class UserUseCase implements IUserUseCase {
     return null;
   }
 
-  //Function to validate the password of the User
+  // function to validate the password of the User
   @override
   String? validatePassword(String password) {
     if(password.isEmpty) {
@@ -45,7 +45,7 @@ class UserUseCase implements IUserUseCase {
     return null;
   }
 
-  //Function to validate the User
+  // function to validate the User
   @override
   Future<User?> validateUser(String email) async {
     final result = await userRepository.getUserByEmail(email);
@@ -55,7 +55,7 @@ class UserUseCase implements IUserUseCase {
     return null;
   }
 
-  //Function to register the User
+  // function to register the User
   @override
   Future<String?> registerUser(String name, String email, String password) async {
     final existingUser = await userRepository.getUserByEmail(email);
@@ -72,7 +72,7 @@ class UserUseCase implements IUserUseCase {
     return "Error in the register";
   }
 
-  //Function to do login
+  // function to do login
   @override
   Future<User?> loginUser(String email, String password) async {
     final user = await userRepository.doLogin(email, password);

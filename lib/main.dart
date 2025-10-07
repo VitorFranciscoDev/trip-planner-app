@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_state.dart';
-import 'package:trip_planner/infrastructure/presentation/home/home_state.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_state.dart';
 import 'package:trip_planner/infrastructure/presentation/theme/theme.dart';
@@ -16,7 +15,6 @@ void main() {
         ChangeNotifierProvider(create: (_) => BottomNavigatorProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => TripProvider()),
-        ChangeNotifierProvider(create: (_) => RecomendedStopsProvider()),
       ],
       child: const MyApp(),
     ),

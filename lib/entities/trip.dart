@@ -7,10 +7,10 @@ class Trip {
   final String transport;
   final String startDate;
   final String endDate;
-  final List<Person> group;
-  final List<Stop> stops;
+  final List<Person>? group;
+  final List<Stop>? stops;
 
-  Trip({ this.id, required this.title, required this.transport, required this.startDate, required this.endDate, required this.group, required this.stops });
+  Trip({ this.id, required this.title, required this.transport, required this.startDate, required this.endDate, this.group, this.stops });
 
   //Transforms Trip in Map
   Map<String, dynamic> toMap() {
@@ -33,8 +33,6 @@ class Trip {
       transport: map['transport'],
       startDate: map['startDate'],
       endDate: map['endDate'],
-      group: map['group'],
-      stops: map['stops'],
     );
   }
 }

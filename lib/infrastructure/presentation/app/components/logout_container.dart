@@ -6,6 +6,8 @@ class LogOutContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return GestureDetector(
       onTap: () {
         showDialog(
@@ -14,11 +16,15 @@ class LogOutContainer extends StatelessWidget {
         );
       },
       child: Container(
-        width: 70,
-        height: 20,
-        color: Colors.yellow,
-        child: const Center(
-          child: Text("Log Out"),
+        height: 30,
+        color: theme.colorScheme.secondary,
+        child: Center(
+          child: Text("Log Out", style: 
+            TextStyle(
+              color: theme.colorScheme.tertiary,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
         ),
       ),
     );

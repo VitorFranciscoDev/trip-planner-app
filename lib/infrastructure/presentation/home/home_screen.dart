@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trip_planner/infrastructure/presentation/app/components/container_recomended_stop.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_state.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/logout_container.dart';
 
@@ -46,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           if(showLogOut)
             Padding(
-              padding: EdgeInsets.only(right: 325),
+              padding: EdgeInsets.only(right: 202, left: 25),
               child: LogOutContainer(),
             ),
           Padding(
@@ -71,18 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 50, left: 25, right: 25),
-            child: ContainerRecomendedStop(),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 40, left: 25, right: 25),
-            child: ContainerRecomendedStop(),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 40, left: 25, right: 25),
-            child: ContainerRecomendedStop(),
           ),
         ],
       ),
