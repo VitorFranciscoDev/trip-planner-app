@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/stop.dart';
+import 'package:trip_planner/entities/trip.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_date_component.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_screen.dart';
+import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
+import 'package:trip_planner/infrastructure/presentation/trip/group_state.dart';
+import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 import 'package:trip_planner/modules/person/person_usecase.dart';
 import 'package:trip_planner/modules/trip/trip_usecase.dart';
 
@@ -40,16 +45,12 @@ class _TripScreenState extends State<TripScreen> {
   
   String? errorStops; // 3. errors
 
-  final List<Person> group = []; // group of participants
-
-  final List<Stop> stops = []; // stops
-
   final TripUseCase tripUseCase = TripUseCase(); // use cases of the trip
 
   final PersonUseCase personUseCase = PersonUseCase(); // use cases of the group
 
   // function to verify and register all the trip data
-  Future<void> registerGroup() async {
+  Future<void> registerGroup(List<Person> group, List<Stop> stops) async {
 
     setState(() {
       // errors
@@ -64,9 +65,9 @@ class _TripScreenState extends State<TripScreen> {
     });
 
     // if doesn't have any errors, add the trip in the db
-    if(errorTripTitle==null && errorStartDate==null && errorEndDate==null && 
-      errorDate == null && errorGroup == null && errorStops == null) {
-      
+    if(errorTripTitle==null && errorStartDate==null && errorEndDate==null && errorDate == null && errorGroup == null && errorStops == null) {
+      Trip trip = Trip(title: controllerTripTitle.text, transport: dropdownValue, startDate: controllerStartDate.text, endDate: controllerEndDate.text, group: group, stops: stops);
+      context.read<TripProvider>().addTrip(trip);
     }
   }
 
@@ -78,11 +79,16 @@ class _TripScreenState extends State<TripScreen> {
     });
 
     if(errorName == null && errorAge == null) {
-      group.add(Person(name: controllerName.text, age: int.parse(controllerAge.text)));
+      Person person = Person(name: controllerName.text, age: int.parse(controllerAge.text));
+      context.read<GroupProvider>().addPerson(person);
 
       // clear the TextFields
       controllerName.clear();
       controllerAge.clear();
+
+      setState(() {
+        errorGroup = null;
+      });
     }
   }
 
@@ -103,6 +109,8 @@ class _TripScreenState extends State<TripScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final group = context.read<GroupProvider>().group;
+    final stops = context.read<StopsProvider>().stops;
 
     return SingleChildScrollView( 
       child: Center(
@@ -276,7 +284,7 @@ class _TripScreenState extends State<TripScreen> {
                       ),
                     ),
                   ),
-                  if (group.isNotEmpty) ... [
+                  if (group.isNotEmpty)
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: Wrap(
@@ -289,7 +297,7 @@ class _TripScreenState extends State<TripScreen> {
                                 deleteIcon: Icon(Icons.close),
                                 onDeleted: () {
                                   setState(() {
-                                    group.remove(person);
+                                    context.read<GroupProvider>().removePerson(person);
                                   });
                                 },
                               ),
@@ -298,8 +306,7 @@ class _TripScreenState extends State<TripScreen> {
                         ],
                       ),  
                     ),
-                  ],
-                  if (errorGroup != null) ... [
+                  if (errorGroup != null)
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: Text(errorGroup!, style: 
@@ -309,7 +316,6 @@ class _TripScreenState extends State<TripScreen> {
                         ),
                       ),
                     ),
-                  ],
                 ],
               ),
             ),
@@ -365,7 +371,29 @@ class _TripScreenState extends State<TripScreen> {
                       ),
                     ),
                   ),
-                  if(errorStops != null) ... [
+                  if (stops.isNotEmpty)
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 20),
+                      child: Wrap(
+                        children: [
+                          ...stops.map((stop) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 3),
+                              child: Chip(
+                                label: Text(stop.location),
+                                deleteIcon: Icon(Icons.close),
+                                onDeleted: () {
+                                  setState(() {
+                                    context.read<StopsProvider>().removeStop(stop);
+                                  });
+                                },
+                              ),
+                            );
+                          }),
+                        ],
+                      ),  
+                    ),
+                  if(errorStops != null) 
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: Text(errorStops!, style: 
@@ -375,7 +403,6 @@ class _TripScreenState extends State<TripScreen> {
                         ),
                       ),
                     ),
-                  ],
                 ],
               ),
             ),
@@ -384,7 +411,7 @@ class _TripScreenState extends State<TripScreen> {
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => registerGroup(),
+                  onPressed: () => registerGroup(group, stops),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: theme.colorScheme.secondary,
                     foregroundColor: theme.colorScheme.tertiary,

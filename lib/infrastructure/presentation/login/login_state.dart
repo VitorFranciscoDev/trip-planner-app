@@ -1,11 +1,48 @@
 import 'package:flutter/widgets.dart';
 import 'package:trip_planner/entities/user.dart';
+import 'package:trip_planner/modules/user/user_usecase.dart';
 
-class UserProvider with ChangeNotifier {
-  User? user;
+class LoginProvider with ChangeNotifier {
+  LoginProvider({required this.userUseCase});
 
-  void registerUser(User newUser) {
-    user = User(name: newUser.name, email: newUser.email, password: newUser.password);
+  final UserUseCase userUseCase;
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  String? _errorEmail;
+  String? _errorPassword;
+
+  String? get errorEmail => _errorEmail;
+  String? get errorPassword => _errorPassword;
+
+  bool validateFields(String email, String password) {
+    _errorEmail = userUseCase.validateEmail(email);
+    _errorPassword = userUseCase.validatePassword(password);
+    
+    notifyListeners();
+    
+    return _errorEmail == null && _errorPassword == null;
+  }
+
+  Future<User?> doLogin(String email, String password) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final user = await userUseCase.doLogin(email, password);
+      return user;
+    } catch (e) {
+      return null;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  void clearErrors() {
+    _errorEmail = null;
+    _errorPassword = null;
     notifyListeners();
   }
 }

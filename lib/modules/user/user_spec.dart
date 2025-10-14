@@ -1,15 +1,9 @@
 import 'package:trip_planner/entities/user.dart';
 
-abstract class IUserUseCase {
-  String? validateName(String name);
+abstract class IUserRepository {
+  Future<int?> registerUser(User user);
 
-  String? validateEmail(String email);
+  Future<User?> doLogin(String email, String password);
 
-  String? validatePassword(String password);
-
-  Future<User?> validateUser(String email);
-
-  Future<String?> registerUser(String name, String email, String password);
-
-  Future<User?> loginUser(String email, String password);
+  Future<User?> getUserByEmail(String email);
 }

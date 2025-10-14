@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_screen.dart';
-import 'package:trip_planner/modules/user/user_repository.dart';
-import 'package:trip_planner/modules/user/user_usecase.dart';
+import 'package:trip_planner/infrastructure/presentation/register/register_state.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -12,165 +12,147 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  //Controllers
+  // controllers
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
 
-  //Error Text
-  String? errorName;
-  String? errorEmail;
-  String? errorPassword;
-
-  //Use Cases of the User
-  final UserUseCase userUseCase = UserUseCase(userRepository: UserRepository());
-
   void registerUser() async {
-    setState(() {
-      errorName = userUseCase.validateName(controllerName.text);
-      errorEmail = userUseCase.validateEmail(controllerEmail.text);
-      errorPassword = userUseCase.validatePassword(controllerPassword.text);
-    });
+    final provider = context.read<RegisterProvider>();
 
-    if(errorName==null && errorEmail==null && errorPassword==null) {
-      try {
-        final resultUser = await userUseCase.validateUser(controllerEmail.text);
+    final isValid = provider.validateFields(controllerName.text, controllerEmail.text, controllerPassword.text);
 
-        if(resultUser==null) {
-          showDialog(
-            context: context, 
-            builder: (context) => AlertDialog(
-              title: const Text("Register Successful"),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
-                  }, 
-                  child: const Text("Close"),
-                ),
-              ],
+    if(!isValid) return;
+
+    final result = await provider.registerUser(controllerName.text, controllerEmail.text, controllerPassword.text);
+
+    if(result == null) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Register Successful"),
+          content: const Text("You can now login with your credentials"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                );
+              },
+              child: const Text("Go to Login"),
             ),
-          );
-        } else {
-          setState(() {
-            errorEmail = "Email already exists";
-          });
-        }
-      } catch(e) {
-        showDialog(
-          context: context, 
-          builder: (context) => AlertDialog(
-            title: const Text("Unexpected Error"),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                }, 
-                child: const Text("Close"),
-              ),
-            ],
-          ),
-        );
-      }
+          ],
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final provider = context.watch<RegisterProvider>();
 
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              "assets/trip-planner-logo.png",
-              width: 350,
-              fit: BoxFit.cover,
-            ),
-            Padding(padding: EdgeInsets.only(top: 50)),
-            Container(
-              width: 320,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(35),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/trip-planner-logo.png",
+                width: 350,
+                fit: BoxFit.cover,
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(padding: EdgeInsets.only(bottom: 50)),
-                  Text(
-                    "Create Your Account",
-                    style: TextStyle(fontSize: 20, color: theme.colorScheme.primary),
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 30)),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: TextFieldComponent(
-                      controller: controllerName, 
-                      hint: "Name",
-                      error: errorName,
+              Padding(padding: EdgeInsets.only(top: 50)),
+              Container(
+                width: 320,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(35),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(padding: EdgeInsets.only(bottom: 50)),
+                    Text(
+                      "Create Your Account",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: theme.colorScheme.primary,
+                      ),
                     ),
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 20)),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: TextFieldComponent(
-                      controller: controllerEmail, 
-                      hint: "Email",
-                      error: errorEmail,
+                    Padding(padding: EdgeInsets.only(top: 30)),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: TextFieldComponent(
+                        controller: controllerName,
+                        hint: "Name",
+                        error: provider.errorName,
+                      ),
                     ),
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 20)),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: TextFieldComponent(
-                      controller: controllerPassword, 
-                      hint: "Password",
-                      error: errorPassword,
-                      isPassword: true,
+                    Padding(padding: EdgeInsets.only(top: 20)),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: TextFieldComponent(
+                        controller: controllerEmail,
+                        hint: "Email",
+                        error: provider.errorEmail,
+                      ),
                     ),
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 20)),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () => registerUser(),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: theme.colorScheme.secondary,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                    Padding(padding: EdgeInsets.only(top: 20)),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: TextFieldComponent(
+                        controller: controllerPassword,
+                        hint: "Password",
+                        error: provider.errorPassword,
+                        isPassword: true,
+                      ),
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 20)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () => registerUser(),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: theme.colorScheme.secondary,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
-                        ),
-                        child: const Text(
-                          "Sign Up",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
+                          child: const Text(
+                            "Sign Up",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 10)),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      "Already have an account? Click here to login!",
-                      style: TextStyle(color: theme.colorScheme.secondary),
+                    Padding(padding: EdgeInsets.only(top: 10)),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "Already have an account? Click here to login!",
+                        style: TextStyle(color: theme.colorScheme.secondary),
+                      ),
                     ),
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 50)),
-                ],
+                    Padding(padding: EdgeInsets.only(top: 50)),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

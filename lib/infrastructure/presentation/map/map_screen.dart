@@ -4,6 +4,9 @@ import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
+import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
+import 'package:trip_planner/modules/stop/stop_usecase.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -14,16 +17,20 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   final MapController _mapController = MapController();
-  LatLng? currentLocation;
-  List<Marker> markers = [];
-  List<LatLng> points = [];
 
-  Future<void> requestPermission() async {
+  LatLng? _currentLocation;
+
+  final List<Marker> _markers = [];
+  final List<LatLng> _points = [];
+
+  StopUseCase stopUseCase = StopUseCase();
+
+  Future<void> _requestPermission() async {
     final status = await Permission.location.request();
     if(status.isGranted) {
       Position position = await Geolocator.getCurrentPosition();
       setState(() {
-        currentLocation = LatLng(position.latitude, position.longitude);
+        _currentLocation = LatLng(position.latitude, position.longitude);
       });
     }
   }
@@ -31,7 +38,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     super.initState();
-    requestPermission();
+    _requestPermission();
   }
 
   @override
@@ -42,13 +49,17 @@ class _MapScreenState extends State<MapScreen> {
           FlutterMap(
             mapController: _mapController,
             options: MapOptions(
-              initialCenter: currentLocation ?? LatLng(0, 0),
+              initialCenter: _currentLocation ?? LatLng(-22.908333, -43.196388),
               initialZoom: 13,
               minZoom: 0,
               maxZoom: 19,
-              onTap: (tapPosition, latlng) {
+              onTap: (tapPosition, latlng) async {
+                final locationData = await stopUseCase.reverseGeocode(latlng.latitude, latlng.longitude);
+                final locationName = locationData["city"] ?? "Unknown";
+
                 setState(() {
-                  markers.add(
+                  context.read<StopsProvider>().addStop(locationName);
+                  _markers.add(
                     Marker(
                       point: latlng,
                       width: 40,
@@ -56,7 +67,7 @@ class _MapScreenState extends State<MapScreen> {
                       child: Icon(Icons.location_on, color: Colors.red),
                     ),
                   );
-                  points.add(latlng);
+                  _points.add(latlng);
                 });
               },
             ),
@@ -64,7 +75,7 @@ class _MapScreenState extends State<MapScreen> {
               TileLayer(
                 urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
               ),
-              if(currentLocation != null)
+              if(_currentLocation != null)
                 CurrentLocationLayer(
                   style: const LocationMarkerStyle(
                     marker: DefaultLocationMarker(
@@ -74,12 +85,12 @@ class _MapScreenState extends State<MapScreen> {
                     markerDirection: MarkerDirection.heading,
                   ),
                 ),
-              MarkerLayer(markers: markers),
+              MarkerLayer(markers: _markers),
               PolylineLayer(
                 polylines: [
-                  if (points.isNotEmpty)
+                  if (_points.isNotEmpty)
                     Polyline(
-                      points: points,
+                      points: _points,
                       strokeWidth: 4,
                       color: Colors.red,
                     ),

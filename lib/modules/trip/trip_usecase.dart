@@ -41,4 +41,6 @@ class TripUseCase implements ITripUseCase {
   @override
   String? validateStops(List<Stop> stops) => stops.isEmpty ? "Stops cannot be empty" : null;
 
+  
+
 }
