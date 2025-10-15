@@ -9,7 +9,7 @@ import 'package:trip_planner/infrastructure/presentation/trip-register/trip_regi
 class BottomNavigatorScreen extends StatelessWidget {
   BottomNavigatorScreen({super.key});
 
-  //Pages of the Bottom Navigator
+  // pages of the Bottom Navigator
   final List<Widget> pages = [HomeScreen(), TripScreen(), ListTripsScreen(), ConfigScreen()];
 
   @override

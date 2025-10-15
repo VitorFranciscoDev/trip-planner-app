@@ -4,9 +4,6 @@ import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
-import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
-import 'package:trip_planner/modules/stop/stop_usecase.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -22,8 +19,6 @@ class _MapScreenState extends State<MapScreen> {
 
   final List<Marker> _markers = [];
   final List<LatLng> _points = [];
-
-  StopUseCase stopUseCase = StopUseCase();
 
   Future<void> _requestPermission() async {
     final status = await Permission.location.request();
@@ -54,11 +49,7 @@ class _MapScreenState extends State<MapScreen> {
               minZoom: 0,
               maxZoom: 19,
               onTap: (tapPosition, latlng) async {
-                final locationData = await stopUseCase.reverseGeocode(latlng.latitude, latlng.longitude);
-                final locationName = locationData["city"] ?? "Unknown";
-
                 setState(() {
-                  context.read<StopsProvider>().addStop(locationName);
                   _markers.add(
                     Marker(
                       point: latlng,

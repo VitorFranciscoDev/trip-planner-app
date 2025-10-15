@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trip_planner/infrastructure/presentation/trip-register/trip_register_state.dart';
+import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 
 class ListTripsScreen extends StatefulWidget {
   const ListTripsScreen({super.key});
@@ -10,8 +10,6 @@ class ListTripsScreen extends StatefulWidget {
 }
 
 class _ListTripsScreenState extends State<ListTripsScreen> {
-  List<String> aaa = ["aaa", "eeee"];
-
   @override
   Widget build(BuildContext context) {
     final trips = context.read<TripProvider>().trips;
@@ -50,9 +48,9 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
             ),
           ),
           ListView.builder(
-            itemCount: aaa.length,
+            itemCount: trips.length,
             itemBuilder: (context, index) {
-              final eeeeee = aaa[index];
+              final trip = trips[index];
               return Container(
                 width: 200,
                 height: 100,
