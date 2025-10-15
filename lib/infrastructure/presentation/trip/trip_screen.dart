@@ -7,7 +7,7 @@ import 'package:trip_planner/infrastructure/presentation/app/components/text_fie
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_date_component.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
-import 'package:trip_planner/infrastructure/presentation/trip/group_state.dart';
+import 'package:trip_planner/infrastructure/presentation/group/group_state.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 import 'package:trip_planner/modules/person/person_usecase.dart';
 import 'package:trip_planner/modules/trip/trip_usecase.dart';
@@ -20,75 +20,77 @@ class TripScreen extends StatefulWidget {
 }
 
 class _TripScreenState extends State<TripScreen> {
-  
-  // 1. controllers
+  // controllers
   TextEditingController controllerTripTitle = TextEditingController();
   TextEditingController controllerStartDate = TextEditingController();
   TextEditingController controllerEndDate = TextEditingController();
-
-  // 2. controllers
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerAge = TextEditingController();
 
-  String dropdownValue = "Car"; // value of the DropdownButton
+  String dropdownValue = "Car";
 
-  // 1. errors
-  String? errorTripTitle;
-  String? errorStartDate;
-  String? errorEndDate;
-  String? errorDate;
+  Future<void> registerTrip() async {
+    final provider = context.read<TripProvider>();
 
-  // 2. errors
-  String? errorName;
-  String? errorAge;
-  String? errorGroup;
-  
-  String? errorStops; // 3. errors
+    final isValid = provider.validateTrip(
+      tripTitle: controllerTripTitle.text, 
+      startDate: controllerStartDate.text, 
+      endDate: controllerEndDate.text, 
+      group: group, 
+      stops: stops,
+    );
 
-  final TripUseCase tripUseCase = TripUseCase(); // use cases of the trip
+    if(!isValid) return;
 
-  final PersonUseCase personUseCase = PersonUseCase(); // use cases of the group
+    Trip trip = Trip(
+      title: controllerTripTitle.text, 
+      transport: dropdownValue, 
+      startDate: controllerStartDate.text, 
+      endDate: controllerEndDate.text,
+      group: group,
+      stops: stops,
+    );
 
-  // function to verify and register all the trip data
-  Future<void> registerGroup(List<Person> group, List<Stop> stops) async {
+    final result = await provider.createTrip(trip);
 
-    setState(() {
-      // errors
-      errorTripTitle = tripUseCase.validateTripTitle(controllerTripTitle.text);
-      errorStartDate = tripUseCase.validateStartDate(controllerStartDate.text);
-      errorEndDate = tripUseCase.validateEndDate(controllerEndDate.text);
-      if(errorStartDate==null && errorEndDate==null) {
-        errorDate = tripUseCase.validateDates(controllerStartDate.text, controllerEndDate.text);
-      }
-      errorGroup = tripUseCase.validateGroup(group);
-      errorStops = tripUseCase.validateStops(stops);
-    });
-
-    // if doesn't have any errors, add the trip in the db
-    if(errorTripTitle==null && errorStartDate==null && errorEndDate==null && errorDate == null && errorGroup == null && errorStops == null) {
-      Trip trip = Trip(title: controllerTripTitle.text, transport: dropdownValue, startDate: controllerStartDate.text, endDate: controllerEndDate.text, group: group, stops: stops);
-      context.read<TripProvider>().addTrip(trip);
-    }
-  }
-
-  // function to verify and add a person in the group
-  void addPerson() {
-    setState(() {
-      errorName = personUseCase.validateName(controllerName.text);
-      errorAge = personUseCase.validateAge(controllerAge.text);
-    });
-
-    if(errorName == null && errorAge == null) {
-      Person person = Person(name: controllerName.text, age: int.parse(controllerAge.text));
-      context.read<GroupProvider>().addPerson(person);
-
-      // clear the TextFields
-      controllerName.clear();
-      controllerAge.clear();
-
-      setState(() {
-        errorGroup = null;
-      });
+    if(result == null) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Success!"),
+          content: const Text("Trip created successfully"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                controllerTripTitle.clear();
+                controllerStartDate.clear();
+                controllerEndDate.clear();
+                context.read<GroupProvider>().clearGroup();
+                context.read<StopsProvider>().clearStops();
+                setState(() {
+                  dropdownValue = "Car";
+                });
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Error"),
+          content: Text(result),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
     }
   }
 
@@ -109,8 +111,7 @@ class _TripScreenState extends State<TripScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final group = context.read<GroupProvider>().group;
-    final stops = context.read<StopsProvider>().stops;
+    final provider = context.watch<TripProvider>();
 
     return SingleChildScrollView( 
       child: Center(
@@ -150,7 +151,7 @@ class _TripScreenState extends State<TripScreen> {
                     child: TextFieldComponent(
                       controller: controllerTripTitle, 
                       hint: "Trip Title",
-                      error: errorTripTitle,
+                      error: provider.errorTripTitle,
                     ),
                   ),
                   Padding(padding: EdgeInsets.only(top: 20)),
@@ -209,7 +210,7 @@ class _TripScreenState extends State<TripScreen> {
                     child: TextFieldDateComponent(
                       controller: controllerStartDate, 
                       hint: "Start Date", 
-                      error: errorStartDate,
+                      error: provider.errorStartDate,
                       function: () => selectDate(controllerStartDate),
                     ),
                   ),
@@ -219,7 +220,7 @@ class _TripScreenState extends State<TripScreen> {
                     child: TextFieldDateComponent(
                       controller: controllerEndDate, 
                       hint: "End Date",
-                      error: errorEndDate, 
+                      error: provider.errorEndDate, 
                       function: () => selectDate(controllerEndDate),
                     ),
                   ),
@@ -251,7 +252,7 @@ class _TripScreenState extends State<TripScreen> {
                     child: TextFieldComponent(
                       controller: controllerName,
                       hint: "Name",
-                      error: errorName,
+                      error: ,
                     ),
                   ),
                   Padding(padding: EdgeInsets.only(top: 20)),
@@ -260,7 +261,7 @@ class _TripScreenState extends State<TripScreen> {
                     child: TextFieldComponent(
                       controller: controllerAge, 
                       hint: "Age",
-                      error: errorAge,
+                      error: ,
                     ),
                   ),
                   Padding(

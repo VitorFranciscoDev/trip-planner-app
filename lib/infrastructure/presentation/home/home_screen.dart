@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/logout_container.dart';
-import 'package:trip_planner/infrastructure/presentation/providers/user_provider.dart';
+import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

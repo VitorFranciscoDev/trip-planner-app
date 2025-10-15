@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_state.dart';
-import 'package:trip_planner/infrastructure/presentation/providers/user_provider.dart';
+import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
 import 'package:trip_planner/infrastructure/presentation/register/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {

@@ -1,18 +1,9 @@
-import 'package:trip_planner/entities/person.dart';
-import 'package:trip_planner/entities/stop.dart';
+import 'package:trip_planner/entities/trip.dart';
 
-abstract class ITripUseCase {
-  String? validateTripTitle(String tripTitle);
-
-  String? validateStartDate(String startDate);
-
-  String? validateEndDate(String endDate);
-
-  String? validateDates(String startDate, String endDate);
-
-  String? validateGroup(List<Person> group);
-
-  String? validateStops(List<Stop> stops);
-
-  
+abstract class ITripRepository {
+  Future<int> registerTrip(Trip trip);
+  Future<List<Trip>> getAllTrips();
+  Future<Trip?> getTripById(int id);
+  Future<int> updateTrip(Trip trip);
+  Future<int> deleteTrip(int id);
 }

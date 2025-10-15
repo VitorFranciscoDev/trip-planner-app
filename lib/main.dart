@@ -7,7 +7,7 @@ import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
 import 'package:trip_planner/infrastructure/presentation/register/register_state.dart';
 import 'package:trip_planner/infrastructure/presentation/theme/theme.dart';
 import 'package:trip_planner/infrastructure/presentation/theme/theme_provider.dart';
-import 'package:trip_planner/infrastructure/presentation/trip/group_state.dart';
+import 'package:trip_planner/infrastructure/presentation/group/group_state.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 import 'package:trip_planner/modules/user/user_repository.dart';
 import 'package:trip_planner/modules/user/user_usecase.dart';
