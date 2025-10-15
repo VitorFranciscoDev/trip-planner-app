@@ -18,7 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
 
-  void doLogin() async {
+  Future<void> doLogin() async {
     final provider = context.read<LoginProvider>();
 
     final isValid = provider.validateFields(controllerEmail.text, controllerPassword.text);

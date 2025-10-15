@@ -50,10 +50,4 @@ class RegisterProvider with ChangeNotifier {
     }
   }
   
-  void clearErrors() {
-    _errorName = null;
-    _errorEmail = null;
-    _errorPassword = null;
-    notifyListeners();
-  }
 }

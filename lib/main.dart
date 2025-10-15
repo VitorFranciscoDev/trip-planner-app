@@ -11,8 +11,6 @@ import 'package:trip_planner/infrastructure/presentation/group/group_state.dart'
 import 'package:trip_planner/infrastructure/presentation/trip-register/trip_register_state.dart';
 import 'package:trip_planner/modules/person/person_repository.dart';
 import 'package:trip_planner/modules/person/person_usecase.dart';
-import 'package:trip_planner/modules/stop/stop_repository.dart';
-import 'package:trip_planner/modules/stop/stop_usecase.dart';
 import 'package:trip_planner/modules/trip/trip_repository.dart';
 import 'package:trip_planner/modules/trip/trip_usecase.dart';
 import 'package:trip_planner/modules/user/user_repository.dart';
@@ -28,9 +26,6 @@ void main() {
   final personRepository = PersonRepository();
   final personUseCase = PersonUseCase(personRepository: personRepository);
 
-  final stopRepository = StopRepository();
-  final stopUseCase = StopUseCase(stopRepository: stopRepository);
-
   runApp(
     MultiProvider(
       providers: [
@@ -38,7 +33,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => LoginProvider(userUseCase: userUseCase)),
         ChangeNotifierProvider(create: (_) => RegisterProvider(userUseCase: userUseCase)),
         ChangeNotifierProvider(create: (_) => BottomNavigatorProvider()),
-        ChangeNotifierProvider(create: (_) => TripRegisterProvider(tripUseCase: tripUseCase, personUseCase: personUseCase, stopUseCase: stopUseCase)),
+        ChangeNotifierProvider(create: (_) => TripRegisterProvider(tripUseCase: tripUseCase, personUseCase: personUseCase)),
         ChangeNotifierProvider(create: (_) => GroupProvider()),
         ChangeNotifierProvider(create: (_) => StopsProvider()),
       ],

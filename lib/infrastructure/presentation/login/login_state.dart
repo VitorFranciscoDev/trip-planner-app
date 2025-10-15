@@ -40,9 +40,4 @@ class LoginProvider with ChangeNotifier {
     }
   }
 
-  void clearErrors() {
-    _errorEmail = null;
-    _errorPassword = null;
-    notifyListeners();
-  }
 }

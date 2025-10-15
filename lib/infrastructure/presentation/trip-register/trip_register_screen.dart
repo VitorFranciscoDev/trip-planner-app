@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/person.dart';
-import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/entities/trip.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_date_component.dart';
@@ -9,8 +8,6 @@ import 'package:trip_planner/infrastructure/presentation/map/map_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
 import 'package:trip_planner/infrastructure/presentation/group/group_state.dart';
 import 'package:trip_planner/infrastructure/presentation/trip-register/trip_register_state.dart';
-import 'package:trip_planner/modules/person/person_usecase.dart';
-import 'package:trip_planner/modules/trip/trip_usecase.dart';
 
 class TripScreen extends StatefulWidget {
   const TripScreen({super.key});
@@ -30,7 +27,7 @@ class _TripScreenState extends State<TripScreen> {
   String dropdownValue = "Car";
 
   Future<void> registerTrip() async {
-    final provider = context.read<TripProvider>();
+    final provider = context.read<TripRegisterProvider>();
     final group = context.read<GroupProvider>().group;
     final stops = context.read<StopsProvider>().stops;
 
@@ -68,8 +65,6 @@ class _TripScreenState extends State<TripScreen> {
                 controllerTripTitle.clear();
                 controllerStartDate.clear();
                 controllerEndDate.clear();
-                context.read<GroupProvider>().clearGroup();
-                context.read<StopsProvider>().clearStops();
                 setState(() {
                   dropdownValue = "Car";
                 });
@@ -113,7 +108,10 @@ class _TripScreenState extends State<TripScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final provider = context.watch<TripProvider>();
+    final provider = context.watch<TripRegisterProvider>();
+    final groupProvider = context.read<GroupProvider>();
+    final group = context.read<GroupProvider>().group;
+    final stops = context.read<StopsProvider>().stops;
 
     return SingleChildScrollView( 
       child: Center(
@@ -254,7 +252,7 @@ class _TripScreenState extends State<TripScreen> {
                     child: TextFieldComponent(
                       controller: controllerName,
                       hint: "Name",
-                      error: ,
+                      error: provider.errorName,
                     ),
                   ),
                   Padding(padding: EdgeInsets.only(top: 20)),
@@ -263,7 +261,7 @@ class _TripScreenState extends State<TripScreen> {
                     child: TextFieldComponent(
                       controller: controllerAge, 
                       hint: "Age",
-                      error: ,
+                      error: provider.errorAge,
                     ),
                   ),
                   Padding(
@@ -271,7 +269,12 @@ class _TripScreenState extends State<TripScreen> {
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () => addPerson(),
+                        onPressed: () {
+                          final isValid = provider.validatePerson(controllerName.text, controllerAge.text);
+                          if(!isValid) return;
+                          Person person = Person(name: controllerName.text, age: int.parse(controllerAge.text));
+                          groupProvider.addPerson(person);
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: theme.colorScheme.secondary,
                           foregroundColor: theme.colorScheme.tertiary,
@@ -309,10 +312,10 @@ class _TripScreenState extends State<TripScreen> {
                         ],
                       ),  
                     ),
-                  if (errorGroup != null)
+                  if (provider.errorGroup != null)
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
-                      child: Text(errorGroup!, style: 
+                      child: Text(provider.errorGroup!, style: 
                         TextStyle(
                           color: Colors.red,
                           fontWeight: FontWeight.w900,
@@ -396,10 +399,10 @@ class _TripScreenState extends State<TripScreen> {
                         ],
                       ),  
                     ),
-                  if(errorStops != null) 
+                  if(provider.errorStops != null) 
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
-                      child: Text(errorStops!, style: 
+                      child: Text(provider.errorStops!, style: 
                         TextStyle(
                           color: Colors.red,
                           fontWeight: FontWeight.w900,
@@ -414,7 +417,7 @@ class _TripScreenState extends State<TripScreen> {
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => registerGroup(group, stops),
+                  onPressed: () => registerTrip(),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: theme.colorScheme.secondary,
                     foregroundColor: theme.colorScheme.tertiary,
