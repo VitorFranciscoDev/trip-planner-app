@@ -8,13 +8,28 @@ import 'package:trip_planner/infrastructure/presentation/register/register_state
 import 'package:trip_planner/infrastructure/presentation/theme/theme.dart';
 import 'package:trip_planner/infrastructure/presentation/theme/theme_provider.dart';
 import 'package:trip_planner/infrastructure/presentation/group/group_state.dart';
-import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
+import 'package:trip_planner/infrastructure/presentation/trip-register/trip_register_state.dart';
+import 'package:trip_planner/modules/person/person_repository.dart';
+import 'package:trip_planner/modules/person/person_usecase.dart';
+import 'package:trip_planner/modules/stop/stop_repository.dart';
+import 'package:trip_planner/modules/stop/stop_usecase.dart';
+import 'package:trip_planner/modules/trip/trip_repository.dart';
+import 'package:trip_planner/modules/trip/trip_usecase.dart';
 import 'package:trip_planner/modules/user/user_repository.dart';
 import 'package:trip_planner/modules/user/user_usecase.dart';
 
 void main() {
   final userRepository = UserRepository();
   final userUseCase = UserUseCase(userRepository: userRepository);
+
+  final tripRepository = TripRepository();
+  final tripUseCase = TripUseCase(tripRepository: tripRepository);
+
+  final personRepository = PersonRepository();
+  final personUseCase = PersonUseCase(personRepository: personRepository);
+
+  final stopRepository = StopRepository();
+  final stopUseCase = StopUseCase(stopRepository: stopRepository);
 
   runApp(
     MultiProvider(
@@ -23,7 +38,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => LoginProvider(userUseCase: userUseCase)),
         ChangeNotifierProvider(create: (_) => RegisterProvider(userUseCase: userUseCase)),
         ChangeNotifierProvider(create: (_) => BottomNavigatorProvider()),
-        ChangeNotifierProvider(create: (_) => TripProvider()),
+        ChangeNotifierProvider(create: (_) => TripRegisterProvider(tripUseCase: tripUseCase, personUseCase: personUseCase, stopUseCase: stopUseCase)),
         ChangeNotifierProvider(create: (_) => GroupProvider()),
         ChangeNotifierProvider(create: (_) => StopsProvider()),
       ],

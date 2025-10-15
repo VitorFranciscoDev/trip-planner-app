@@ -20,8 +20,6 @@ class Trip {
       'transport': transport,
       'startDate': startDate,
       'endDate': endDate,
-      'group': group,
-      'stops': stops,
     };
   }
 

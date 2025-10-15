@@ -1,13 +1,12 @@
-import 'package:trip_planner/modules/person/person_spec.dart';
+import 'package:trip_planner/modules/person/person_repository.dart';
 
-class PersonUseCase implements IPersonUseCase {
+class PersonUseCase {
+  PersonUseCase({ required this.personRepository });
 
-  // function to validate the name
-  @override
+  final PersonRepository personRepository;
+
   String? validateName(String name) => name.isEmpty ? "Name cannot be blank" : null;
 
-  // function to validate the age
-  @override
   String? validateAge(String age) {
     if(age.isEmpty) {
       return "Age cannot be blank";

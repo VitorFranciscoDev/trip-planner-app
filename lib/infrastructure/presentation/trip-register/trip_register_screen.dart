@@ -8,7 +8,7 @@ import 'package:trip_planner/infrastructure/presentation/app/components/text_fie
 import 'package:trip_planner/infrastructure/presentation/map/map_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
 import 'package:trip_planner/infrastructure/presentation/group/group_state.dart';
-import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
+import 'package:trip_planner/infrastructure/presentation/trip-register/trip_register_state.dart';
 import 'package:trip_planner/modules/person/person_usecase.dart';
 import 'package:trip_planner/modules/trip/trip_usecase.dart';
 
@@ -31,6 +31,8 @@ class _TripScreenState extends State<TripScreen> {
 
   Future<void> registerTrip() async {
     final provider = context.read<TripProvider>();
+    final group = context.read<GroupProvider>().group;
+    final stops = context.read<StopsProvider>().stops;
 
     final isValid = provider.validateTrip(
       tripTitle: controllerTripTitle.text, 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
+import 'package:trip_planner/infrastructure/presentation/trip-register/trip_register_state.dart';
 
 class ListTripsScreen extends StatefulWidget {
   const ListTripsScreen({super.key});

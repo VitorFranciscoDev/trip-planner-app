@@ -1,9 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:trip_planner/entities/person.dart';
 
-class GroupProvider with ChangeNotifier {
-  final List<Person> _group = [];
-
+class GroupProvider extends ChangeNotifier {
+  List<Person> _group = [];
   List<Person> get group => _group;
 
   void addPerson(Person person) {
@@ -13,6 +12,11 @@ class GroupProvider with ChangeNotifier {
 
   void removePerson(Person person) {
     _group.remove(person);
+    notifyListeners();
+  }
+
+  void clearGroup() {
+    _group.clear();
     notifyListeners();
   }
 }
