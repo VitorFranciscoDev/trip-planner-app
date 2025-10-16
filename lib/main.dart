@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_state.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_state.dart';
@@ -52,10 +53,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = context.watch<ThemeProvider>();
+    final user = context.read<UserProvider>().user;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: user != null ? BottomNavigatorScreen() : LoginScreen(),
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: themeProvider.themeMode,
