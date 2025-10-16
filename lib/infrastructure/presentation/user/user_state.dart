@@ -8,6 +8,9 @@ class UserProvider with ChangeNotifier {
   User? _user;
   User? get user => _user;
 
+  bool _isLoading = true;
+  bool get isLoading => _isLoading;
+
   UserProvider() {
     loadUser();
   }
@@ -29,6 +32,9 @@ class UserProvider with ChangeNotifier {
       _user = User.fromMap(map);
       notifyListeners();
     }
+
+    _isLoading = false;
+    notifyListeners();
   }
 
   Future<void> logout() async {

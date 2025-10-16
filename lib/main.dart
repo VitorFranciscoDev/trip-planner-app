@@ -19,7 +19,9 @@ import 'package:trip_planner/modules/trip/trip_usecase.dart';
 import 'package:trip_planner/modules/user/user_repository.dart';
 import 'package:trip_planner/modules/user/user_usecase.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   final userRepository = UserRepository();
   final userUseCase = UserUseCase(userRepository: userRepository);
 
@@ -53,11 +55,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = context.watch<ThemeProvider>();
-    final user = context.read<UserProvider>().user;
+    final userProvider = context.watch<UserProvider>();
+
+    if (userProvider.isLoading) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
+      );
+    }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: user != null ? BottomNavigatorScreen() : LoginScreen(),
+      home: userProvider.user != null ? BottomNavigatorScreen() : LoginScreen(),
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: themeProvider.themeMode,
