@@ -56,20 +56,53 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(),
-            child: Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                color: theme.colorScheme.tertiary,
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
+            padding: EdgeInsets.only(top: 50),
+            child: GestureDetector(
+              child: Container(
+                width: 360,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.tertiary,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    width: 0.8,
+                    color: Colors.black,
+                  ),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
 
-                  },
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 50),
+            child: GestureDetector(
+              child: Container(
+                width: 360,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.tertiary,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    width: 0.8,
+                    color: Colors.black,
+                  ),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+
+                    },
+                  ),
                 ),
               ),
             ),
