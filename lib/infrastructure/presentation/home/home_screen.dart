@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trip_planner/infrastructure/presentation/app/components/logout_container.dart';
 import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,9 +13,6 @@ class _HomeScreenState extends State<HomeScreen> {
   //Controller
   final TextEditingController controllerSearch = TextEditingController();
 
-  //bool to show the log out container
-  bool showLogOut = false;
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -29,25 +25,13 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    showLogOut = !showLogOut;
-                  });
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(left: 15),
-                  child: Image.asset("assets/trip-planner-icon.png", height: 55),
-                ),
+              Padding(
+                padding: EdgeInsets.only(left: 15),
+                child: Image.asset("assets/trip-planner-icon.png", height: 55),
               ),
               Text("Welcome, $name", style: TextStyle(fontFamily: "Times New Roman", fontSize: 20)),
             ],
           ),
-          if(showLogOut)
-            Padding(
-              padding: EdgeInsets.only(right: 202, left: 25),
-              child: LogOutContainer(),
-            ),
           Padding(
             padding: EdgeInsets.only(top: 40, left: 25, right: 25),
             child: TextField(
@@ -67,6 +51,25 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: theme.colorScheme.primary,
                     width: 2,
                   ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(),
+            child: Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.tertiary,
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+
+                  },
                 ),
               ),
             ),
