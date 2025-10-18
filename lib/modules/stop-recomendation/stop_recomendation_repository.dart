@@ -6,27 +6,27 @@ class StopRecomendationRepository {
     return [
       StopRecomendation(
         name: 'Porto de Galinhas',
-        img: 'https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=400',
+        img: 'assets/stops-recomendations/br-ne/portogalinhas.jpg',
         duration: 3,
       ),
       StopRecomendation(
         name: 'Maragogi',
-        img: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400',
+        img: 'assets/stops-recomendations/br-ne/maragogi.jpg',
         duration: 2,
       ),
       StopRecomendation(
         name: 'Praia do Forte',
-        img: 'https://images.unsplash.com/photo-1516490981167-dc990a242603?w=400',
+        img: 'assets/stops-recomendations/br-ne/praiaforte.jpg',
         duration: 3,
       ),
       StopRecomendation(
         name: 'Jericoacoara',
-        img: 'https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?w=400',
+        img: 'assets/stops-recomendations/br-ne/jericoacoara.jpg',
         duration: 4,
       ),
       StopRecomendation(
         name: 'Arraial d\'Ajuda',
-        img: 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=400',
+        img: 'assets/stops-recomendations/br-ne/arraial.jpg',
         duration: 3,
       ),
     ];
@@ -36,28 +36,23 @@ class StopRecomendationRepository {
     return [
       StopRecomendation(
         name: 'Florianópolis',
-        img: 'https://images.unsplash.com/photo-1516726817505-f5ed825624d8?w=400',
+        img: 'assets/stops-recomendations/br-so/floripa.jpg',
         duration: 4,
       ),
       StopRecomendation(
         name: 'Balneário Camboriú',
-        img: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400',
+        img: 'assets/stops-recomendations/br-so/balneario.jpg',
         duration: 2,
       ),
       StopRecomendation(
         name: 'Gramado',
-        img: 'https://images.unsplash.com/photo-1536859975388-d3e293d5ca2d?w=400',
+        img: 'assets/stops-recomendations/br-so/gramado.jpg',
         duration: 3,
       ),
       StopRecomendation(
         name: 'Bombinhas',
-        img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400',
+        img: 'assets/stops-recomendations/br-so/bombinhas.jpg',
         duration: 3,
-      ),
-      StopRecomendation(
-        name: 'Canela',
-        img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400',
-        duration: 2,
       ),
     ];
   }

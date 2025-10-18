@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_global_state.dart';
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_state.dart';
+import 'package:trip_planner/infrastructure/presentation/home/home_state.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_state.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
 import 'package:trip_planner/infrastructure/presentation/register/register_state.dart';
@@ -12,6 +13,7 @@ import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
 import 'package:trip_planner/modules/person/person_repository.dart';
 import 'package:trip_planner/modules/person/person_usecase.dart';
+import 'package:trip_planner/modules/stop-recomendation/stop_recomendation_repository.dart';
 import 'package:trip_planner/modules/trip/trip_repository.dart';
 import 'package:trip_planner/modules/trip/trip_usecase.dart';
 import 'package:trip_planner/modules/user/user_repository.dart';
@@ -29,6 +31,8 @@ void main() async {
   final personRepository = PersonRepository();
   final personUseCase = PersonUseCase(personRepository: personRepository);
 
+  final stopRecomendationRepository = StopRecomendationRepository();
+
   runApp(
     MultiProvider(
       providers: [
@@ -40,6 +44,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => LoginProvider(userUseCase: userUseCase)),
         ChangeNotifierProvider(create: (_) => RegisterProvider(userUseCase: userUseCase)),
         ChangeNotifierProvider(create: (_) => BottomNavigatorProvider()),
+        ChangeNotifierProvider(create: (_) => HomeProvider(stopRecomendationRepository: stopRecomendationRepository)),
         ChangeNotifierProvider(create: (_) => TripRegisterProvider(tripUseCase: tripUseCase, personUseCase: personUseCase)),
       ],
       child: const MyApp(),

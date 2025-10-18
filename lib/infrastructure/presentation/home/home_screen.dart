@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trip_planner/infrastructure/presentation/home/home_state.dart';
 import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,6 +18,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final name = context.read<UserProvider>().user!.name;
+    final provider = context.read<HomeProvider>();
+    final list1 = provider.brNERecommendations;
+    final list2 = provider.brSORecommendations;
 
     return Center(
       child: Column(
@@ -27,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 15),
-                child: Image.asset("assets/trip-planner-icon.png", height: 55),
+                child: Image.asset("assets/logos/trip-planner-icon.png", height: 55),
               ),
               Text("Welcome, $name", style: TextStyle(fontFamily: "Times New Roman", fontSize: 20)),
             ],
@@ -95,14 +99,35 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.black,
                   ),
                 ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-
-                    },
-                  ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Text("PIPIPI"),
+                        Spacer(),
+                        const Text("15 days"),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: list2.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: 20, bottom: 20),
+                                child: Container(
+                                  child: Image.asset(list1[index].img),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

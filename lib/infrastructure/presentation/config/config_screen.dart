@@ -20,7 +20,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
         children: [
           Padding(
             padding: EdgeInsets.only(top: 50, bottom: 100),
-            child: Image.asset("assets/trip-planner-logo.png", height: 75),
+            child: Image.asset("assets/logos/trip-planner-logo.png", height: 75),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
