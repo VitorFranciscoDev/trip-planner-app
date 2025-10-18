@@ -6,6 +6,7 @@ import 'package:trip_planner/infrastructure/presentation/home/home_state.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_state.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
 import 'package:trip_planner/infrastructure/presentation/register/register_state.dart';
+import 'package:trip_planner/infrastructure/presentation/search-result/search_result_state.dart';
 import 'package:trip_planner/infrastructure/presentation/theme/theme_provider.dart';
 import 'package:trip_planner/infrastructure/presentation/group/group_state.dart';
 import 'package:trip_planner/infrastructure/presentation/trip-register/trip_register_state.dart';
@@ -13,6 +14,7 @@ import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
 import 'package:trip_planner/modules/person/person_repository.dart';
 import 'package:trip_planner/modules/person/person_usecase.dart';
+import 'package:trip_planner/modules/search-result/search_result_service.dart';
 import 'package:trip_planner/modules/stop-recomendation/stop_recomendation_repository.dart';
 import 'package:trip_planner/modules/trip/trip_repository.dart';
 import 'package:trip_planner/modules/trip/trip_usecase.dart';
@@ -33,6 +35,8 @@ void main() async {
 
   final stopRecomendationRepository = StopRecomendationRepository();
 
+  final searchResultService = SearchResultService();
+
   runApp(
     MultiProvider(
       providers: [
@@ -45,6 +49,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => RegisterProvider(userUseCase: userUseCase)),
         ChangeNotifierProvider(create: (_) => BottomNavigatorProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider(stopRecomendationRepository: stopRecomendationRepository)),
+        ChangeNotifierProvider(create: (_) => SearchResultProvider(searchResultService: searchResultService)),
         ChangeNotifierProvider(create: (_) => TripRegisterProvider(tripUseCase: tripUseCase, personUseCase: personUseCase)),
       ],
       child: const MyApp(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/home/home_state.dart';
+import 'package:trip_planner/infrastructure/presentation/search-result/search_result_state.dart';
 import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,9 +19,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final name = context.read<UserProvider>().user!.name;
-    final provider = context.read<HomeProvider>();
-    final list1 = provider.brNERecommendations;
-    final list2 = provider.brSORecommendations;
+    final provider = context.watch<HomeProvider>();
+    final searchProvider = context.watch<SearchResultProvider>();
+    final recomendation1 = provider.brNERecommendations;
+    final recomendation2 = provider.brSORecommendations;
 
     return SingleChildScrollView(
       child: Column(
@@ -51,6 +53,15 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: InputDecoration(
                 hintText: "Search destinations...",
                 prefixIcon: Icon(Icons.search),
+                suffixIcon: controllerSearch.text.isNotEmpty
+                  ? IconButton(
+                    icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        controllerSearch.clear();
+                        searchProvider.clearSearch();
+                      },
+                  )
+                  : null,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(
@@ -68,6 +79,106 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          if (searchProvider.isSearching)
+            Container(
+              margin: const EdgeInsets.only(top: 8),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            )
+            else if (searchProvider.searchResults.isNotEmpty)
+              Container(
+                margin: const EdgeInsets.only(top: 8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: searchProvider.searchResults.length,
+                  separatorBuilder: (context, index) => const Divider(height: 1),
+                  itemBuilder: (context, index) {
+                    final result = searchProvider.searchResults[index];
+                    return ListTile(
+                      leading: Icon(
+                        Icons.location_on,
+                        color: theme.colorScheme.secondary,
+                      ),
+                      title: Text(
+                        result.displayName,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                      onTap: () {
+                        // Quando clicar em um resultado
+                        FocusScope.of(context).unfocus();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Selected: ${result.displayName}\n'
+                              'Lat: ${result.position.latitude.toStringAsFixed(4)}, '
+                              'Lng: ${result.position.longitude.toStringAsFixed(4)}',
+                            ),
+                            duration: const Duration(seconds: 3),
+                          ),
+                        );
+                        
+                        // Aqui você pode:
+                        // - Navegar para o mapa com essas coordenadas
+                        // - Adicionar como Stop
+                        // - Criar uma nova trip com esse local
+                        
+                        controllerSearch.clear();
+                        searchProvider.clearSearch();
+                      },
+                    );
+                  },
+                ),
+              )
+            else if (searchProvider.query.isNotEmpty && 
+                      searchProvider.query.length >= 3 &&
+                      !searchProvider.isSearching)
+              Container(
+                margin: const EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: const Text(
+                  'No results found',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ),
           Padding(
             padding: EdgeInsets.only(top: 30),
             child: GestureDetector(
@@ -108,9 +219,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     Expanded(
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: list1.length,
+                        itemCount: recomendation1.length,
                         itemBuilder: (context, index) {
-                          final location = list1[index];
+                          final location = recomendation1[index];
                           return Column(
                             children: [
                               Row(
@@ -190,9 +301,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     Expanded(
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: list2.length,
+                        itemCount: recomendation2.length,
                         itemBuilder: (context, index) {
-                          final location = list2[index];
+                          final location = recomendation2[index];
                           return Column(
                             children: [
                               Row(
