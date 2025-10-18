@@ -1,9 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
+import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
+import 'package:trip_planner/modules/search-result/search_result_service.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -14,26 +20,73 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   final MapController _mapController = MapController();
+  final SearchResultService _searchResultService = SearchResultService();
 
   LatLng? _currentLocation;
 
-  final List<Marker> _markers = [];
-  final List<LatLng> _points = [];
+  List<Marker> _markers = [];
+  List<LatLng> _points = [];
 
-  Future<void> _requestPermission() async {
+  Future<void> _requestPermissionAndLocate() async {
     final status = await Permission.location.request();
-    if(status.isGranted) {
-      Position position = await Geolocator.getCurrentPosition();
-      setState(() {
-        _currentLocation = LatLng(position.latitude, position.longitude);
-      });
-    }
+    if (!status.isGranted) return;
+
+    final position = await Geolocator.getCurrentPosition();
+    setState(() {
+      _currentLocation = LatLng(position.latitude, position.longitude);
+    });
+
+    _mapController.move(_currentLocation!, 15);
+  }
+
+  Future<List<LatLng>> _getRoute(List<LatLng> points) async {
+    if (points.length < 2) return points;
+
+    final coords = points.map((p) => "${p.longitude},${p.latitude}").join(";");
+    final url = Uri.parse(
+      "https://router.project-osrm.org/route/v1/driving/$coords?overview=full&geometries=geojson",
+    );
+
+    final response = await http.get(url);
+    if (response.statusCode != 200) return points;
+
+    final data = json.decode(response.body);
+    final route = data['routes'][0]['geometry']['coordinates'] as List;
+    return route
+        .map((coord) => LatLng(coord[1].toDouble(), coord[0].toDouble()))
+        .toList();
+  }
+
+  Future<void> _onMapTap(LatLng latlng) async {
+    final provider = context.watch<StopsProvider>();
+
+    final address = await _searchResultService.getAddressFromCoordinates(latlng);
+    final locationName = address ?? "Unknown location";
+
+    provider.addStop(locationName);
+
+    setState(() {
+      _markers.add(
+        Marker(
+          point: latlng,
+          width: 40,
+          height: 40,
+          child: const Icon(Icons.location_on, color: Colors.red),
+        ),
+      );
+      _points.add(latlng);
+    });
+
+    final routedPoints = await _getRoute(_points);
+    setState(() {
+      _points = routedPoints;
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    _requestPermission();
+    _requestPermissionAndLocate();
   }
 
   @override
@@ -48,19 +101,7 @@ class _MapScreenState extends State<MapScreen> {
               initialZoom: 13,
               minZoom: 0,
               maxZoom: 19,
-              onTap: (tapPosition, latlng) async {
-                setState(() {
-                  _markers.add(
-                    Marker(
-                      point: latlng,
-                      width: 40,
-                      height: 40, 
-                      child: Icon(Icons.location_on, color: Colors.red),
-                    ),
-                  );
-                  _points.add(latlng);
-                });
-              },
+              onTap: (tapPosition, latlng) => _onMapTap(latlng),
             ),
             children: [
               TileLayer(
