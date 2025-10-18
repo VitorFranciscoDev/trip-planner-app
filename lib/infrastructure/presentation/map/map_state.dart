@@ -6,8 +6,7 @@ class StopsProvider with ChangeNotifier {
   
   List<Stop> get stops => _stops;
 
-  void addStop(String location) {
-    Stop stop = Stop(location: location);
+  void addStop(Stop stop) {
     _stops.add(stop);
     notifyListeners();
   }

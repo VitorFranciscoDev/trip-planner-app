@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
 import 'package:trip_planner/modules/search-result/search_result_service.dart';
 
@@ -58,12 +59,17 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _onMapTap(LatLng latlng) async {
-    final provider = context.watch<StopsProvider>();
+    final provider = context.read<StopsProvider>();
 
     final address = await _searchResultService.getAddressFromCoordinates(latlng);
     final locationName = address ?? "Unknown location";
 
-    provider.addStop(locationName);
+    final stop = Stop(
+      location: locationName,
+      latitude: latlng.latitude,
+      longitude: latlng.longitude,
+    );
+    provider.addStop(stop);
 
     setState(() {
       _markers.add(
@@ -111,12 +117,14 @@ class _MapScreenState extends State<MapScreen> {
               ),
               if(_currentLocation != null)
                 CurrentLocationLayer(
-                  style: const LocationMarkerStyle(
+                  style: LocationMarkerStyle(
                     marker: DefaultLocationMarker(
-                      child: Icon(Icons.location_pin, color: Colors.red),
+                      color: Colors.blue.withOpacity(0.3),
+                      child: const SizedBox(),
                     ),
-                    markerSize: Size(20, 20),
-                    markerDirection: MarkerDirection.heading,
+                    markerSize: const Size(50, 50),
+                    accuracyCircleColor: Colors.blue.withOpacity(0.1),
+                    showAccuracyCircle: true,
                   ),
                 ),
               MarkerLayer(markers: _markers),
