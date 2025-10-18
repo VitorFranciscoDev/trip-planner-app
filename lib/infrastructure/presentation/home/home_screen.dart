@@ -46,8 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          const SizedBox(height: 20),
           Padding(
-            padding: EdgeInsets.only(top: 30, left: 25, right: 25),
+            padding: EdgeInsets.only(left: 25, right: 25, bottom: 40),
             child: TextField(
               controller: controllerSearch,
               decoration: InputDecoration(
@@ -131,7 +132,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: const TextStyle(fontSize: 14),
                       ),
                       onTap: () {
-                        // Quando clicar em um resultado
                         FocusScope.of(context).unfocus();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -143,12 +143,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             duration: const Duration(seconds: 3),
                           ),
                         );
-                        
-                        // Aqui você pode:
-                        // - Navegar para o mapa com essas coordenadas
-                        // - Adicionar como Stop
-                        // - Criar uma nova trip com esse local
-                        
                         controllerSearch.clear();
                         searchProvider.clearSearch();
                       },
@@ -179,85 +173,85 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(color: Colors.grey),
                 ),
               ),
-          Padding(
-            padding: EdgeInsets.only(top: 30),
-            child: GestureDetector(
-              child: Container(
-                width: 360,
-                height: 220,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.background,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(width: 2, color: Colors.black),
-                ),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        const SizedBox(width: 15),
-                        Text(
-                          "Nordeste Brasileiro",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: theme.colorScheme.primary,
-                            fontFamily: "Times New Roman",
-                          ),
+          GestureDetector(
+            child: Container(
+              width: 360,
+              height: 220,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.background,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(width: 3, color: theme.colorScheme.primary),
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const SizedBox(width: 15),
+                      Text(
+                        "Nordeste Brasileiro",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: theme.colorScheme.primary,
+                          fontFamily: "Times New Roman",
+                          fontWeight: FontWeight.w700,
                         ),
-                        Spacer(),
-                        Text(
-                          "30 days",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: theme.colorScheme.primary,
-                            fontFamily: "Times New Roman",
-                          ),
+                      ),
+                      Spacer(),
+                      Text(
+                        "30 days",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: theme.colorScheme.primary,
+                          fontFamily: "Times New Roman",
+                          fontWeight: FontWeight.w700,
                         ),
-                        const SizedBox(width: 15),
-                      ],
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: recomendation1.length,
-                        itemBuilder: (context, index) {
-                          final location = recomendation1[index];
-                          return Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Image.asset(
-                                        location.img,
-                                        fit: BoxFit.cover,
-                                        width: 170,
-                                        height: 130,
-                                      ),
+                      ),
+                      const SizedBox(width: 15),
+                    ],
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: recomendation1.length,
+                      itemBuilder: (context, index) {
+                        final location = recomendation1[index];
+                        return Column(
+                          children: [
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.asset(
+                                      location.img,
+                                      fit: BoxFit.cover,
+                                      width: 170,
+                                      height: 130,
                                     ),
                                   ),
-                                  Icon(Icons.arrow_right, size: 30),
-                                ],
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 5, right: 20),
-                                child: Text(
-                                  location.name,
-                                  style: TextStyle(
-                                    color: theme.colorScheme.primary,
-                                    fontFamily: "Times New Roman",
-                                  ),
+                                ),
+                                Icon(Icons.arrow_right, size: 30),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 5, right: 20),
+                              child: Text(
+                                location.name,
+                                style: TextStyle(
+                                  color: theme.colorScheme.primary,
+                                  fontFamily: "Times New Roman",
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
-                            ],
-                          );
-                        },
-                      ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -270,7 +264,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 decoration: BoxDecoration(
                   color: theme.colorScheme.background,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(width: 2, color: Colors.black),
+                  border: Border.all(width: 3, color: theme.colorScheme.primary),
                 ),
                 child: Column(
                   children: [
@@ -284,6 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 15,
                             color: theme.colorScheme.primary,
                             fontFamily: "Times New Roman",
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         Spacer(),
@@ -293,6 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 15,
                             color: theme.colorScheme.primary,
                             fontFamily: "Times New Roman",
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         const SizedBox(width: 15),
@@ -330,6 +326,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   style: TextStyle(
                                     color: theme.colorScheme.primary,
                                     fontFamily: "Times New Roman",
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
                               ),
