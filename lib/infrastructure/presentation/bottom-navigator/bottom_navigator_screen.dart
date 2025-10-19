@@ -23,8 +23,8 @@ class BottomNavigatorScreen extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
         type: BottomNavigationBarType.shifting,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black,
+        selectedItemColor: theme.colorScheme.background,
+        unselectedItemColor: theme.colorScheme.background,
         onTap: (newIndex) => context.read<BottomNavigatorProvider>().setIndex(newIndex),
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home", backgroundColor: theme.colorScheme.primary),
