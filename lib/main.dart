@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_global_state.dart';
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_state.dart';
+import 'package:trip_planner/infrastructure/presentation/config/config_state.dart';
 import 'package:trip_planner/infrastructure/presentation/home/home_state.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_state.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
@@ -51,6 +52,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => HomeProvider(stopRecomendationRepository: stopRecomendationRepository)),
         ChangeNotifierProvider(create: (_) => SearchResultProvider(searchResultService: searchResultService)),
         ChangeNotifierProvider(create: (_) => TripRegisterProvider(tripUseCase: tripUseCase, personUseCase: personUseCase)),
+        ChangeNotifierProvider(create: (_) => ConfigProvider(userUseCase: userUseCase)),
       ],
       child: const MyApp(),
     ),
