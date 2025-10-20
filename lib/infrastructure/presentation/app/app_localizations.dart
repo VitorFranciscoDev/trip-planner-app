@@ -42,6 +42,15 @@ class AppLocalizations {
       'email_already_registered': "There's already a register with this email",
       'register_error': 'Error during registration',
       'delete_user_error': 'Error deleting user',
+      
+      // Home Screen
+      'welcome': 'Welcome, {0}',
+      'search_destinations': 'Search destinations...',
+      'no_results_found': 'No results found',
+      'selected': 'Selected: {0}',
+      'days': '{0} days',
+      'brazilian_northeast': 'Brazilian Northeast',
+      'southern_brazil': 'Southern Brazil',
     },
     'pt': {
       // Login Screen
@@ -69,7 +78,19 @@ class AppLocalizations {
       // Validation Errors
       'field_required': 'Este campo é obrigatório',
       'invalid_email': 'Formato de e-mail inválido',
-      'password_too_short': 'A senha deve ter pelo menos 6 caracteres',
+      'password_too_short': 'A senha deve ter pelo menos 8 caracteres',
+      'email_already_registered': 'Já existe um cadastro com este e-mail',
+      'register_error': 'Erro ao realizar cadastro',
+      'delete_user_error': 'Erro ao deletar usuário',
+      
+      // Home Screen
+      'welcome': 'Bem-vindo, {0}',
+      'search_destinations': 'Buscar destinos...',
+      'no_results_found': 'Nenhum resultado encontrado',
+      'selected': 'Selecionado: {0}',
+      'days': '{0} dias',
+      'brazilian_northeast': 'Nordeste Brasileiro',
+      'southern_brazil': 'Sul do Brasil',
     },
     'es': {
       // Login Screen
@@ -97,7 +118,19 @@ class AppLocalizations {
       // Validation Errors
       'field_required': 'Este campo es obligatorio',
       'invalid_email': 'Formato de correo inválido',
-      'password_too_short': 'La contraseña debe tener al menos 6 caracteres',
+      'password_too_short': 'La contraseña debe tener al menos 8 caracteres',
+      'email_already_registered': 'Ya existe un registro con este correo',
+      'register_error': 'Error al realizar el registro',
+      'delete_user_error': 'Error al eliminar usuario',
+      
+      // Home Screen
+      'welcome': 'Bienvenido, {0}',
+      'search_destinations': 'Buscar destinos...',
+      'no_results_found': 'No se encontraron resultados',
+      'selected': 'Seleccionado: {0}',
+      'days': '{0} días',
+      'brazilian_northeast': 'Nordeste Brasileño',
+      'southern_brazil': 'Sur de Brasil',
     },
   };
 
@@ -137,6 +170,14 @@ class AppLocalizations {
   String get fieldRequired => translate('field_required');
   String get invalidEmail => translate('invalid_email');
   String get passwordTooShort => translate('password_too_short');
+  
+  // Home Screen getters
+  String get searchDestinations => translate('search_destinations');
+  String get noResultsFound => translate('no_results_found');
+  String selected(String location) => translate('selected', [location]);
+  String days(int count) => translate('days', [count.toString()]);
+  String get brazilianNortheast => translate('brazilian_northeast');
+  String get southernBrazil => translate('southern_brazil');
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/home/home_state.dart';
 import 'package:trip_planner/infrastructure/presentation/search-result/search_result_state.dart';
 import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
@@ -18,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final intl = AppLocalizations.of(context);
     final name = context.read<UserProvider>().user!.name;
     final provider = context.watch<HomeProvider>();
     final searchProvider = context.watch<SearchResultProvider>();
@@ -40,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Text(
-                  "Welcome, $name",
+                  intl.welcomeUser(name),
                   style: TextStyle(fontFamily: "Times New Roman", fontSize: 20),
                 ),
               ],
@@ -52,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: TextField(
               controller: controllerSearch,
               decoration: InputDecoration(
-                hintText: "Search destinations...",
+                hintText: intl.searchDestinations,
                 prefixIcon: Icon(Icons.search),
                 suffixIcon: controllerSearch.text.isNotEmpty
                   ? IconButton(
@@ -167,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                child: const Text(
+                child: Text(
                   'No results found',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.grey),
