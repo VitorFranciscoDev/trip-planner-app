@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/entities/trip.dart';
-import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
+import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 
 class ListTripsScreen extends StatefulWidget {
   const ListTripsScreen({super.key});
@@ -67,6 +66,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final intl = AppLocalizations.of(context);
     //final trips = context.read<TripProvider>().trips;
 
     return SingleChildScrollView(
@@ -75,7 +75,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
         children: [
           Padding(
             padding: EdgeInsets.only(top: 60, left: 25),
-            child: Text("Your Trips", 
+            child: Text(intl.yourTrips, 
               style: TextStyle(
                 color: Color(0xFF8B4513),
                 fontFamily: "Times New Roman",
@@ -86,7 +86,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
           ),
           Padding(
             padding: EdgeInsets.only(top: 20, left: 25),
-            child: Text("- Active Trips", 
+            child: Text(intl.activeTrips, 
               style: TextStyle(
                 color: Color(0xFF8B4513),
                 fontFamily: "Times New Roman",
@@ -159,7 +159,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
           ),
           Padding(
             padding: EdgeInsets.only(top: 20, left: 25),
-            child: Text("- Concluded Trips", 
+            child: Text(intl.concludedTrips, 
               style: TextStyle(
                 color: Color(0xFF8B4513),
                 fontFamily: "Times New Roman",

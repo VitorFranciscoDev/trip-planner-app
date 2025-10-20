@@ -87,6 +87,28 @@ class AppLocalizations {
       'trip_create_failed': 'Failed to create trip',
       'trip_create_error': 'Error creating trip',
       'unexpected_error': 'Unexpected error',
+      
+      // List Trips Screen
+      'your_trips': 'Your Trips',
+      'active_trips': '- Active Trips',
+      'concluded_trips': '- Concluded Trips',
+      
+      // Config Screen
+      'preferences': 'Preferences',
+      'dark_mode': 'Dark Mode',
+      'language': 'Language',
+      'english': 'English',
+      'portuguese': 'Portuguese',
+      'spanish': 'Spanish',
+      'account': 'Account',
+      'your_information': 'Your Information',
+      'update_info': 'Update Info',
+      'delete_account': 'Delete Account',
+      'delete_account_confirm': 'Delete Account?',
+      'cancel': 'Cancel',
+      'delete': 'Delete',
+      'log_out': 'Log Out',
+      'log_out_confirm': 'Log Out?',
     },
     'pt': {
       // Login Screen
@@ -163,6 +185,28 @@ class AppLocalizations {
       'trip_create_failed': 'Falha ao criar viagem',
       'trip_create_error': 'Erro ao criar viagem',
       'unexpected_error': 'Erro inesperado',
+      
+      // List Trips Screen
+      'your_trips': 'Suas Viagens',
+      'active_trips': '- Viagens Ativas',
+      'concluded_trips': '- Viagens Concluídas',
+      
+      // Config Screen
+      'preferences': 'Preferências',
+      'dark_mode': 'Modo Escuro',
+      'language': 'Idioma',
+      'english': 'Inglês',
+      'portuguese': 'Português',
+      'spanish': 'Espanhol',
+      'account': 'Conta',
+      'your_information': 'Suas Informações',
+      'update_info': 'Atualizar Info',
+      'delete_account': 'Deletar Conta',
+      'delete_account_confirm': 'Deletar Conta?',
+      'cancel': 'Cancelar',
+      'delete': 'Deletar',
+      'log_out': 'Sair',
+      'log_out_confirm': 'Sair?',
     },
     'es': {
       // Login Screen
@@ -239,6 +283,28 @@ class AppLocalizations {
       'trip_create_failed': 'Error al crear el viaje',
       'trip_create_error': 'Error al crear el viaje',
       'unexpected_error': 'Error inesperado',
+      
+      // List Trips Screen
+      'your_trips': 'Tus Viajes',
+      'active_trips': '- Viajes Activos',
+      'concluded_trips': '- Viajes Concluidos',
+      
+      // Config Screen
+      'preferences': 'Preferencias',
+      'dark_mode': 'Modo Oscuro',
+      'language': 'Idioma',
+      'english': 'Inglés',
+      'portuguese': 'Portugués',
+      'spanish': 'Español',
+      'account': 'Cuenta',
+      'your_information': 'Tu Información',
+      'update_info': 'Actualizar Info',
+      'delete_account': 'Eliminar Cuenta',
+      'delete_account_confirm': '¿Eliminar Cuenta?',
+      'cancel': 'Cancelar',
+      'delete': 'Eliminar',
+      'log_out': 'Cerrar Sesión',
+      'log_out_confirm': '¿Cerrar Sesión?',
     },
   };
 
@@ -322,6 +388,28 @@ class AppLocalizations {
   String get tripCreateFailed => translate('trip_create_failed');
   String get tripCreateError => translate('trip_create_error');
   String get unexpectedError => translate('unexpected_error');
+  
+  // List Trips getters
+  String get yourTrips => translate('your_trips');
+  String get activeTrips => translate('active_trips');
+  String get concludedTrips => translate('concluded_trips');
+  
+  // Config Screen getters
+  String get preferences => translate('preferences');
+  String get darkMode => translate('dark_mode');
+  String get language => translate('language');
+  String get english => translate('english');
+  String get portuguese => translate('portuguese');
+  String get spanish => translate('spanish');
+  String get account => translate('account');
+  String get yourInformation => translate('your_information');
+  String get updateInfo => translate('update_info');
+  String get deleteAccount => translate('delete_account');
+  String get deleteAccountConfirm => translate('delete_account_confirm');
+  String get cancel => translate('cancel');
+  String get deleteText => translate('delete');
+  String get logOut => translate('log_out');
+  String get logOutConfirm => translate('log_out_confirm');
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

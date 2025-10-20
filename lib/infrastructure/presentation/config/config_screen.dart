@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/user.dart';
+import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
 import 'package:trip_planner/infrastructure/presentation/config/config_state.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_screen.dart';
@@ -33,6 +34,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final intl =AppLocalizations.of(context);
     final provider = context.watch<ConfigProvider>();
     final userProvider = context.read<UserProvider>();
 
@@ -47,7 +49,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
             Padding(
               padding: EdgeInsets.only(top: 30, bottom: 10, right: 205),
               child: Text(
-                "Preferences",
+                intl.preferences,
                 style: TextStyle(
                   fontSize: 16,
                   fontFamily: "Times New Roman",
@@ -73,7 +75,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                     const SizedBox(width: 20),
                     const Icon(Icons.dark_mode),
                     const SizedBox(width: 5),
-                    const Text("Dark Mode", style: TextStyle(fontFamily: "Times New Roman", fontSize: 18)),
+                    Text(intl.darkMode, style: TextStyle(fontFamily: "Times New Roman", fontSize: 18)),
                     Spacer(),
                     Switch(
                       value: context.watch<ThemeProvider>().themeMode == ThemeMode.dark, 
@@ -116,8 +118,8 @@ class _ConfigScreenState extends State<ConfigScreen> {
                           const SizedBox(width: 20),
                           const Icon(Icons.flag),
                           const SizedBox(width: 5),
-                          const Text(
-                            "Language",
+                          Text(
+                            intl.language,
                             style: TextStyle(
                               fontFamily: "Times New Roman",
                               fontSize: 18,
@@ -147,8 +149,8 @@ class _ConfigScreenState extends State<ConfigScreen> {
                                   const SizedBox(width: 20),
                                   const Text("🇺🇸"),
                                   const SizedBox(width: 10),
-                                  const Text(
-                                    "English",
+                                  Text(
+                                    intl.english,
                                     style: TextStyle(
                                       fontFamily: "Times New Roman",
                                       fontSize: 18,
@@ -170,8 +172,8 @@ class _ConfigScreenState extends State<ConfigScreen> {
                                   const SizedBox(width: 20),
                                   const Text("🇧🇷"),
                                   const SizedBox(width: 10),
-                                  const Text(
-                                    "Portuguese",
+                                  Text(
+                                    intl.portuguese,
                                     style: TextStyle(
                                       fontFamily: "Times New Roman",
                                       fontSize: 18,
@@ -193,8 +195,8 @@ class _ConfigScreenState extends State<ConfigScreen> {
                                   const SizedBox(width: 20),
                                   const Text("🇪🇸"),
                                   const SizedBox(width: 10),
-                                  const Text(
-                                    "Spanish",
+                                  Text(
+                                    intl.spanish,
                                     style: TextStyle(
                                       fontFamily: "Times New Roman",
                                       fontSize: 18,
@@ -213,7 +215,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
             Padding(
               padding: EdgeInsets.only(top: 20, bottom: 10, right: 235),
               child: Text(
-                "Account",
+                intl.account,
                 style: TextStyle(
                   fontSize: 16,
                   fontFamily: "Times New Roman",
@@ -250,8 +252,8 @@ class _ConfigScreenState extends State<ConfigScreen> {
                           const SizedBox(width: 20),
                           const Icon(Icons.settings),
                           const SizedBox(width: 8),
-                          const Text(
-                            "Your Information",
+                          Text(
+                            intl.yourInformation,
                             style: TextStyle(
                               fontFamily: "Times New Roman",
                               fontSize: 18,
@@ -272,7 +274,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                               padding: EdgeInsets.only(top: 10, right: 30, left: 30),
                               child: TextFieldComponent(
                                 controller: _controllerName, 
-                                hint: "Name",
+                                hint: intl.name,
                                 error: provider.errorName,
                               ),
                             ),
@@ -280,7 +282,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                               padding: EdgeInsets.only(top: 10, right: 30, left: 30),
                               child: TextFieldComponent(
                                 controller: _controllerEmail, 
-                                hint: "Email",
+                                hint: intl.email,
                                 error: provider.errorEmail,
                               ),
                             ),
@@ -307,8 +309,8 @@ class _ConfigScreenState extends State<ConfigScreen> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
-                                  child: const Text(
-                                    "Update Info",
+                                  child: Text(
+                                    intl.updateInfo,
                                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
                                   ),
                                 ),
@@ -328,11 +330,11 @@ class _ConfigScreenState extends State<ConfigScreen> {
                   showDialog(
                     context: context, 
                     builder: (context) => AlertDialog(
-                      title: const Text("Delete Account?"),
+                      title: Text(intl.deleteAccount),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: const Text("Cancel"),
+                          child: Text(intl.cancel),
                         ),
                         TextButton(
                           onPressed: () {
@@ -340,7 +342,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                             Navigator.of(context).pop();
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                           },
-                          child: const Text("Delete"),
+                          child: Text(intl.deleteAccountConfirm),
                         ),
                       ],
                     ),
@@ -361,8 +363,8 @@ class _ConfigScreenState extends State<ConfigScreen> {
                       const SizedBox(width: 20),
                       const Icon(Icons.delete, color: Colors.red,),
                       const SizedBox(width: 8),
-                      const Text(
-                        "Delete Account",
+                      Text(
+                        intl.deleteAccount,
                         style: TextStyle(
                           fontFamily: "Times New Roman",
                           fontSize: 18,
@@ -381,11 +383,11 @@ class _ConfigScreenState extends State<ConfigScreen> {
                   showDialog(
                     context: context, 
                     builder: (context) => AlertDialog(
-                      title: const Text("Log Out?"),
+                      title: Text(intl.logOut),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: const Text("Cancel"),
+                          child: Text(intl.cancel),
                         ),
                         TextButton(
                           onPressed: () {
@@ -393,7 +395,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                             Navigator.of(context).pop();
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                           },
-                          child: const Text("Delete"),
+                          child: Text(intl.logOutConfirm),
                         ),
                       ],
                     ),
