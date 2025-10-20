@@ -3,6 +3,7 @@ import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/entities/trip.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/trip-details/trip_details_screen.dart';
 
 class ListTripsScreen extends StatefulWidget {
   const ListTripsScreen({super.key});
@@ -112,44 +113,47 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                   final trip = trips[index];
                   return Padding(
                     padding: EdgeInsets.only(right: 20, left: 20, bottom: 20),
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          width: 2,
-                          color: theme.colorScheme.primary,
+                    child: GestureDetector(
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TripDetailsScreen(trip: trip))),
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            width: 2,
+                            color: theme.colorScheme.primary,
+                          ),
                         ),
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 15),
-                            child: Text(
-                              trip.title,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: "Times New Roman",
-                                fontWeight: FontWeight.w700,
-                                color: theme.colorScheme.primary,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 15),
+                              child: Text(
+                                trip.title,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: "Times New Roman",
+                                  fontWeight: FontWeight.w700,
+                                  color: theme.colorScheme.primary,
+                                ),
                               ),
                             ),
-                          ),
-                          Spacer(),
-                          Padding(
-                            padding: EdgeInsets.only(right: 15),
-                            child: Text(
-                              "${trip.startDate} - ${trip.endDate}",
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontFamily: "Times New Roman",
-                                fontWeight: FontWeight.w700,
-                                color: theme.colorScheme.primary,
+                            Spacer(),
+                            Padding(
+                              padding: EdgeInsets.only(right: 15),
+                              child: Text(
+                                "${trip.startDate} - ${trip.endDate}",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontFamily: "Times New Roman",
+                                  fontWeight: FontWeight.w700,
+                                  color: theme.colorScheme.primary,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );
