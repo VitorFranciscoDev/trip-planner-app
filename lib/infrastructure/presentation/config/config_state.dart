@@ -12,10 +12,12 @@ class ConfigProvider with ChangeNotifier {
   String? _errorName;
   String? _errorEmail;
   String? _errorPassword;
+  String? _error;
 
   String? get errorName => _errorName;
   String? get errorEmail => _errorEmail;
   String? get errorPassword => _errorPassword;
+  String? get error => _error;
 
   // validate the fields
   bool validateFields(String name, String email, String password) {
@@ -38,6 +40,27 @@ class ConfigProvider with ChangeNotifier {
       
       if(result != null) {
         _errorEmail = result;
+        notifyListeners();
+      }
+      
+      return result;
+    } catch (e) {
+      return "Unexpected error: ${e.toString()}";
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<String?> deleteUser(int id) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final result = await userUseCase.deleteUser(id);
+      
+      if(result != null) {
+        _error = result;
         notifyListeners();
       }
       

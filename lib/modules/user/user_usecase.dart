@@ -50,4 +50,12 @@ class UserUseCase {
   Future<User?> doLogin(String email, String password) async {
     return await userRepository.doLogin(email, password);
   }
+
+  Future<String?> deleteUser(int id) async {
+    final result = await userRepository.deleteUser(id);
+    
+    if(result>0) return null;
+
+    return "Error in deleting the user";
+  }
 }

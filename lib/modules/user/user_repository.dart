@@ -6,7 +6,7 @@ class UserRepository implements IUserRepository {
   final dbHelper = DBHelper();
 
   @override
-  Future<int?> registerUser(User user) async {
+  Future<int> registerUser(User user) async {
     try {
       final db = await dbHelper.database;
       return await db.insert('users', user.toMap());
@@ -51,5 +51,16 @@ class UserRepository implements IUserRepository {
     }
 
     return null;
+  }
+
+  @override
+  Future<int> deleteUser(int id) async {
+    final db = await dbHelper.database;
+
+    return await db.delete(
+      'users',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }

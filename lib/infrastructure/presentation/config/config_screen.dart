@@ -210,7 +210,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 250),
                   curve: Curves.easeInOut,
-                  height: showInformations ? 280 : 70,
+                  height: showInformations ? 275 : 70,
                   decoration: BoxDecoration(
                     color: theme.colorScheme.tertiary,
                     borderRadius: BorderRadius.circular(20),
@@ -306,13 +306,14 @@ class _ConfigScreenState extends State<ConfigScreen> {
                 child: Row(
                   children: [
                     const SizedBox(width: 20),
-                    const Icon(Icons.delete),
+                    const Icon(Icons.delete, color: Colors.red,),
                     const SizedBox(width: 8),
                     const Text(
                       "Delete Account",
                       style: TextStyle(
                         fontFamily: "Times New Roman",
                         fontSize: 18,
+                        color: Colors.red,
                       ),
                     ),
                   ],
@@ -334,13 +335,14 @@ class _ConfigScreenState extends State<ConfigScreen> {
                 child: Row(
                   children: [
                     const SizedBox(width: 20),
-                    const Icon(Icons.logout),
+                    const Icon(Icons.logout, color: Colors.red,),
                     const SizedBox(width: 8),
                     const Text(
                       "Log Out",
                       style: TextStyle(
                         fontFamily: "Times New Roman",
                         fontSize: 18,
+                        color: Colors.red,
                       ),
                     ),
                   ],
