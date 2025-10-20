@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/entities/trip.dart';
+import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/modules/trip/trip_spec.dart';
 
 class TripUseCase {
@@ -8,11 +10,20 @@ class TripUseCase {
 
   TripUseCase({ required this.tripRepository });
 
-  String? validateTripTitle(String tripTitle) => tripTitle.isEmpty ? "Trip Title cannot be blank" : null;
+  String? validateTripTitle(String tripTitle, BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return tripTitle.isEmpty ? l10n.tripTitleRequired : null;
+  }
 
-  String? validateStartDate(String startDate) => startDate.isEmpty ? "Start Date cannot be blank" : null;
+  String? validateStartDate(String startDate, BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return startDate.isEmpty ? l10n.startDateRequired : null;
+  }
 
-  String? validateEndDate(String endDate) => endDate.isEmpty ? "End Date cannot be blank" : null;
+  String? validateEndDate(String endDate, BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return endDate.isEmpty ? l10n.endDateRequired : null;
+  }
 
   DateTime? parseDate(String text) { 
     try { 
@@ -22,33 +33,42 @@ class TripUseCase {
     } 
   }
 
-  String? validateDates(String startDate, String endDate) {
+  String? validateDates(String startDate, String endDate, BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     DateTime? start = parseDate(startDate);
     DateTime? end = parseDate(endDate);
 
     if (start != null && end != null) {
       if (start.isAfter(end)) {
-        return "Start Date cannot be after End Date";
+        return l10n.startAfterEnd;
       }
     }
 
     return null;
   }
 
-  String? validateGroup(List<Person> group) => group.isEmpty ? "Group cannot be empty" : null;
+  String? validateGroup(List<Person> group, BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return group.isEmpty ? l10n.groupEmpty : null;
+  }
 
-  String? validateStops(List<Stop> stops) => stops.isEmpty ? "Stops cannot be empty" : null;
+  String? validateStops(List<Stop> stops, BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return stops.isEmpty ? l10n.stopsEmpty : null;
+  }
 
-  Future<String?> createTrip(Trip trip) async {
+  Future<String?> createTrip(Trip trip, BuildContext context) async {
+    final l10n = AppLocalizations.of(context);
+    
     try {
       final result = await tripRepository.registerTrip(trip);
       
       if (result > 0) {
         return null;
       }
-      return "Failed to create trip";
+      return l10n.tripCreateFailed;
     } catch (e) {
-      return "Error creating trip: ${e.toString()}";
+      return l10n.tripCreateError;
     }
   }
 
@@ -60,29 +80,33 @@ class TripUseCase {
     return await tripRepository.getTripById(id);
   }
 
-  Future<String?> updateTrip(Trip trip) async {
+  Future<String?> updateTrip(Trip trip, BuildContext context) async {
+    final l10n = AppLocalizations.of(context);
+    
     try {
       final result = await tripRepository.updateTrip(trip);
       
       if (result > 0) {
         return null;
       }
-      return "Failed to update trip";
+      return l10n.tripCreateFailed;
     } catch (e) {
-      return "Error updating trip: ${e.toString()}";
+      return l10n.tripCreateError;
     }
   }
 
-  Future<String?> deleteTrip(int id) async {
+  Future<String?> deleteTrip(int id, BuildContext context) async {
+    final l10n = AppLocalizations.of(context);
+    
     try {
       final result = await tripRepository.deleteTrip(id);
       
       if (result > 0) {
         return null;
       }
-      return "Failed to delete trip";
+      return l10n.tripCreateFailed;
     } catch (e) {
-      return "Error deleting trip: ${e.toString()}";
+      return l10n.tripCreateError;
     }
   }
 }

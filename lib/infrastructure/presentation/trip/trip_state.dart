@@ -35,9 +35,9 @@ class TripProvider extends ChangeNotifier {
     }
   }
 
-  Future<String?> deleteTrip(int id) async {
+  Future<String?> deleteTrip(int id, BuildContext context) async {
     try {
-      final result = await tripUseCase.deleteTrip(id);
+      final result = await tripUseCase.deleteTrip(id, context);
       
       if (result == null) {
         await loadAllTrips();
@@ -49,9 +49,9 @@ class TripProvider extends ChangeNotifier {
     }
   }
 
-  Future<String?> updateTrip(Trip trip) async {
+  Future<String?> updateTrip(Trip trip, BuildContext context) async {
     try {
-      final result = await tripUseCase.updateTrip(trip);
+      final result = await tripUseCase.updateTrip(trip, context);
       
       if (result == null) {
         await loadAllTrips();

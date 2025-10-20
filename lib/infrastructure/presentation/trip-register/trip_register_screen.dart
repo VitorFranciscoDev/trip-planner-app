@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/trip.dart';
+import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_date_component.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_screen.dart';
@@ -37,6 +38,7 @@ class _TripScreenState extends State<TripScreen> {
       endDate: controllerEndDate.text, 
       group: group, 
       stops: stops,
+      context: context,
     );
 
     if(!isValid) return;
@@ -50,7 +52,7 @@ class _TripScreenState extends State<TripScreen> {
       stops: stops,
     );
 
-    final result = await provider.createTrip(trip);
+    final result = await provider.createTrip(trip, context);
 
     if(result == null) {
       showDialog(
@@ -108,6 +110,7 @@ class _TripScreenState extends State<TripScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final intl = AppLocalizations.of(context);
     final provider = context.watch<TripRegisterProvider>();
     final groupProvider = context.read<GroupProvider>();
     final group = context.read<GroupProvider>().group;
@@ -119,7 +122,7 @@ class _TripScreenState extends State<TripScreen> {
           children: [
             Padding(
               padding: EdgeInsets.only(top: 50, right: 220),
-              child: Text("New Trip", style: 
+              child: Text(intl.newTrip, style: 
                 TextStyle(
                   fontFamily: "Times New Roman", 
                   fontSize: 20,
@@ -130,7 +133,7 @@ class _TripScreenState extends State<TripScreen> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 30, right: 200, bottom: 10),
-              child: Text("1. Trip Data", style: 
+              child: Text(intl.tripData, style: 
                 TextStyle(
                   fontFamily: "Times New Roman", 
                   fontSize: 20,
@@ -152,7 +155,7 @@ class _TripScreenState extends State<TripScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: TextFieldComponent(
                       controller: controllerTripTitle, 
-                      hint: "Trip Title",
+                      hint: intl.tripTitle,
                       error: provider.errorTripTitle,
                     ),
                   ),
@@ -182,26 +185,26 @@ class _TripScreenState extends State<TripScreen> {
                           dropdownValue = newValue!;
                         });
                       },
-                      items: const [
+                      items: [
                         DropdownMenuItem(
                           value: "Car",
-                          child: Text("Car"),
+                          child: Text(intl.car),
                         ),
                         DropdownMenuItem(
                           value: "Motorcycle",
-                          child: Text("Motorcycle"),
+                          child: Text(intl.motorcycle),
                         ),
                         DropdownMenuItem(
                           value: "Bus",
-                          child: Text("Bus"),
+                          child: Text(intl.bus),
                         ),
                         DropdownMenuItem(
                           value: "Airplane",
-                          child: Text("Airplane"),
+                          child: Text(intl.airplane),
                         ),
                         DropdownMenuItem(
                           value: "Ship",
-                          child: Text("Ship"),
+                          child: Text(intl.ship),
                         ),
                       ], 
                     ),
@@ -211,7 +214,7 @@ class _TripScreenState extends State<TripScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: TextFieldDateComponent(
                       controller: controllerStartDate, 
-                      hint: "Start Date", 
+                      hint: intl.startDate, 
                       error: provider.errorStartDate,
                       function: () => selectDate(controllerStartDate),
                     ),
@@ -221,7 +224,7 @@ class _TripScreenState extends State<TripScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: TextFieldDateComponent(
                       controller: controllerEndDate, 
-                      hint: "End Date",
+                      hint: intl.endDate,
                       error: provider.errorEndDate, 
                       function: () => selectDate(controllerEndDate),
                     ),
@@ -232,7 +235,7 @@ class _TripScreenState extends State<TripScreen> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 30, right: 180, bottom: 10),
-              child: Text("2. Group Data", style: 
+              child: Text(intl.groupData, style: 
                 TextStyle(
                   fontFamily: "Times New Roman", 
                   fontSize: 20,
@@ -254,7 +257,7 @@ class _TripScreenState extends State<TripScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: TextFieldComponent(
                       controller: controllerName,
-                      hint: "Name",
+                      hint: intl.name,
                       error: provider.errorName,
                     ),
                   ),
@@ -263,7 +266,7 @@ class _TripScreenState extends State<TripScreen> {
                     padding: EdgeInsets.only(left: 30, right: 30, bottom: 20),
                     child: TextFieldComponent(
                       controller: controllerAge, 
-                      hint: "Age",
+                      hint: intl.age,
                       error: provider.errorAge,
                     ),
                   ),
@@ -273,7 +276,7 @@ class _TripScreenState extends State<TripScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          final isValid = provider.validatePerson(controllerName.text, controllerAge.text);
+                          final isValid = provider.validatePerson(controllerName.text, controllerAge.text, context);
                           if(!isValid) return;
                           Person person = Person(name: controllerName.text, age: int.parse(controllerAge.text));
                           groupProvider.addPerson(person);
@@ -286,8 +289,8 @@ class _TripScreenState extends State<TripScreen> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: const Text(
-                          "Add Person",
+                        child: Text(
+                          intl.addPerson,
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
                         ),
                       ),
@@ -330,7 +333,7 @@ class _TripScreenState extends State<TripScreen> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 30, right: 250, bottom: 10),
-              child: Text("3. Map", style: 
+              child: Text(intl.map, style: 
                 TextStyle(
                   fontFamily: "Times New Roman", 
                   fontSize: 20,
@@ -430,8 +433,8 @@ class _TripScreenState extends State<TripScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text(
-                    "Register The Group",
+                  child: Text(
+                    intl.registerTrip,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
                   ),
                 ),

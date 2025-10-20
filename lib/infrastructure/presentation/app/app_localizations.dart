@@ -51,6 +51,42 @@ class AppLocalizations {
       'days': '{0} days',
       'brazilian_northeast': 'Brazilian Northeast',
       'southern_brazil': 'Southern Brazil',
+      
+      // Trip Register Screen
+      'new_trip': 'New Trip',
+      'trip_data': '1. Trip Data',
+      'trip_title': 'Trip Title',
+      'transport': 'Transport',
+      'car': 'Car',
+      'motorcycle': 'Motorcycle',
+      'bus': 'Bus',
+      'airplane': 'Airplane',
+      'ship': 'Ship',
+      'start_date': 'Start Date',
+      'end_date': 'End Date',
+      'group_data': '2. Group Data',
+      'age': 'Age',
+      'add_person': 'Add Person',
+      'map': '3. Map',
+      'register_trip': 'Register The Trip',
+      'success': 'Success!',
+      'trip_created': 'Trip created successfully',
+      'ok': 'OK',
+      'error': 'Error',
+      
+      // Trip Validation Errors
+      'trip_title_required': 'Trip Title cannot be blank',
+      'start_date_required': 'Start Date cannot be blank',
+      'end_date_required': 'End Date cannot be blank',
+      'start_after_end': 'Start Date cannot be after End Date',
+      'group_empty': 'Group cannot be empty',
+      'stops_empty': 'Stops cannot be empty',
+      'name_required': 'Name cannot be blank',
+      'age_required': 'Age cannot be blank',
+      'age_invalid': 'Age must be a valid number',
+      'trip_create_failed': 'Failed to create trip',
+      'trip_create_error': 'Error creating trip',
+      'unexpected_error': 'Unexpected error',
     },
     'pt': {
       // Login Screen
@@ -91,6 +127,42 @@ class AppLocalizations {
       'days': '{0} dias',
       'brazilian_northeast': 'Nordeste Brasileiro',
       'southern_brazil': 'Sul do Brasil',
+      
+      // Trip Register Screen
+      'new_trip': 'Nova Viagem',
+      'trip_data': '1. Dados da Viagem',
+      'trip_title': 'Título da Viagem',
+      'transport': 'Transporte',
+      'car': 'Carro',
+      'motorcycle': 'Motocicleta',
+      'bus': 'Ônibus',
+      'airplane': 'Avião',
+      'ship': 'Navio',
+      'start_date': 'Data de Início',
+      'end_date': 'Data de Término',
+      'group_data': '2. Dados do Grupo',
+      'age': 'Idade',
+      'add_person': 'Adicionar Pessoa',
+      'map': '3. Mapa',
+      'register_trip': 'Registrar a Viagem',
+      'success': 'Sucesso!',
+      'trip_created': 'Viagem criada com sucesso',
+      'ok': 'OK',
+      'error': 'Erro',
+      
+      // Trip Validation Errors
+      'trip_title_required': 'Título da viagem não pode estar em branco',
+      'start_date_required': 'Data de início não pode estar em branco',
+      'end_date_required': 'Data de término não pode estar em branco',
+      'start_after_end': 'Data de início não pode ser após a data de término',
+      'group_empty': 'Grupo não pode estar vazio',
+      'stops_empty': 'Paradas não podem estar vazias',
+      'name_required': 'Nome não pode estar em branco',
+      'age_required': 'Idade não pode estar em branco',
+      'age_invalid': 'Idade deve ser um número válido',
+      'trip_create_failed': 'Falha ao criar viagem',
+      'trip_create_error': 'Erro ao criar viagem',
+      'unexpected_error': 'Erro inesperado',
     },
     'es': {
       // Login Screen
@@ -131,6 +203,42 @@ class AppLocalizations {
       'days': '{0} días',
       'brazilian_northeast': 'Nordeste Brasileño',
       'southern_brazil': 'Sur de Brasil',
+      
+      // Trip Register Screen
+      'new_trip': 'Nuevo Viaje',
+      'trip_data': '1. Datos del Viaje',
+      'trip_title': 'Título del Viaje',
+      'transport': 'Transporte',
+      'car': 'Coche',
+      'motorcycle': 'Motocicleta',
+      'bus': 'Autobús',
+      'airplane': 'Avión',
+      'ship': 'Barco',
+      'start_date': 'Fecha de Inicio',
+      'end_date': 'Fecha de Fin',
+      'group_data': '2. Datos del Grupo',
+      'age': 'Edad',
+      'add_person': 'Añadir Persona',
+      'map': '3. Mapa',
+      'register_trip': 'Registrar el Viaje',
+      'success': '¡Éxito!',
+      'trip_created': 'Viaje creado exitosamente',
+      'ok': 'OK',
+      'error': 'Error',
+      
+      // Trip Validation Errors
+      'trip_title_required': 'El título del viaje no puede estar en blanco',
+      'start_date_required': 'La fecha de inicio no puede estar en blanco',
+      'end_date_required': 'La fecha de fin no puede estar en blanco',
+      'start_after_end': 'La fecha de inicio no puede ser posterior a la fecha de fin',
+      'group_empty': 'El grupo no puede estar vacío',
+      'stops_empty': 'Las paradas no pueden estar vacías',
+      'name_required': 'El nombre no puede estar en blanco',
+      'age_required': 'La edad no puede estar en blanco',
+      'age_invalid': 'La edad debe ser un número válido',
+      'trip_create_failed': 'Error al crear el viaje',
+      'trip_create_error': 'Error al crear el viaje',
+      'unexpected_error': 'Error inesperado',
     },
   };
 
@@ -178,6 +286,42 @@ class AppLocalizations {
   String days(int count) => translate('days', [count.toString()]);
   String get brazilianNortheast => translate('brazilian_northeast');
   String get southernBrazil => translate('southern_brazil');
+  
+  // Trip Register Screen getters
+  String get newTrip => translate('new_trip');
+  String get tripData => translate('trip_data');
+  String get tripTitle => translate('trip_title');
+  String get transport => translate('transport');
+  String get car => translate('car');
+  String get motorcycle => translate('motorcycle');
+  String get bus => translate('bus');
+  String get airplane => translate('airplane');
+  String get ship => translate('ship');
+  String get startDate => translate('start_date');
+  String get endDate => translate('end_date');
+  String get groupData => translate('group_data');
+  String get age => translate('age');
+  String get addPerson => translate('add_person');
+  String get map => translate('map');
+  String get registerTrip => translate('register_trip');
+  String get success => translate('success');
+  String get tripCreated => translate('trip_created');
+  String get ok => translate('ok');
+  String get error => translate('error');
+  
+  // Trip validation getters
+  String get tripTitleRequired => translate('trip_title_required');
+  String get startDateRequired => translate('start_date_required');
+  String get endDateRequired => translate('end_date_required');
+  String get startAfterEnd => translate('start_after_end');
+  String get groupEmpty => translate('group_empty');
+  String get stopsEmpty => translate('stops_empty');
+  String get nameRequired => translate('name_required');
+  String get ageRequired => translate('age_required');
+  String get ageInvalid => translate('age_invalid');
+  String get tripCreateFailed => translate('trip_create_failed');
+  String get tripCreateError => translate('trip_create_error');
+  String get unexpectedError => translate('unexpected_error');
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

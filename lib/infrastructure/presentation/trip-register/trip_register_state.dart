@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/entities/trip.dart';
+import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/modules/trip/trip_usecase.dart';
 import 'package:trip_planner/modules/person/person_usecase.dart';
 
@@ -37,18 +38,19 @@ class TripRegisterProvider extends ChangeNotifier {
     required String startDate, 
     required String endDate, 
     required List<Person> group, 
-    required List<Stop> stops
+    required List<Stop> stops,
+    required BuildContext context,
   }) {
-    _errorTripTitle = tripUseCase.validateTripTitle(tripTitle);
-    _errorStartDate = tripUseCase.validateStartDate(startDate);
-    _errorEndDate = tripUseCase.validateEndDate(endDate);
+    _errorTripTitle = tripUseCase.validateTripTitle(tripTitle, context);
+    _errorStartDate = tripUseCase.validateStartDate(startDate, context);
+    _errorEndDate = tripUseCase.validateEndDate(endDate, context);
     
     if (_errorStartDate == null && _errorEndDate == null) {
-      _errorDate = tripUseCase.validateDates(startDate, endDate);
+      _errorDate = tripUseCase.validateDates(startDate, endDate, context);
     }
     
-    _errorGroup = tripUseCase.validateGroup(group);
-    _errorStops = tripUseCase.validateStops(stops);
+    _errorGroup = tripUseCase.validateGroup(group, context);
+    _errorStops = tripUseCase.validateStops(stops, context);
 
     notifyListeners();
 
@@ -60,28 +62,29 @@ class TripRegisterProvider extends ChangeNotifier {
         _errorStops == null;
   }
 
-  bool validatePerson(String name, String age) {
-    _errorName = personUseCase.validateName(name);
-    _errorAge = personUseCase.validateAge(age);
+  bool validatePerson(String name, String age, BuildContext context) {
+    _errorName = personUseCase.validateName(name, context);
+    _errorAge = personUseCase.validateAge(age, context);
     
     notifyListeners();
     
     return _errorName == null && _errorAge == null;
   }
 
-  Future<String?> createTrip(Trip trip) async {
+  Future<String?> createTrip(Trip trip, BuildContext context) async {
+    final l10n = AppLocalizations.of(context);
+    
     _isLoading = true;
     notifyListeners();
 
     try {
-      final result = await tripUseCase.createTrip(trip);
+      final result = await tripUseCase.createTrip(trip, context);
       return result;
     } catch (e) {
-      return "Unexpected error: ${e.toString()}";
+      return "${l10n.unexpectedError}: ${e.toString()}";
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
-
 }
