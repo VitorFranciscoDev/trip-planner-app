@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:trip_planner/entities/user.dart';
 import 'package:trip_planner/modules/user/user_usecase.dart';
 
@@ -21,10 +22,10 @@ class ConfigProvider with ChangeNotifier {
   String? get error => _error;
 
   // validate the fields
-  bool validateFields(String name, String email, String password) {
-    _errorName = userUseCase.validateName(name);
-    _errorEmail = userUseCase.validateEmail(email);
-    _errorPassword = userUseCase.validatePassword(password);
+  bool validateFields(String name, String email, String password, BuildContext context) {
+    _errorName = userUseCase.validateName(name, context);
+    _errorEmail = userUseCase.validateEmail(email, context);
+    _errorPassword = userUseCase.validatePassword(password, context);
     
     notifyListeners();
     
@@ -46,12 +47,12 @@ class ConfigProvider with ChangeNotifier {
     }
   }
 
-  Future<String?> deleteUser(int? id) async {
+  Future<String?> deleteUser(int? id, BuildContext context) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final result = await userUseCase.deleteUser(id);
+      final result = await userUseCase.deleteUser(id, context);
       
       if(result != null) {
         _error = result;

@@ -21,11 +21,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void registerUser() async {
     final provider = context.read<RegisterProvider>();
 
-    final isValid = provider.validateFields(controllerName.text, controllerEmail.text, controllerPassword.text);
+    final isValid = provider.validateFields(controllerName.text, controllerEmail.text, controllerPassword.text, context);
 
     if(!isValid) return;
 
-    final result = await provider.registerUser(controllerName.text, controllerEmail.text, controllerPassword.text);
+    final result = await provider.registerUser(controllerName.text, controllerEmail.text, controllerPassword.text, context);
 
     if(result == null) {
       showDialog(

@@ -35,10 +35,13 @@ class AppLocalizations {
       'can_login_now': 'You can now login with your credentials',
       'go_to_login': 'Go to Login',
       
-      // Validation Errors (you'll need these in your providers)
+      // Validation Errors
       'field_required': 'This field is required',
       'invalid_email': 'Invalid email format',
-      'password_too_short': 'Password must be at least 6 characters',
+      'password_too_short': 'Password must be at least 8 characters',
+      'email_already_registered': "There's already a register with this email",
+      'register_error': 'Error during registration',
+      'delete_user_error': 'Error deleting user',
     },
     'pt': {
       // Login Screen

@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> doLogin() async {
     final provider = context.read<LoginProvider>();
 
-    final isValid = provider.validateFields(controllerEmail.text, controllerPassword.text);
+    final isValid = provider.validateFields(controllerEmail.text, controllerPassword.text, context);
 
     if(!isValid) return;
 

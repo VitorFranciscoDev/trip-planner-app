@@ -336,7 +336,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                         ),
                         TextButton(
                           onPressed: () {
-                            context.read<ConfigProvider>().deleteUser(userProvider.user!.id);
+                            context.read<ConfigProvider>().deleteUser(userProvider.user!.id, context);
                             Navigator.of(context).pop();
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                           },

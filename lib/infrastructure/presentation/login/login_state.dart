@@ -16,9 +16,9 @@ class LoginProvider with ChangeNotifier {
   String? get errorEmail => _errorEmail;
   String? get errorPassword => _errorPassword;
 
-  bool validateFields(String email, String password) {
-    _errorEmail = userUseCase.validateEmail(email);
-    _errorPassword = userUseCase.validatePassword(password);
+  bool validateFields(String email, String password, BuildContext context) {
+    _errorEmail = userUseCase.validateEmail(email, context);
+    _errorPassword = userUseCase.validatePassword(password, context);
     
     notifyListeners();
     

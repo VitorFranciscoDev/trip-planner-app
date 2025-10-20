@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:trip_planner/modules/user/user_usecase.dart';
 
 class RegisterProvider with ChangeNotifier {
@@ -18,10 +19,10 @@ class RegisterProvider with ChangeNotifier {
   String? get errorPassword => _errorPassword;
 
   // validate the fields
-  bool validateFields(String name, String email, String password) {
-    _errorName = userUseCase.validateName(name);
-    _errorEmail = userUseCase.validateEmail(email);
-    _errorPassword = userUseCase.validatePassword(password);
+  bool validateFields(String name, String email, String password, BuildContext context) {
+    _errorName = userUseCase.validateName(name, context);
+    _errorEmail = userUseCase.validateEmail(email, context);
+    _errorPassword = userUseCase.validatePassword(password, context);
     
     notifyListeners();
     
@@ -29,12 +30,12 @@ class RegisterProvider with ChangeNotifier {
   }
 
   // register the user
-  Future<String?> registerUser(String name, String email, String password) async {
+  Future<String?> registerUser(String name, String email, String password, BuildContext context) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final result = await userUseCase.registerUser(name, email, password);
+      final result = await userUseCase.registerUser(name, email, password, context);
       
       if(result != null) {
         _errorEmail = result;
