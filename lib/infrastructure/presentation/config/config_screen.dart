@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
 import 'package:trip_planner/infrastructure/presentation/config/config_state.dart';
+import 'package:trip_planner/infrastructure/presentation/login/login_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/theme/theme_provider.dart';
 import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
 
@@ -36,6 +37,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final provider = context.watch<ConfigProvider>();
+    final user = context.read<UserProvider>().user;
 
     return SingleChildScrollView(
       child: Center(
@@ -293,30 +295,54 @@ class _ConfigScreenState extends State<ConfigScreen> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-              child: Container(
-                height: 70,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.tertiary,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    width: 2,
-                    color: theme.colorScheme.primary,
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    const SizedBox(width: 20),
-                    const Icon(Icons.delete, color: Colors.red,),
-                    const SizedBox(width: 8),
-                    const Text(
-                      "Delete Account",
-                      style: TextStyle(
-                        fontFamily: "Times New Roman",
-                        fontSize: 18,
-                        color: Colors.red,
-                      ),
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context, 
+                    builder: (context) => AlertDialog(
+                      title: const Text("Delete Account?"),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text("Cancel"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            context.read<ConfigProvider>().deleteUser(user!.id);
+                            Navigator.of(context).pop();
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                          },
+                          child: const Text("Delete"),
+                        ),
+                      ],
                     ),
-                  ],
+                  );
+                },
+                child: Container(
+                  height: 70,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.tertiary,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      width: 2,
+                      color: theme.colorScheme.primary,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 20),
+                      const Icon(Icons.delete, color: Colors.red,),
+                      const SizedBox(width: 8),
+                      const Text(
+                        "Delete Account",
+                        style: TextStyle(
+                          fontFamily: "Times New Roman",
+                          fontSize: 18,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

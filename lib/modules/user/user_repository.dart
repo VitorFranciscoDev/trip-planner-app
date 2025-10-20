@@ -54,7 +54,7 @@ class UserRepository implements IUserRepository {
   }
 
   @override
-  Future<int> deleteUser(int id) async {
+  Future<int> deleteUser(int? id) async {
     final db = await dbHelper.database;
 
     return await db.delete(

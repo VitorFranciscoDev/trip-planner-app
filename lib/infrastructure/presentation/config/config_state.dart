@@ -52,7 +52,7 @@ class ConfigProvider with ChangeNotifier {
     }
   }
 
-  Future<String?> deleteUser(int id) async {
+  Future<String?> deleteUser(int? id) async {
     _isLoading = true;
     notifyListeners();
 

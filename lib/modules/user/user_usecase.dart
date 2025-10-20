@@ -51,7 +51,7 @@ class UserUseCase {
     return await userRepository.doLogin(email, password);
   }
 
-  Future<String?> deleteUser(int id) async {
+  Future<String?> deleteUser(int? id) async {
     final result = await userRepository.deleteUser(id);
     
     if(result>0) return null;
