@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_screen.dart';
+import 'package:trip_planner/infrastructure/presentation/intl/intl_state.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/theme/theme.dart';
 import 'package:trip_planner/infrastructure/presentation/theme/theme_provider.dart';
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final intlProvider = context.watch<IntlProvider>();
     final themeProvider = context.watch<ThemeProvider>();
     final userProvider = context.watch<UserProvider>();
 
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
     }
 
     return MaterialApp(
-      locale: Locale('es', ''),
+      locale: intlProvider.locale,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -36,9 +38,9 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('en', ''),
-        Locale('pt', ''),
-        Locale('es', ''),
+        Locale('en', 'US'),
+        Locale('pt', 'BR'),
+        Locale('es', 'ES'),
       ],
       debugShowCheckedModeBanner: false,
       home: userProvider.user != null ? BottomNavigatorScreen() : LoginScreen(),

@@ -4,6 +4,7 @@ import 'package:trip_planner/infrastructure/presentation/app/app_global_state.da
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_state.dart';
 import 'package:trip_planner/infrastructure/presentation/config/config_state.dart';
 import 'package:trip_planner/infrastructure/presentation/home/home_state.dart';
+import 'package:trip_planner/infrastructure/presentation/intl/intl_state.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_state.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
 import 'package:trip_planner/infrastructure/presentation/register/register_state.dart';
@@ -41,6 +42,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => IntlProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => TripProvider(tripUseCase: tripUseCase)),
