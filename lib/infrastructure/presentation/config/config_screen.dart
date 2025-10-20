@@ -253,7 +253,6 @@ class _ConfigScreenState extends State<ConfigScreen> {
                                 controller: _controllerName, 
                                 hint: "Name",
                                 error: provider.errorName,
-                                isPassword: true,
                               ),
                             ),
                             Padding(
@@ -262,7 +261,6 @@ class _ConfigScreenState extends State<ConfigScreen> {
                                 controller: _controllerEmail, 
                                 hint: "Email",
                                 error: provider.errorEmail,
-                                isPassword: true,
                               ),
                             ),
                             Padding(
@@ -348,30 +346,54 @@ class _ConfigScreenState extends State<ConfigScreen> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25),
-              child: Container(
-                height: 70,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.tertiary,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    width: 2,
-                    color: theme.colorScheme.primary,
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    const SizedBox(width: 20),
-                    const Icon(Icons.logout, color: Colors.red,),
-                    const SizedBox(width: 8),
-                    const Text(
-                      "Log Out",
-                      style: TextStyle(
-                        fontFamily: "Times New Roman",
-                        fontSize: 18,
-                        color: Colors.red,
-                      ),
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context, 
+                    builder: (context) => AlertDialog(
+                      title: const Text("Log Out?"),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text("Cancel"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            context.read<UserProvider>().logout();
+                            Navigator.of(context).pop();
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                          },
+                          child: const Text("Delete"),
+                        ),
+                      ],
                     ),
-                  ],
+                  );
+                },
+                child: Container(
+                  height: 70,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.tertiary,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      width: 2,
+                      color: theme.colorScheme.primary,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 20),
+                      const Icon(Icons.logout, color: Colors.red,),
+                      const SizedBox(width: 8),
+                      const Text(
+                        "Log Out",
+                        style: TextStyle(
+                          fontFamily: "Times New Roman",
+                          fontSize: 18,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
