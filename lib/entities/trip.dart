@@ -3,14 +3,16 @@ import 'package:trip_planner/entities/stop.dart';
 
 class Trip {
   final int? id;
+  final int? userId;
   final String title;
   final String transport;
-  final String startDate;
-  final String endDate;
+  final String start_date;
+  final String end_date;
+  final bool concluded;
   final List<Person>? group;
   final List<Stop>? stops;
 
-  Trip({ this.id, required this.title, required this.transport, required this.startDate, required this.endDate, this.group, this.stops });
+  Trip({ this.id, this.userId, required this.title, required this.transport, required this.start_date, required this.end_date, required this.concluded, this.group, this.stops });
 
   //Transforms Trip in Map
   Map<String, dynamic> toMap() {
@@ -18,8 +20,9 @@ class Trip {
       'id': id,
       'title': title,
       'transport': transport,
-      'startDate': startDate,
-      'endDate': endDate,
+      'start_date': start_date,
+      'end_date': end_date,
+      'concluded': concluded,
     };
   }
 
@@ -29,8 +32,9 @@ class Trip {
       id: map['id'],
       title: map['title'],
       transport: map['transport'],
-      startDate: map['startDate'],
-      endDate: map['endDate'],
+      start_date: map['start_date'],
+      end_date: map['end_date'],
+      concluded: map['concluded'],
     );
   }
 }

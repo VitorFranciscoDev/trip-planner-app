@@ -23,8 +23,6 @@ class DBHelper {
     final databaseDirPath = await getDatabasesPath();
     final databasePath = join(databaseDirPath, 'trip_planner.db');
 
-    print('Caminho do banco: $databasePath');
-
     return await openDatabase(
       databasePath,
       version: 1,

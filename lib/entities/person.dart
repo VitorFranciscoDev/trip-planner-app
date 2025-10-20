@@ -4,7 +4,7 @@ class Person {
   final String name;
   final int age;
 
-  Person({this.id, this.tripId, required this.name, required this.age });
+  Person({ this.id, this.tripId, required this.name, required this.age });
 
   //Transforms Person in Map
   Map<String, dynamic> toMap() {

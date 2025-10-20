@@ -2,10 +2,12 @@ class Stop {
   final int? id;
   final int? tripId;
   final String location;
+  final String startDate;
+  final String endDate;
   final double latitude;
   final double longitude;
 
-  Stop({ this.id, this.tripId, required this.location, required this.latitude, required this.longitude });
+  Stop({ this.id, this.tripId, required this.location, required this.startDate, required this.endDate, required this.latitude, required this.longitude });
 
   //Transforms Stop in Map
   Map<String, dynamic> toMap() {
@@ -13,6 +15,8 @@ class Stop {
       'id': id,
       'tripId': tripId,
       'location': location,
+      'startDate': startDate,
+      'endDate': endDate,
       'latitude': latitude,
       'longitude': longitude,
     };
@@ -24,6 +28,8 @@ class Stop {
       id: map['id'],
       tripId: map['tripId'],
       location: map['location'],
+      startDate: map['startDate'],
+      endDate: map['endDate'],
       latitude: map['latitude'],
       longitude: map['longitude'],
     );
