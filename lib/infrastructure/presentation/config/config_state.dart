@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:trip_planner/entities/user.dart';
 import 'package:trip_planner/modules/user/user_usecase.dart';
 
 class ConfigProvider with ChangeNotifier {
@@ -30,22 +31,15 @@ class ConfigProvider with ChangeNotifier {
     return _errorName == null && _errorEmail == null && _errorPassword == null;
   }
 
-  // register the user
-  Future<String?> registerUser(String name, String email, String password) async {
+  Future<User?> updateUser(User? user) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final result = await userUseCase.registerUser(name, email, password);
+      return await userUseCase.updateUser(user!);
       
-      if(result != null) {
-        _errorEmail = result;
-        notifyListeners();
-      }
-      
-      return result;
     } catch (e) {
-      return "Unexpected error: ${e.toString()}";
+      return null;
     } finally {
       _isLoading = false;
       notifyListeners();

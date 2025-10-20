@@ -63,4 +63,23 @@ class UserRepository implements IUserRepository {
       whereArgs: [id],
     );
   }
+
+  @override
+  Future<User?> updateUser(User user) async {
+    final db = await dbHelper.database;
+
+    try {
+      final result = await db.update(
+        'users',
+        user.toMap(),
+        where: 'id = ?',
+        whereArgs: [user.id],
+      );
+
+      if (result > 0) return user;
+      return null;
+    } catch (e) {
+      throw Exception("Error updating user: $e");
+    }
+  }
 }

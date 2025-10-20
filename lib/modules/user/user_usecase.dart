@@ -58,4 +58,8 @@ class UserUseCase {
 
     return "Error in deleting the user";
   }
+
+  Future<User?> updateUser(User user) async {
+    return await userRepository.updateUser(user);
+  }
 }

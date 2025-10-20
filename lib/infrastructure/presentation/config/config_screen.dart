@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trip_planner/entities/user.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
 import 'package:trip_planner/infrastructure/presentation/config/config_state.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_screen.dart';
@@ -22,10 +23,6 @@ class _ConfigScreenState extends State<ConfigScreen> {
   bool showLanguage = false;
   bool showInformations = false;
 
-  Future<void> saveNewUser() async {
-
-  }
-
   @override
   void initState() {
     super.initState();
@@ -37,7 +34,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final provider = context.watch<ConfigProvider>();
-    final user = context.read<UserProvider>().user;
+    final userProvider = context.read<UserProvider>();
 
     return SingleChildScrollView(
       child: Center(
@@ -268,7 +265,16 @@ class _ConfigScreenState extends State<ConfigScreen> {
                               child: SizedBox(
                                 width: double.infinity,
                                 child: ElevatedButton(
-                                  onPressed: () => saveNewUser(),
+                                  onPressed: () async {
+                                    final updatedUser = User(
+                                      id: userProvider.user!.id,
+                                      name: _controllerName.text,
+                                      email: _controllerEmail.text,
+                                      password: userProvider.user!.password,
+                                    );
+                                    final newUser = await provider.updateUser(updatedUser);
+                                    userProvider.registerUser(newUser!);
+                                  },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: theme.colorScheme.secondary,
                                     foregroundColor: Colors.white,
@@ -278,7 +284,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                                     ),
                                   ),
                                   child: const Text(
-                                    "Sign In",
+                                    "Update Info",
                                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
                                   ),
                                 ),
@@ -306,7 +312,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                         ),
                         TextButton(
                           onPressed: () {
-                            context.read<ConfigProvider>().deleteUser(user!.id);
+                            context.read<ConfigProvider>().deleteUser(userProvider.user!.id);
                             Navigator.of(context).pop();
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                           },
@@ -345,7 +351,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25),
+              padding: EdgeInsets.only(left: 25, right: 25, bottom: 30),
               child: GestureDetector(
                 onTap: () {
                   showDialog(
