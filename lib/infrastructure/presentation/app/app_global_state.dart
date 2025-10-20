@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/theme/theme.dart';
@@ -26,6 +28,18 @@ class MyApp extends StatelessWidget {
     }
 
     return MaterialApp(
+      locale: Locale('es', ''),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', ''),
+        Locale('pt', ''),
+        Locale('es', ''),
+      ],
       debugShowCheckedModeBanner: false,
       home: userProvider.user != null ? BottomNavigatorScreen() : LoginScreen(),
       theme: lightTheme,

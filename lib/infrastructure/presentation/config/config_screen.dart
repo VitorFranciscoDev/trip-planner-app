@@ -18,7 +18,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerEmail = TextEditingController();
 
-  String dropdownValue = "Portuguese";
+  String languageSelected = "Portuguese";
   bool darkMode = false;
   bool showLanguage = false;
   bool showInformations = false;
@@ -135,49 +135,73 @@ class _ConfigScreenState extends State<ConfigScreen> {
                         Column(
                           children: [
                             const SizedBox(height: 15),
-                            Row(
-                              children: [
-                                const SizedBox(width: 20),
-                                const Text("🇺🇸"),
-                                const SizedBox(width: 10),
-                                const Text(
-                                  "English",
-                                  style: TextStyle(
-                                    fontFamily: "Times New Roman",
-                                    fontSize: 18,
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  languageSelected = "English";
+                                  showLanguage = !showLanguage;
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  const SizedBox(width: 20),
+                                  const Text("🇺🇸"),
+                                  const SizedBox(width: 10),
+                                  const Text(
+                                    "English",
+                                    style: TextStyle(
+                                      fontFamily: "Times New Roman",
+                                      fontSize: 18,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             const SizedBox(height: 15),
-                            Row(
-                              children: [
-                                const SizedBox(width: 20),
-                                const Text("🇧🇷"),
-                                const SizedBox(width: 10),
-                                const Text(
-                                  "Portuguese",
-                                  style: TextStyle(
-                                    fontFamily: "Times New Roman",
-                                    fontSize: 18,
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  languageSelected = "Portuguese";
+                                  showLanguage = !showLanguage;
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  const SizedBox(width: 20),
+                                  const Text("🇧🇷"),
+                                  const SizedBox(width: 10),
+                                  const Text(
+                                    "Portuguese",
+                                    style: TextStyle(
+                                      fontFamily: "Times New Roman",
+                                      fontSize: 18,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             const SizedBox(height: 15),
-                            Row(
-                              children: [
-                                const SizedBox(width: 20),
-                                const Text("🇪🇸"),
-                                const SizedBox(width: 10),
-                                const Text(
-                                  "Spanish",
-                                  style: TextStyle(
-                                    fontFamily: "Times New Roman",
-                                    fontSize: 18,
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  languageSelected = "Spanish";
+                                  showLanguage = !showLanguage;
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  const SizedBox(width: 20),
+                                  const Text("🇪🇸"),
+                                  const SizedBox(width: 10),
+                                  const Text(
+                                    "Spanish",
+                                    style: TextStyle(
+                                      fontFamily: "Times New Roman",
+                                      fontSize: 18,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -235,7 +259,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                           ),
                           const Spacer(),
                           Icon(
-                            showLanguage ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                            showInformations ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                             size: 35,
                           ),
                           const SizedBox(width: 30),

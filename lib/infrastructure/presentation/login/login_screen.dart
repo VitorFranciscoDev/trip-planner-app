@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_state.dart';
@@ -67,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final provider = context.watch<LoginProvider>();
 
     return Scaffold(
@@ -93,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Padding(padding: EdgeInsets.only(bottom: 50)),
                     Text(
-                      "Welcome Back!",
+                      l10n.welcomeBack,
                       style: TextStyle(fontSize: 20, color: theme.colorScheme.primary),
                     ),
                     Padding(padding: EdgeInsets.only(top: 30)),
@@ -101,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 30),
                       child: TextFieldComponent(
                         controller: controllerEmail, 
-                        hint: "Email", 
+                        hint: l10n.email, 
                         error: provider.errorEmail,
                       ),
                     ),
@@ -110,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 30),
                       child: TextFieldComponent(
                         controller: controllerPassword, 
-                        hint: "Password",
+                        hint: l10n.password,
                         error: provider.errorPassword,
                         isPassword: true,
                       ),
@@ -130,8 +132,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          child: const Text(
-                            "Sign In",
+                          child: Text(
+                            l10n.signIn,
                             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
                           ),
                         ),
@@ -147,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                         },
                         child: Text(
-                          "Doesn't have an account? Click here to create one!",
+                          l10n.noAccount,
                           style: TextStyle(
                             color: theme.colorScheme.secondary,
                             fontSize: 12,
