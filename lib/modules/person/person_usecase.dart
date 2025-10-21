@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
-import 'package:trip_planner/modules/person/person_spec.dart';
 
 class PersonUseCase {
-  PersonUseCase({ required this.personRepository });
-
-  final IPersonRepository personRepository;
-
   String? validateName(String name, BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return name.isEmpty ? l10n.nameRequired : null;

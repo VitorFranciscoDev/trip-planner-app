@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:trip_planner/entities/search_result.dart';
-import 'package:trip_planner/modules/search-result/search_result_service.dart';
+import 'package:trip_planner/modules/search-result/search_result_repository.dart';
 
 class SearchResultProvider with ChangeNotifier {
-  SearchResultProvider({required this.searchResultService});
+  SearchResultProvider({required this.searchResultRepository});
 
-  final SearchResultService searchResultService;
+  final SearchResultRepository searchResultRepository;
 
   List<SearchResult> _searchResults = [];
   List<SearchResult> get searchResults => _searchResults;
@@ -29,7 +29,7 @@ class SearchResultProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      _searchResults = await searchResultService.searchLocation(query);
+      _searchResults = await searchResultRepository.searchLocation(query);
     } catch (e) {
       _searchResults = [];
     } finally {

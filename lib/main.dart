@@ -14,9 +14,8 @@ import 'package:trip_planner/infrastructure/presentation/group/group_state.dart'
 import 'package:trip_planner/infrastructure/presentation/trip-register/trip_register_state.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
-import 'package:trip_planner/modules/person/person_repository.dart';
 import 'package:trip_planner/modules/person/person_usecase.dart';
-import 'package:trip_planner/modules/search-result/search_result_service.dart';
+import 'package:trip_planner/modules/search-result/search_result_repository.dart';
 import 'package:trip_planner/modules/stop-recomendation/stop_recomendation_repository.dart';
 import 'package:trip_planner/modules/trip/trip_repository.dart';
 import 'package:trip_planner/modules/trip/trip_usecase.dart';
@@ -32,12 +31,11 @@ void main() async {
   final tripRepository = TripRepository();
   final tripUseCase = TripUseCase(tripRepository: tripRepository);
 
-  final personRepository = PersonRepository();
-  final personUseCase = PersonUseCase(personRepository: personRepository);
+  final personUseCase = PersonUseCase();
 
   final stopRecomendationRepository = StopRecomendationRepository();
 
-  final searchResultService = SearchResultService();
+  final searchResultRepository = SearchResultRepository();
 
   runApp(
     MultiProvider(
@@ -52,7 +50,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => RegisterProvider(userUseCase: userUseCase)),
         ChangeNotifierProvider(create: (_) => BottomNavigatorProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider(stopRecomendationRepository: stopRecomendationRepository)),
-        ChangeNotifierProvider(create: (_) => SearchResultProvider(searchResultService: searchResultService)),
+        ChangeNotifierProvider(create: (_) => SearchResultProvider(searchResultRepository: searchResultRepository)),
         ChangeNotifierProvider(create: (_) => TripRegisterProvider(tripUseCase: tripUseCase, personUseCase: personUseCase)),
         ChangeNotifierProvider(create: (_) => ConfigProvider(userUseCase: userUseCase)),
       ],
