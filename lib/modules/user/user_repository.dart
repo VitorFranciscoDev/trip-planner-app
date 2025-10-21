@@ -6,6 +6,23 @@ class UserRepository implements IUserRepository {
   final dbHelper = DBHelper();
 
   @override
+  Future<User?> getUserByEmail(String email) async {
+    final db = await dbHelper.database;
+
+    final existingUser = await db.query(
+      'users',
+      where: 'email = ?',
+      whereArgs: [email],
+    );
+
+    if(existingUser.isNotEmpty) {
+      return User.fromMap(existingUser.first);
+    }
+
+    return null;
+  }
+
+  @override
   Future<int> registerUser(User user) async {
     try {
       final db = await dbHelper.database;
@@ -37,34 +54,6 @@ class UserRepository implements IUserRepository {
   }
 
   @override
-  Future<User?> getUserByEmail(String email) async {
-    final db = await dbHelper.database;
-
-    final existingUser = await db.query(
-      'users',
-      where: 'email = ?',
-      whereArgs: [email],
-    );
-
-    if(existingUser.isNotEmpty) {
-      return User.fromMap(existingUser.first);
-    }
-
-    return null;
-  }
-
-  @override
-  Future<int> deleteUser(int? id) async {
-    final db = await dbHelper.database;
-
-    return await db.delete(
-      'users',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-  }
-
-  @override
   Future<User?> updateUser(User user) async {
     final db = await dbHelper.database;
 
@@ -82,4 +71,20 @@ class UserRepository implements IUserRepository {
       throw Exception("Error updating user: $e");
     }
   }
+
+  @override
+  Future<int> deleteUser(int? id) async {
+    try {
+      final db = await dbHelper.database;
+
+      return await db.delete(
+        'users',
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+    } catch(e) {
+      throw Exception("Error deleting user: $e");
+    }
+  }
+
 }
