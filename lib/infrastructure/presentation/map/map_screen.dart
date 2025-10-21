@@ -10,7 +10,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
-import 'package:trip_planner/modules/search-result/search_result_repository.dart';
+import 'package:trip_planner/modules/stop/stop_repository.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -21,7 +21,7 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   final MapController _mapController = MapController();
-  final SearchResultService _searchResultService = SearchResultService();
+  final StopRepository _stopRepository = StopRepository();
 
   LatLng? _currentLocation;
 
@@ -61,11 +61,13 @@ class _MapScreenState extends State<MapScreen> {
   Future<void> _onMapTap(LatLng latlng) async {
     final provider = context.read<StopsProvider>();
 
-    final address = await _searchResultService.getAddressFromCoordinates(latlng);
+    final address = await _stopRepository.getAddressFromCoordinates(latlng);
     final locationName = address ?? "Unknown location";
 
     final stop = Stop(
       location: locationName,
+      startDate: "22",
+      endDate: "33",
       latitude: latlng.latitude,
       longitude: latlng.longitude,
     );

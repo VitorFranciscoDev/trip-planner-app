@@ -17,49 +17,18 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
     Trip(
       title: "PAPAPAPAP", 
       transport: "CAR", 
-      startDate: "7/8/0", 
-      endDate: "9/8/0",
+      start_date: "7/8/0", 
+      end_date: "9/8/0",
+      concluded: false,
       group: [
         Person(name: "Vitor", age: 9),
         Person(name: "ISabella", age: 8),
         Person(name: "Andrea", age: 7),
       ],
       stops: [
-        Stop(location: "Vasco", latitude: 98.4, longitude: 87.4),
-        Stop(location: "papapa", latitude: 4, longitude: 3),
-        Stop(location: "eirir", latitude: 2, longitude: 1),
-      ],
-    ),
-    Trip(
-      title: "PAPAPAPAP", 
-      transport: "CAR", 
-      startDate: "7/8/0", 
-      endDate: "9/8/0",
-      group: [
-        Person(name: "Vitor", age: 9),
-        Person(name: "ISabella", age: 8),
-        Person(name: "Andrea", age: 7),
-      ],
-      stops: [
-        Stop(location: "Vasco", latitude: 98.4, longitude: 87.4),
-        Stop(location: "papapa", latitude: 4, longitude: 3),
-        Stop(location: "eirir", latitude: 2, longitude: 1),
-      ],
-    ),
-    Trip(
-      title: "PAPAPAPAP", 
-      transport: "CAR", 
-      startDate: "7/8/0", 
-      endDate: "9/8/0",
-      group: [
-        Person(name: "Vitor", age: 9),
-        Person(name: "ISabella", age: 8),
-        Person(name: "Andrea", age: 7),
-      ],
-      stops: [
-        Stop(location: "Vasco", latitude: 98.4, longitude: 87.4),
-        Stop(location: "papapa", latitude: 4, longitude: 3),
-        Stop(location: "eirir", latitude: 2, longitude: 1),
+        Stop(location: "Vasco", startDate: "1", endDate: "8", latitude: 98.4, longitude: 87.4),
+        Stop(location: "papapa", startDate: "1", endDate: "8", latitude: 4, longitude: 3),
+        Stop(location: "eirir", startDate: "1", endDate: "8", latitude: 2, longitude: 1),
       ],
     ),
   ];
@@ -143,7 +112,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                             Padding(
                               padding: EdgeInsets.only(right: 15),
                               child: Text(
-                                "${trip.startDate} - ${trip.endDate}",
+                                "${trip.start_date} - ${trip.end_date}",
                                 style: TextStyle(
                                   fontSize: 10,
                                   fontFamily: "Times New Roman",
@@ -217,7 +186,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                           Padding(
                             padding: EdgeInsets.only(right: 15),
                             child: Text(
-                              "${trip.startDate} - ${trip.endDate}",
+                              "${trip.start_date} - ${trip.end_date}",
                               style: TextStyle(
                                 fontSize: 10,
                                 fontFamily: "Times New Roman",

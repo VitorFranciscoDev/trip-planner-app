@@ -46,8 +46,9 @@ class _TripScreenState extends State<TripScreen> {
     Trip trip = Trip(
       title: controllerTripTitle.text, 
       transport: dropdownValue, 
-      startDate: controllerStartDate.text, 
-      endDate: controllerEndDate.text,
+      start_date: controllerStartDate.text, 
+      end_date: controllerEndDate.text,
+      concluded: false,
       group: group,
       stops: stops,
     );
