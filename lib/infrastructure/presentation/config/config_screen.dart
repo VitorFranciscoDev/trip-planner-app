@@ -4,9 +4,9 @@ import 'package:trip_planner/entities/user.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
 import 'package:trip_planner/infrastructure/presentation/config/config_state.dart';
-import 'package:trip_planner/infrastructure/presentation/intl/intl_state.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/intl_state.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_screen.dart';
-import 'package:trip_planner/infrastructure/presentation/theme/theme_provider.dart';
+import 'package:trip_planner/infrastructure/presentation/app/theme/theme_provider.dart';
 import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
 
 class ConfigScreen extends StatefulWidget {

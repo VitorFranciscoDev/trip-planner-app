@@ -4,12 +4,12 @@ import 'package:trip_planner/infrastructure/presentation/app/app_global_state.da
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_state.dart';
 import 'package:trip_planner/infrastructure/presentation/config/config_state.dart';
 import 'package:trip_planner/infrastructure/presentation/home/home_state.dart';
-import 'package:trip_planner/infrastructure/presentation/intl/intl_state.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/intl_state.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_state.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
 import 'package:trip_planner/infrastructure/presentation/register/register_state.dart';
 import 'package:trip_planner/infrastructure/presentation/search-result/search_result_state.dart';
-import 'package:trip_planner/infrastructure/presentation/theme/theme_provider.dart';
+import 'package:trip_planner/infrastructure/presentation/app/theme/theme_provider.dart';
 import 'package:trip_planner/infrastructure/presentation/group/group_state.dart';
 import 'package:trip_planner/infrastructure/presentation/trip-register/trip_register_state.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';

@@ -29,28 +29,30 @@ class _HomeScreenState extends State<HomeScreen> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.only(top: 50),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 15),
-                  child: Image.asset(
-                    "assets/logos/trip-planner-icon.png",
-                    height: 55,
-                  ),
+          const SizedBox(height: 50),
+          Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 15),
+                child: Image.asset(
+                  "assets/logos/trip-planner-icon.png",
+                  height: 55,
                 ),
-                Text(
-                  intl.welcomeUser(name),
-                  style: TextStyle(fontFamily: "Times New Roman", fontSize: 20),
+              ),
+              Text(
+                intl.welcomeUser(name),
+                style: TextStyle(
+                  fontFamily: "Times New Roman", 
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: theme.colorScheme.primary,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           const SizedBox(height: 10),
           Padding(
-            padding: EdgeInsets.only(left: 25, right: 25, bottom: 20),
+            padding: EdgeInsets.symmetric(horizontal: 25),
             child: TextField(
               controller: controllerSearch,
               decoration: InputDecoration(
@@ -175,6 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(color: Colors.grey),
                 ),
               ),
+          const SizedBox(height: 60),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
@@ -260,8 +263,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          const SizedBox(height: 30),
           Padding(
-            padding: EdgeInsets.only(top: 30, right: 25, left: 25),
+            padding: EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
               child: Container(
                 width: 360,

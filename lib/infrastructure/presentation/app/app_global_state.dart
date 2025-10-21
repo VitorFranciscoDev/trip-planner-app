@@ -3,10 +3,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_screen.dart';
-import 'package:trip_planner/infrastructure/presentation/intl/intl_state.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/intl_state.dart';
 import 'package:trip_planner/infrastructure/presentation/login/login_screen.dart';
-import 'package:trip_planner/infrastructure/presentation/theme/theme.dart';
-import 'package:trip_planner/infrastructure/presentation/theme/theme_provider.dart';
+import 'package:trip_planner/infrastructure/presentation/app/theme/theme.dart';
+import 'package:trip_planner/infrastructure/presentation/app/theme/theme_provider.dart';
 import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
 
 class MyApp extends StatelessWidget {
