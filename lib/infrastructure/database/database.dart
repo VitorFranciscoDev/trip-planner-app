@@ -1,7 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
-import 'package:trip_planner/infrastructure/database/people_table.dart';
+import 'package:trip_planner/infrastructure/database/persons_table.dart';
 import 'package:trip_planner/infrastructure/database/stops_table.dart';
 import 'package:trip_planner/infrastructure/database/trips_table.dart';
 import 'package:trip_planner/infrastructure/database/user_experiences_table.dart';
@@ -30,7 +30,7 @@ class DBHelper {
       onCreate: (db, version) async {
         await UsersTable.createTable(db);
         await TripsTable.createTable(db);
-        await PeopleTable.createTable(db);
+        await PersonsTable.createTable(db);
         await StopsTable.createTable(db);
         await UserExperiencesTable.createTable(db);
       },

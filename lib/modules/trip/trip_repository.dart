@@ -16,7 +16,7 @@ class TripRepository implements ITripRepository {
         final tripId = await txn.insert('trips', trip.toMap());
 
         for(var person in trip.group!) {
-          await txn.insert('people', {
+          await txn.insert('persons', {
             ...person.toMap(),
             'tripId': tripId,
           }); 
@@ -37,38 +37,18 @@ class TripRepository implements ITripRepository {
   }
 
   @override
-  Future<List<Trip>> getAllTrips() async {
+  Future<int> deleteTrip(int id) async {
     try {
       final db = await dbHelper.database;
-      final result = await db.query('trips', orderBy: 'id DESC');
-      return result.map((map) => Trip.fromMap(map)).toList();
+      return await db.delete(
+        'trips',
+        where: 'id = ?',
+        whereArgs: [id],
+      );
     } catch (e) {
-      throw Exception("Failed to get trips: $e");
+      throw Exception("Failed to delete trip: $e");
     }
   }
-
-  @override
-  Future<Trip?> getTripById(int id) async {
-  final db = await dbHelper.database;
-
-  final result = await db.query('trips', where: 'id = ?', whereArgs: [id]);
-  if (result.isEmpty) return null;
-
-  final tripMap = result.first;
-
-  final personsResult = await db.query('persons', where: 'tripId = ?', whereArgs: [id]);
-  final stopsResult = await db.query('stops', where: 'tripId = ?', whereArgs: [id]);
-
-  return Trip(
-    id: tripMap['id'] as int,
-    title: tripMap['title'] as String,
-    transport: tripMap['transport'] as String,
-    startDate: tripMap['startDate'] as String,
-    endDate: tripMap['endDate'] as String,
-    group: personsResult.map((p) => Person.fromMap(p)).toList(),
-    stops: stopsResult.map((s) => Stop.fromMap(s)).toList(),
-  );
-}
 
   @override
   Future<int> updateTrip(Trip trip) async {
@@ -86,16 +66,36 @@ class TripRepository implements ITripRepository {
   }
 
   @override
-  Future<int> deleteTrip(int id) async {
+  Future<List<Trip>> getAllTrips() async {
     try {
       final db = await dbHelper.database;
-      return await db.delete(
-        'trips',
-        where: 'id = ?',
-        whereArgs: [id],
-      );
+      final result = await db.query('trips', orderBy: 'id DESC');
+      return result.map((map) => Trip.fromMap(map)).toList();
     } catch (e) {
-      throw Exception("Failed to delete trip: $e");
+      throw Exception("Failed to get trips: $e");
     }
+  }
+
+  @override
+  Future<Trip?> getTripById(int id) async {
+    final db = await dbHelper.database;
+
+    final result = await db.query('trips', where: 'id = ?', whereArgs: [id]);
+    if (result.isEmpty) return null;
+
+    final map = result.first;
+
+    final peopleResult = await db.query('persons', where: 'tripId = ?', whereArgs: [id]);
+    final stopsResult = await db.query('stops', where: 'tripId = ?', whereArgs: [id]);
+
+    return Trip(
+      title: map['title'] as String, 
+      transport: map['transport'] as String, 
+      start_date: map['start_date'] as String, 
+      end_date: map['end_date'] as String, 
+      concluded: (map['concluded'] as int) == 1,
+      group: peopleResult.map((p) => Person.fromMap(p)).toList(),
+      stops: stopsResult.map((s) => Stop.fromMap(s)).toList(),
+    );
   }
 }
