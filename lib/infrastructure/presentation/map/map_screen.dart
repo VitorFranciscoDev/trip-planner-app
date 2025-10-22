@@ -62,7 +62,7 @@ class _MapScreenState extends State<MapScreen> {
     final provider = context.read<StopsProvider>();
 
     final address = await _stopRepository.getAddressFromCoordinates(latlng);
-    final locationName = address ?? "Unknown location";
+    final locationName = address ?? "Uknown Place";
 
     final stop = Stop(
       location: locationName,
@@ -121,10 +121,10 @@ class _MapScreenState extends State<MapScreen> {
                 CurrentLocationLayer(
                   style: LocationMarkerStyle(
                     marker: DefaultLocationMarker(
-                      color: Colors.blue.withOpacity(0.3),
+                      color: const Color.fromARGB(255, 0, 99, 181),
                       child: const SizedBox(),
                     ),
-                    markerSize: const Size(50, 50),
+                    markerSize: const Size(15, 15),
                     accuracyCircleColor: Colors.blue.withOpacity(0.1),
                     showAccuracyCircle: true,
                   ),

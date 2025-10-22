@@ -19,7 +19,8 @@ class StopRepository {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        return data['display_name'];
+        final address = data['address'];
+        return address['city'] ?? address['state'] ?? address['country'];
       }
       return null;
     } catch (e) {
