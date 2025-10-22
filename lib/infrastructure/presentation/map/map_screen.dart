@@ -28,6 +28,12 @@ class _MapScreenState extends State<MapScreen> {
   List<Marker> _markers = [];
   List<LatLng> _points = [];
 
+  bool _differentCulture = false;
+  bool _alternativeCuisine = false;
+  bool _historicalSites = false;
+  bool _localEstablishments = false;
+  bool _contactWithNature = false;
+
   Future<void> _requestPermissionAndLocate() async {
     final status = await Permission.location.request();
     if (!status.isGranted) return;
@@ -64,31 +70,110 @@ class _MapScreenState extends State<MapScreen> {
     final address = await _stopRepository.getAddressFromCoordinates(latlng);
     final locationName = address ?? "Uknown Place";
 
-    final stop = Stop(
-      location: locationName,
-      startDate: "22",
-      endDate: "33",
-      latitude: latlng.latitude,
-      longitude: latlng.longitude,
-    );
-    provider.addStop(stop);
-
-    setState(() {
-      _markers.add(
-        Marker(
-          point: latlng,
-          width: 40,
-          height: 40,
-          child: const Icon(Icons.location_on, color: Colors.red),
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Center(child: Text(locationName)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Checkbox(
+                  value: _differentCulture,
+                  onChanged: (newValue) {
+                    _differentCulture = !_differentCulture;
+                  },
+                ),
+                Text("Immersion in a Different Culture"),
+              ],
+            ),
+            Row(
+              children: [
+                Checkbox(
+                  value: _alternativeCuisine,
+                  onChanged: (newValue) {
+                    _alternativeCuisine = !_alternativeCuisine;
+                  },
+                ),
+                Text("Explore Alternative Cuisine"),
+              ],
+            ),
+            Row(
+              children: [
+                Checkbox(
+                  value: _historicalSites,
+                  onChanged: (newValue) {
+                    _historicalSites = !_historicalSites;
+                  },
+                ),
+                Text("Visit Historical Sites"),
+              ],
+            ),
+            Row(
+              children: [
+                Checkbox(
+                  value: _localEstablishments,
+                  onChanged: (newValue) {
+                    _localEstablishments = !_localEstablishments;
+                  },
+                ),
+                Text("Visit Local Establishments"),
+              ],
+            ),
+            Row(
+              children: [
+                Checkbox(
+                  value: _contactWithNature,
+                  onChanged: (newValue) {
+                    _contactWithNature = !_contactWithNature;
+                  },
+                ),
+                Text("Contact With Nature"),
+              ],
+            ),
+          ],
         ),
-      );
-      _points.add(latlng);
-    });
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(), 
+            child: const Text("Cancel")
+          ),
+          TextButton(
+            onPressed: () async {
+              final stop = Stop(
+                location: locationName,
+                startDate: "22",
+                endDate: "33",
+                latitude: latlng.latitude,
+                longitude: latlng.longitude,
+              );
+              provider.addStop(stop);
 
-    final routedPoints = await _getRoute(_points);
-    setState(() {
-      _points = routedPoints;
-    });
+              setState(() {
+                _markers.add(
+                  Marker(
+                    point: latlng,
+                    width: 40,
+                    height: 40,
+                    child: const Icon(Icons.location_on, color: Colors.red),
+                  ),
+                );
+                _points.add(latlng);
+              });
+
+              final routedPoints = await _getRoute(_points);
+              setState(() {
+                _points = routedPoints;
+              });
+
+              Navigator.of(context).pop();
+            }, 
+            child: const Text("Add Stop"),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -117,7 +202,7 @@ class _MapScreenState extends State<MapScreen> {
                 userAgentPackageName: 'com.example.trip_planner',
                 tileProvider: NetworkTileProvider(),
               ),
-              if(_currentLocation != null)
+              if (_currentLocation != null)
                 CurrentLocationLayer(
                   style: LocationMarkerStyle(
                     marker: DefaultLocationMarker(
