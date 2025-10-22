@@ -43,30 +43,33 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 60),
           Padding(
-            padding: EdgeInsets.only(top: 60, left: 25),
+            padding: EdgeInsets.only(left: 25),
             child: Text(intl.yourTrips, 
               style: TextStyle(
                 color: Color(0xFF8B4513),
                 fontFamily: "Times New Roman",
                 fontSize: 20,
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
+          const SizedBox(height: 20),
           Padding(
-            padding: EdgeInsets.only(top: 20, left: 25),
+            padding: EdgeInsets.only(left: 25),
             child: Text(intl.activeTrips, 
               style: TextStyle(
                 color: Color(0xFF8B4513),
                 fontFamily: "Times New Roman",
                 fontSize: 18,
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
+          const SizedBox(height: 10),
           Padding(
-            padding: EdgeInsets.only(top: 10, left: 25),
+            padding: EdgeInsets.only(left: 25),
             child: Container(
               width: 310,
               height: 230,
@@ -130,19 +133,21 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
               ),
             ),
           ),
+          const SizedBox(height: 20),
           Padding(
-            padding: EdgeInsets.only(top: 20, left: 25),
+            padding: EdgeInsets.only(left: 25),
             child: Text(intl.concludedTrips, 
               style: TextStyle(
                 color: Color(0xFF8B4513),
                 fontFamily: "Times New Roman",
                 fontSize: 18,
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
+          const SizedBox(height: 10),
           Padding(
-            padding: EdgeInsets.only(top: 10, left: 25),
+            padding: EdgeInsets.only(left: 25),
             child: Container(
               width: 310,
               height: 230,

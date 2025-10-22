@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:trip_planner/entities/user.dart';
 import 'package:trip_planner/modules/user/user_usecase.dart';
 
-class ConfigProvider with ChangeNotifier {
-  ConfigProvider({required this.userUseCase});
+class SettingsProvider with ChangeNotifier {
+  SettingsProvider({required this.userUseCase});
 
   final UserUseCase userUseCase;
 

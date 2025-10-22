@@ -177,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(color: Colors.grey),
                 ),
               ),
-          const SizedBox(height: 60),
+          const SizedBox(height: 30),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
