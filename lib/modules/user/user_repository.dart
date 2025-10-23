@@ -3,11 +3,11 @@ import 'package:trip_planner/infrastructure/database/database.dart';
 import 'package:trip_planner/modules/user/user_spec.dart';
 
 class UserRepository implements IUserRepository {
-  final dbHelper = DBHelper();
+  final database = TripPlannerDatabase();
 
   @override
   Future<User?> getUserByEmail(String email) async {
-    final db = await dbHelper.database;
+    final db = await database.database;
 
     final existingUser = await db.query(
       'users',
@@ -25,7 +25,7 @@ class UserRepository implements IUserRepository {
   @override
   Future<int> registerUser(User user) async {
     try {
-      final db = await dbHelper.database;
+      final db = await database.database;
       return await db.insert('users', user.toMap());
     } catch (e) {
       throw Exception("Error in Register: $e");
@@ -35,7 +35,7 @@ class UserRepository implements IUserRepository {
   @override
   Future<User?> doLogin(String email, String password) async {
     try {
-      final db = await dbHelper.database;
+      final db = await database.database;
 
       final result = await db.query(
         'users',
@@ -55,7 +55,7 @@ class UserRepository implements IUserRepository {
 
   @override
   Future<User?> updateUser(User user) async {
-    final db = await dbHelper.database;
+    final db = await database.database;
 
     try {
       final result = await db.update(
@@ -75,7 +75,7 @@ class UserRepository implements IUserRepository {
   @override
   Future<int> deleteUser(int? id) async {
     try {
-      final db = await dbHelper.database;
+      final db = await database.database;
 
       return await db.delete(
         'users',

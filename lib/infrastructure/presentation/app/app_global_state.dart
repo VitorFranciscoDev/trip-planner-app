@@ -4,10 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/app/intl/intl_state.dart';
-import 'package:trip_planner/infrastructure/presentation/login/login_screen.dart';
+import 'package:trip_planner/infrastructure/presentation/auth/login_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/app/theme/theme.dart';
 import 'package:trip_planner/infrastructure/presentation/app/theme/theme_provider.dart';
-import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
+import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final intlProvider = context.watch<IntlProvider>();
     final themeProvider = context.watch<ThemeProvider>();
-    final userProvider = context.watch<UserProvider>();
+    final userProvider = context.watch<AuthProvider>();
 
     if (userProvider.isLoading) {
       return MaterialApp(

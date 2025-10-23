@@ -9,7 +9,7 @@ import 'package:trip_planner/infrastructure/presentation/map/map_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
 import 'package:trip_planner/infrastructure/presentation/group/group_state.dart';
 import 'package:trip_planner/infrastructure/presentation/trip-register/trip_register_state.dart';
-import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
+import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
 
 class TripScreen extends StatefulWidget {
   const TripScreen({super.key});
@@ -32,7 +32,7 @@ class _TripScreenState extends State<TripScreen> {
     final provider = context.read<TripRegisterProvider>();
     final group = context.read<GroupProvider>().group;
     final stops = context.read<StopsProvider>().stops;
-    final userProvider = context.read<UserProvider>();
+    final userProvider = context.read<AuthProvider>();
 
     final isValid = provider.validateTrip(
       tripTitle: controllerTripTitle.text, 

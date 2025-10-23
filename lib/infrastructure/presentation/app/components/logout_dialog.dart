@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trip_planner/infrastructure/presentation/login/login_screen.dart';
+import 'package:trip_planner/infrastructure/presentation/auth/login_screen.dart';
 
 
 class LogOutDialog extends StatelessWidget {

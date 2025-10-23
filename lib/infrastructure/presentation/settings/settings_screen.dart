@@ -3,11 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/user.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
-import 'package:trip_planner/infrastructure/presentation/settings/settings_state.dart';
 import 'package:trip_planner/infrastructure/presentation/app/intl/intl_state.dart';
-import 'package:trip_planner/infrastructure/presentation/login/login_screen.dart';
+import 'package:trip_planner/infrastructure/presentation/auth/login_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/app/theme/theme_provider.dart';
-import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
+import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -28,16 +27,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    _controllerName.text = context.read<UserProvider>().user!.name;
-    _controllerEmail.text = context.read<UserProvider>().user!.email;
+    _controllerName.text = context.read<AuthProvider>().user!.name;
+    _controllerEmail.text = context.read<AuthProvider>().user!.email;
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final intl =AppLocalizations.of(context);
-    final provider = context.watch<SettingsProvider>();
-    final userProvider = context.read<UserProvider>();
+    final provider = context.read<AuthProvider>();
 
     return SingleChildScrollView(
       child: Column(
@@ -300,13 +298,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               child: ElevatedButton(
                                 onPressed: () async {
                                   final updatedUser = User(
-                                    id: userProvider.user!.id,
+                                    id: provider.user!.id,
                                     name: _controllerName.text,
                                     email: _controllerEmail.text,
-                                    password: userProvider.user!.password,
+                                    password: provider.user!.password,
                                   );
-                                  final newUser = await provider.updateUser(updatedUser);
-                                  userProvider.registerUser(newUser!);
+                                  await provider.updateUser(updatedUser);
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: theme.colorScheme.secondary,
@@ -346,7 +343,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          context.read<SettingsProvider>().deleteUser(userProvider.user!.id, context);
+                          context.read<AuthProvider>().deleteUser(provider.user!.id, context);
                           Navigator.of(context).pop();
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                         },
@@ -400,7 +397,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          context.read<UserProvider>().logout();
+                          context.read<AuthProvider>().logout();
                           Navigator.of(context).pop();
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                         },

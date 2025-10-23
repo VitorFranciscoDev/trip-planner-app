@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/home/home_state.dart';
 import 'package:trip_planner/infrastructure/presentation/search-result/search_result_state.dart';
-import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
+import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final intl = AppLocalizations.of(context);
-    final name = context.read<UserProvider>().user!.name;
+    final name = context.read<AuthProvider>().user!.name;
     final provider = context.watch<HomeProvider>();
     final searchProvider = context.watch<SearchResultProvider>();
     final recomendation1 = provider.brNERecommendations;

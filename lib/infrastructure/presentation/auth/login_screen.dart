@@ -2,47 +2,60 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
-import 'package:trip_planner/infrastructure/presentation/login/login_screen.dart';
-import 'package:trip_planner/infrastructure/presentation/register/register_state.dart';
+import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_screen.dart';
+import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
+import 'package:trip_planner/infrastructure/presentation/auth/register_screen.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   // controllers
-  TextEditingController controllerName = TextEditingController();
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
 
-  void registerUser() async {
-    final provider = context.read<RegisterProvider>();
+  Future<void> doLogin() async {
+    final provider = context.read<AuthProvider>();
 
-    final isValid = provider.validateFields(controllerName.text, controllerEmail.text, controllerPassword.text, context);
+    final isValid = provider.validateLoginFields(controllerEmail.text, controllerPassword.text, context);
 
     if(!isValid) return;
 
-    final result = await provider.registerUser(controllerName.text, controllerEmail.text, controllerPassword.text, context);
+    final result = await provider.doLogin(controllerEmail.text, controllerPassword.text);
 
     if(result == null) {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text("Register Successful"),
-          content: const Text("You can now login with your credentials"),
+          title: const Text("Login Successful"),
+          content: Text("Welcome, ${provider.user!.name}!"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavigatorScreen()));
               },
-              child: const Text("Go to Login"),
+              child: const Text("Continue"),
+            ),
+          ],
+        ),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Login Failed"),
+          content: const Text("Email or password incorrect"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Try Again"),
             ),
           ],
         ),
@@ -54,7 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
-    final provider = context.watch<RegisterProvider>();
+    final provider = context.watch<AuthProvider>();
 
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
@@ -80,27 +93,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: [
                     Padding(padding: EdgeInsets.only(bottom: 50)),
                     Text(
-                      l10n.createAccount,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: theme.colorScheme.primary,
-                      ),
+                      l10n.welcomeBack,
+                      style: TextStyle(fontSize: 20, color: theme.colorScheme.primary),
                     ),
                     Padding(padding: EdgeInsets.only(top: 30)),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 30),
                       child: TextFieldComponent(
-                        controller: controllerName,
-                        hint: l10n.name,
-                        error: provider.errorName,
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.only(top: 20)),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 30),
-                      child: TextFieldComponent(
-                        controller: controllerEmail,
-                        hint: l10n.email,
+                        controller: controllerEmail, 
+                        hint: l10n.email, 
                         error: provider.errorEmail,
                       ),
                     ),
@@ -108,7 +109,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 30),
                       child: TextFieldComponent(
-                        controller: controllerPassword,
+                        controller: controllerPassword, 
                         hint: l10n.password,
                         error: provider.errorPassword,
                         isPassword: true,
@@ -120,7 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () => registerUser(),
+                          onPressed: () => doLogin(),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: theme.colorScheme.secondary,
                             foregroundColor: Colors.white,
@@ -130,23 +131,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           child: Text(
-                            l10n.signUp,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w900,
-                            ),
+                            l10n.signIn,
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
                           ),
                         ),
                       ),
                     ),
-                    Padding(padding: EdgeInsets.only(top: 10)),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        l10n.haveAccount,
-                        style: TextStyle(color: theme.colorScheme.secondary),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context, 
+                            MaterialPageRoute(builder: (context) => RegisterScreen()),
+                          );
+                        },
+                        child: Text(
+                          l10n.noAccount,
+                          style: TextStyle(
+                            color: theme.colorScheme.secondary,
+                            fontSize: 12,
+                          ),
+                        ),
                       ),
                     ),
                     Padding(padding: EdgeInsets.only(top: 50)),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/trip.dart';
-import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
+import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
 import 'package:trip_planner/modules/trip/trip_usecase.dart';
 
 class TripProvider extends ChangeNotifier {
@@ -16,7 +16,7 @@ class TripProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   Future<void> loadAllTrips(BuildContext context) async {
-    final userProvider = context.read<UserProvider>();
+    final userProvider = context.read<AuthProvider>();
     _isLoading = true;
     notifyListeners();
 

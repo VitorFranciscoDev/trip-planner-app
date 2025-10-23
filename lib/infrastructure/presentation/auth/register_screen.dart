@@ -2,62 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
-import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_screen.dart';
-import 'package:trip_planner/infrastructure/presentation/login/login_state.dart';
-import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
-import 'package:trip_planner/infrastructure/presentation/register/register_screen.dart';
+import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
+import 'package:trip_planner/infrastructure/presentation/auth/login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   // controllers
+  TextEditingController controllerName = TextEditingController();
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
 
-  Future<void> doLogin() async {
-    final provider = context.read<LoginProvider>();
+  void registerUser() async {
+    final provider = context.read<AuthProvider>();
 
-    final isValid = provider.validateFields(controllerEmail.text, controllerPassword.text, context);
+    final isValid = provider.validateRegisterFields(controllerName.text, controllerEmail.text, controllerPassword.text, context);
 
     if(!isValid) return;
 
-    final user = await provider.doLogin(controllerEmail.text, controllerPassword.text);
+    final result = await provider.registerUser(controllerName.text, controllerEmail.text, controllerPassword.text, context);
 
-    if(user != null) {
+    if(result == null) {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text("Login Successful"),
-          content: Text("Welcome, ${user.name}!"),
+          title: const Text("Register Successful"),
+          content: const Text("You can now login with your credentials"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                context.read<UserProvider>().registerUser(user);
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavigatorScreen()));
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                );
               },
-              child: const Text("Continue"),
-            ),
-          ],
-        ),
-      );
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Login Failed"),
-          content: const Text("Email or password incorrect"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("Try Again"),
+              child: const Text("Go to Login"),
             ),
           ],
         ),
@@ -69,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
-    final provider = context.watch<LoginProvider>();
+    final provider = context.watch<AuthProvider>();
 
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
@@ -95,15 +80,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Padding(padding: EdgeInsets.only(bottom: 50)),
                     Text(
-                      l10n.welcomeBack,
-                      style: TextStyle(fontSize: 20, color: theme.colorScheme.primary),
+                      l10n.createAccount,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: theme.colorScheme.primary,
+                      ),
                     ),
                     Padding(padding: EdgeInsets.only(top: 30)),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 30),
                       child: TextFieldComponent(
-                        controller: controllerEmail, 
-                        hint: l10n.email, 
+                        controller: controllerName,
+                        hint: l10n.name,
+                        error: provider.errorName,
+                      ),
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 20)),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: TextFieldComponent(
+                        controller: controllerEmail,
+                        hint: l10n.email,
                         error: provider.errorEmail,
                       ),
                     ),
@@ -111,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 30),
                       child: TextFieldComponent(
-                        controller: controllerPassword, 
+                        controller: controllerPassword,
                         hint: l10n.password,
                         error: provider.errorPassword,
                         isPassword: true,
@@ -123,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () => doLogin(),
+                          onPressed: () => registerUser(),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: theme.colorScheme.secondary,
                             foregroundColor: Colors.white,
@@ -133,28 +130,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           child: Text(
-                            l10n.signIn,
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
+                            l10n.signUp,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w900,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context, 
-                            MaterialPageRoute(builder: (context) => RegisterScreen()),
-                          );
-                        },
-                        child: Text(
-                          l10n.noAccount,
-                          style: TextStyle(
-                            color: theme.colorScheme.secondary,
-                            fontSize: 12,
-                          ),
-                        ),
+                    Padding(padding: EdgeInsets.only(top: 10)),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        l10n.haveAccount,
+                        style: TextStyle(color: theme.colorScheme.secondary),
                       ),
                     ),
                     Padding(padding: EdgeInsets.only(top: 50)),
