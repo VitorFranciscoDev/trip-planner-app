@@ -2,17 +2,18 @@ import 'package:trip_planner/entities/user_experience.dart';
 
 class Stop {
   final int? id;
-  final int? trip_id;
+  final int? trip_id; // Trip's ID
   final String location;
   final String start_date;
   final String end_date;
   final double latitude;
   final double longitude;
-  final List<UserExperience>? userExperiences;
+  final List<UserExperience>? userExperiences; // Stop's experiences
 
+  // Constructor
   Stop({ this.id, this.trip_id, required this.location, required this.start_date, required this.end_date, required this.latitude, required this.longitude, this.userExperiences });
 
-  //Transforms Stop in Map
+  // Transforms Stop in Map<String, dynamic>
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -25,7 +26,7 @@ class Stop {
     };
   }
 
-  //Transforms Map in Stop
+  // Transforms Map<String, dynamic> in Stop
   factory Stop.fromMap(Map<String, dynamic> map) {
     return Stop(
       id: map['id'],

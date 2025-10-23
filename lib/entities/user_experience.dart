@@ -1,10 +1,11 @@
 class UserExperience {
   final int? id;
-  final int? stop_id;
+  final int? stop_id; // Stop's ID
   final String experience;
 
   UserExperience({ this.id, this.stop_id, required this.experience });
 
+  // Transforms UserExperience in Map<String, dynamic>
   Map<String, dynamic> toMap() {
     return {
       'id': id,
