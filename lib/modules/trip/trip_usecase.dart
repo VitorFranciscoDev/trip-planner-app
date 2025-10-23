@@ -72,8 +72,8 @@ class TripUseCase {
     }
   }
 
-  Future<List<Trip>> getAllTrips() async {
-    return await tripRepository.getAllTrips();
+  Future<List<Trip>> getAllTrips(int user_id) async {
+    return await tripRepository.getAllTrips(user_id);
   }
 
   Future<Trip?> getTripById(int id) async {

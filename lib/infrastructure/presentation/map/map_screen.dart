@@ -9,6 +9,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/stop.dart';
+import 'package:trip_planner/entities/user_experience.dart';
 import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
 import 'package:trip_planner/modules/stop/stop_repository.dart';
 
@@ -28,7 +29,7 @@ class _MapScreenState extends State<MapScreen> {
   List<Marker> _markers = [];
   List<LatLng> _points = [];
 
-  bool _differentCulture = false;
+  bool _differentCulture = true;
   bool _alternativeCuisine = false;
   bool _historicalSites = false;
   bool _localEstablishments = false;
@@ -82,7 +83,9 @@ class _MapScreenState extends State<MapScreen> {
                 Checkbox(
                   value: _differentCulture,
                   onChanged: (newValue) {
-                    _differentCulture = !_differentCulture;
+                    setState(() {
+                      _differentCulture = newValue!;
+                    });
                   },
                 ),
                 Text("Immersion in a Different Culture"),
@@ -93,10 +96,12 @@ class _MapScreenState extends State<MapScreen> {
                 Checkbox(
                   value: _alternativeCuisine,
                   onChanged: (newValue) {
-                    _alternativeCuisine = !_alternativeCuisine;
+                    setState(() {
+                      _alternativeCuisine = newValue!;
+                    });
                   },
                 ),
-                Text("Explore Alternative Cuisine"),
+                Text("Explore Alternative Cuisines"),
               ],
             ),
             Row(
@@ -104,7 +109,9 @@ class _MapScreenState extends State<MapScreen> {
                 Checkbox(
                   value: _historicalSites,
                   onChanged: (newValue) {
-                    _historicalSites = !_historicalSites;
+                    setState(() {
+                      _historicalSites = newValue!;
+                    });
                   },
                 ),
                 Text("Visit Historical Sites"),
@@ -115,7 +122,9 @@ class _MapScreenState extends State<MapScreen> {
                 Checkbox(
                   value: _localEstablishments,
                   onChanged: (newValue) {
-                    _localEstablishments = !_localEstablishments;
+                    setState(() {
+                      _localEstablishments = newValue!;
+                    });
                   },
                 ),
                 Text("Visit Local Establishments"),
@@ -126,7 +135,9 @@ class _MapScreenState extends State<MapScreen> {
                 Checkbox(
                   value: _contactWithNature,
                   onChanged: (newValue) {
-                    _contactWithNature = !_contactWithNature;
+                    setState(() {
+                      _contactWithNature = !newValue!;
+                    });
                   },
                 ),
                 Text("Contact With Nature"),
@@ -141,12 +152,31 @@ class _MapScreenState extends State<MapScreen> {
           ),
           TextButton(
             onPressed: () async {
+              final experiences = <UserExperience>[];
+
+              if (_differentCulture) {
+                experiences.add(UserExperience(experience: "Immersion in a Different Culture"));
+              }
+              if (_alternativeCuisine) {
+                experiences.add(UserExperience(experience: "Explore Alternative Cuisines"));
+              }
+              if (_historicalSites) {
+                experiences.add(UserExperience(experience: "Visit Historical Sites"));
+              }
+              if (_localEstablishments) {
+                experiences.add(UserExperience(experience: "Visit Local Establishments"));
+              }
+              if (_contactWithNature) {
+                experiences.add(UserExperience(experience: "Contact With Nature"));
+              }
+
               final stop = Stop(
                 location: locationName,
-                startDate: "22",
-                endDate: "33",
+                start_date: "22",
+                end_date: "33",
                 latitude: latlng.latitude,
                 longitude: latlng.longitude,
+                userExperiences: experiences,
               );
               provider.addStop(stop);
 

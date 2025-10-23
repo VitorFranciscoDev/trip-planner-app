@@ -72,7 +72,7 @@ class TripRepository implements ITripRepository {
   }
 
   @override
-  Future<List<Trip>> getAllTrips() async {
+  Future<List<Trip>> getAllTrips(int user_id) async {
     try {
       final db = await dbHelper.database;
       final result = await db.query('trips', orderBy: 'id DESC');
@@ -91,15 +91,15 @@ class TripRepository implements ITripRepository {
 
     final map = result.first;
 
-    final peopleResult = await db.query('persons', where: 'tripId = ?', whereArgs: [id]);
-    final stopsResult = await db.query('stops', where: 'tripId = ?', whereArgs: [id]);
+    final peopleResult = await db.query('persons', where: 'trip_id = ?', whereArgs: [id]);
+    final stopsResult = await db.query('stops', where: 'trip_id = ?', whereArgs: [id]);
 
     return Trip(
       title: map['title'] as String, 
       transport: map['transport'] as String, 
       start_date: map['start_date'] as String, 
       end_date: map['end_date'] as String, 
-      concluded: (map['concluded'] as int) == 1,
+      concluded: map['concluded'] == 1,
       group: peopleResult.map((p) => Person.fromMap(p)).toList(),
       stops: stopsResult.map((s) => Stop.fromMap(s)).toList(),
     );

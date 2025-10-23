@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/trip.dart';
+import 'package:trip_planner/infrastructure/presentation/user/user_state.dart';
 import 'package:trip_planner/modules/trip/trip_usecase.dart';
 
 class TripProvider extends ChangeNotifier {
@@ -13,12 +15,13 @@ class TripProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  Future<void> loadAllTrips() async {
+  Future<void> loadAllTrips(BuildContext context) async {
+    final userProvider = context.read<UserProvider>();
     _isLoading = true;
     notifyListeners();
 
     try {
-      _trips = await tripUseCase.getAllTrips();
+      _trips = await tripUseCase.getAllTrips(userProvider.user!.id!);
     } catch (e) {
       _trips = [];
     } finally {
@@ -40,7 +43,7 @@ class TripProvider extends ChangeNotifier {
       final result = await tripUseCase.deleteTrip(id, context);
       
       if (result == null) {
-        await loadAllTrips();
+        await loadAllTrips(context);
       }
       
       return result;
@@ -54,7 +57,7 @@ class TripProvider extends ChangeNotifier {
       final result = await tripUseCase.updateTrip(trip, context);
       
       if (result == null) {
-        await loadAllTrips();
+        await loadAllTrips(context);
       }
       
       return result;

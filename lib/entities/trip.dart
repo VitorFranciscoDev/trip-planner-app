@@ -23,7 +23,7 @@ class Trip {
       'transport': transport,
       'start_date': start_date,
       'end_date': end_date,
-      'concluded': concluded,
+      'concluded': concluded ? 1 : 0,
     };
   }
 

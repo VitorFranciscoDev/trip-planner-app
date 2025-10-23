@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/entities/trip.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 import 'package:trip_planner/modules/trip/trip_usecase.dart';
 import 'package:trip_planner/modules/person/person_usecase.dart';
 
@@ -79,6 +81,11 @@ class TripRegisterProvider extends ChangeNotifier {
 
     try {
       final result = await tripUseCase.createTrip(trip, context);
+
+      if (result == null) {
+        await context.read<TripProvider>().loadAllTrips(context);
+      }
+      
       return result;
     } catch (e) {
       return "${l10n.unexpectedError}: ${e.toString()}";

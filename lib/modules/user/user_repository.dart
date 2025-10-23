@@ -30,7 +30,7 @@ class UserRepository implements IUserRepository {
     } catch (e) {
       throw Exception("Error in Register: $e");
     }
-  }
+  } 
 
   @override
   Future<User?> doLogin(String email, String password) async {

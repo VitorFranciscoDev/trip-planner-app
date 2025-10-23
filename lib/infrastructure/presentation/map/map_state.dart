@@ -15,4 +15,6 @@ class StopsProvider with ChangeNotifier {
     _stops.remove(stop);
     notifyListeners();
   }
+
+  void clearStops() {}
 }
