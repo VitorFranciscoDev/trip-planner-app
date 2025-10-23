@@ -4,11 +4,8 @@ import 'package:trip_planner/infrastructure/presentation/app/app_global_state.da
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_state.dart';
 import 'package:trip_planner/infrastructure/presentation/home/home_state.dart';
 import 'package:trip_planner/infrastructure/presentation/app/intl/intl_state.dart';
-import 'package:trip_planner/infrastructure/presentation/map/map_state.dart';
-import 'package:trip_planner/infrastructure/presentation/search-result/search_result_state.dart';
+import 'package:trip_planner/infrastructure/presentation/home/search_result_state.dart';
 import 'package:trip_planner/infrastructure/presentation/app/theme/theme_provider.dart';
-import 'package:trip_planner/infrastructure/presentation/group/group_state.dart';
-import 'package:trip_planner/infrastructure/presentation/trip-register/trip_register_state.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
 import 'package:trip_planner/modules/person/person_usecase.dart';
@@ -40,13 +37,10 @@ void main() async {
         ChangeNotifierProvider(create: (_) => IntlProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider(userUseCase: userUseCase)),
-        ChangeNotifierProvider(create: (_) => TripProvider(tripUseCase: tripUseCase)),
-        ChangeNotifierProvider(create: (_) => GroupProvider()),
-        ChangeNotifierProvider(create: (_) => StopsProvider()),
+        ChangeNotifierProvider(create: (_) => TripProvider(tripUseCase: tripUseCase, personUseCase: personUseCase)),
         ChangeNotifierProvider(create: (_) => BottomNavigatorProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider(stopRecomendationRepository: stopRecomendationRepository)),
         ChangeNotifierProvider(create: (_) => SearchResultProvider(searchResultRepository: searchResultRepository)),
-        ChangeNotifierProvider(create: (_) => TripRegisterProvider(tripUseCase: tripUseCase, personUseCase: personUseCase)),
       ],
       child: const MyApp(),
     ),

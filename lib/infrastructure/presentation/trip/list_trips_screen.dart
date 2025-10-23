@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
-import 'package:trip_planner/infrastructure/presentation/trip-details/trip_details_screen.dart';
+import 'package:trip_planner/infrastructure/presentation/trip/trip_details_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 
 class ListTripsScreen extends StatefulWidget {

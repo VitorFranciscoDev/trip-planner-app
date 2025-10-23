@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/home/home_state.dart';
-import 'package:trip_planner/infrastructure/presentation/search-result/search_result_state.dart';
+import 'package:trip_planner/infrastructure/presentation/home/search_result_state.dart';
 import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
 
 class HomeScreen extends StatefulWidget {

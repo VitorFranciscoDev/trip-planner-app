@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_state.dart';
 import 'package:trip_planner/infrastructure/presentation/settings/settings_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/home/home_screen.dart';
-import 'package:trip_planner/infrastructure/presentation/list-trips/list_trips_screen.dart';
-import 'package:trip_planner/infrastructure/presentation/trip-register/trip_register_screen.dart';
+import 'package:trip_planner/infrastructure/presentation/trip/list_trips_screen.dart';
+import 'package:trip_planner/infrastructure/presentation/trip/trip_register_screen.dart';
 
 class BottomNavigatorScreen extends StatelessWidget {
   BottomNavigatorScreen({super.key});
