@@ -92,10 +92,11 @@ class AuthProvider with ChangeNotifier {
 
       if(user!=null) {
         _user = user;
-        notifyListeners();
 
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('user_data', jsonEncode(user.toMap()));
+
+        notifyListeners();
       }
       
       return null;

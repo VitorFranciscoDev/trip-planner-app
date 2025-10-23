@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
         context: context,
         builder: (context) => AlertDialog(
           title: const Text("Login Successful"),
-          content: Text("Welcome, ${provider.user!.name}!"),
+          content: Text("Welcome, ${provider.user?.name ?? "User"}!"),
           actions: [
             TextButton(
               onPressed: () {
