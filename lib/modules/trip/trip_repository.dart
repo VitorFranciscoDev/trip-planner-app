@@ -13,23 +13,29 @@ class TripRepository implements ITripRepository {
       final db = await dbHelper.database;
 
       return await db.transaction((txn) async {
-        final tripId = await txn.insert('trips', trip.toMap());
+        final trip_id = await txn.insert('trips', trip.toMap());
 
         for(var person in trip.group!) {
           await txn.insert('persons', {
             ...person.toMap(),
-            'tripId': tripId,
+            'trip_id': trip_id,
           }); 
         }
 
         for(var stop in trip.stops!) {
-          await txn.insert('stops', {
+          final stop_id = await txn.insert('stops', {
             ...stop.toMap(),
-            'tripId': tripId,
+            'trip_id': trip_id,
           }); 
+          for(var userExperience in stop.userExperiences!) {
+            await txn.insert('user_experiences', {
+              ...userExperience.toMap(),
+              'stop_id': stop_id,
+            });
+          }
         }
         
-        return tripId;
+        return trip_id;
       });
     } catch (e) {
       throw Exception("Failed to insert trip: $e");

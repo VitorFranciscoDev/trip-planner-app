@@ -1,3 +1,5 @@
+import 'package:trip_planner/entities/user_experience.dart';
+
 class Stop {
   final int? id;
   final int? tripId;
@@ -6,8 +8,9 @@ class Stop {
   final String endDate;
   final double latitude;
   final double longitude;
+  final List<UserExperience>? userExperiences;
 
-  Stop({ this.id, this.tripId, required this.location, required this.startDate, required this.endDate, required this.latitude, required this.longitude });
+  Stop({ this.id, this.tripId, required this.location, required this.startDate, required this.endDate, required this.latitude, required this.longitude, this.userExperiences });
 
   //Transforms Stop in Map
   Map<String, dynamic> toMap() {
