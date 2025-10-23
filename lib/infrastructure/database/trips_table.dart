@@ -1,5 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 
+// Trip's Table [DB]
+// [user_id] references the ID of the actual user
 class TripsTable {
   static createTable(Database db) async {
     await db.execute('''

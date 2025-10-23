@@ -7,19 +7,21 @@ import 'package:trip_planner/infrastructure/database/trips_table.dart';
 import 'package:trip_planner/infrastructure/database/user_experiences_table.dart';
 import 'package:trip_planner/infrastructure/database/users_table.dart';
 
-class DBHelper {
-  static final DBHelper _instance = DBHelper._internal();
-  factory DBHelper() => _instance;
-  DBHelper._internal();
-
+class TripPlannerDatabase {
+  // Instances of the DB
+  static final TripPlannerDatabase _instance = TripPlannerDatabase._internal();
+  factory TripPlannerDatabase() => _instance;
+  TripPlannerDatabase._internal();
   static Database? db;
 
+  // Getter for DB
   Future<Database> get database async {
     if(db != null) return db!;
     db = await _initDatabase();
     return db!;
   }
 
+  // Function to init DB and Tables
   Future<Database> _initDatabase() async {
     final databaseDirPath = await getDatabasesPath();
     final databasePath = join(databaseDirPath, 'trip_planner.db');
