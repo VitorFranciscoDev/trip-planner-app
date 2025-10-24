@@ -343,7 +343,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          context.read<AuthProvider>().deleteUser(provider.user!.id, context);
+                          context.read<AuthProvider>().deleteUser(context);
                           Navigator.of(context).pop();
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                         },
