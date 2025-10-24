@@ -72,6 +72,12 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
 
     try {
+      final existingUser = await userUseCase.getUserByEmail(user.email);
+
+      if(existingUser!=null) {
+        return "Email already exists";
+      }
+
       // Receives the ID of new User
       final result = await userUseCase.registerUser(user);
 
