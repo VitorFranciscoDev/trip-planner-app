@@ -1,5 +1,6 @@
 import 'package:trip_planner/entities/user.dart';
 
+// Contracts of User
 abstract class IUserRepository {
   Future<User?> getUserByEmail(String email);
   Future<int> registerUser(User user);
