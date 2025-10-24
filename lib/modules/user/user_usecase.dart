@@ -41,19 +41,20 @@ class UserUseCase {
     return null;
   }
 
-  // Register the User
-  Future<String?> registerUser(User user, BuildContext context) async {
+  // Get User By Email
+  Future<User?> getUserByEmail(String email) async {
     try {
-      // Verifies if the email isn't in DB
-      final existingUser = await userRepository.getUserByEmail(user.email);
+      // Returns User from Repository if it exists
+      return await userRepository.getUserByEmail(email);
+    } catch(e) {
+      throw Exception("Error in Get User By Email Use Case: $e");
+    } 
+  }
 
-      if(existingUser != null) {
-        return "User already exists";
-      }
-      
-      // Repository register the User in DB
-      await userRepository.registerUser(user);
-      return null;
+  // Register the User
+  Future<int> registerUser(User user) async {
+    try {
+      return await userRepository.registerUser(user);
     } catch (e) {
       throw Exception("Error in Register Use Case: $e");
     }
@@ -80,15 +81,9 @@ class UserUseCase {
   }
 
   // Delete the User
-  Future<String?> deleteUser(int? id, BuildContext context) async {
+  Future<int> deleteUser(int? id) async {
     try {
-      // Receive the number of rows affected
-      final result = await userRepository.deleteUser(id);
-      
-      // if it has any rows affected, returns null
-      if(result>0) return null;
-      
-      return "Error in deleting user";
+      return await userRepository.deleteUser(id);
     } catch(e) {
       throw Exception("Error in Delete User Use Case: $e");
     }

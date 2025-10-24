@@ -25,7 +25,7 @@ class AuthProvider with ChangeNotifier {
   String? get errorEmail => _errorEmail;
   String? get errorPassword => _errorPassword;
 
-  // Constructor [Load User(if it already has one)]
+  // Constructor (Load User if it already has one)
   AuthProvider({required this.userUseCase}) {
     loadUser();
   }
@@ -72,10 +72,13 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      // 
-      return await userUseCase.registerUser(user, context);
+      // Receives the ID of new User
+      final result = await userUseCase.registerUser(user);
+
+      if(result > 0) return null;
+      return "Error in Register. Try Again.";
     } catch (e) {
-      return "Unexpected error. Try Again";
+      return "Unexpected error. Try Again.";
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -97,11 +100,13 @@ class AuthProvider with ChangeNotifier {
         await prefs.setString('user_data', jsonEncode(user.toMap()));
 
         notifyListeners();
+
+        return null;
       }
       
-      return null;
+      return "No User Found.";
     } catch (e) {
-      return "Unexpected Error. Try Again";
+      return "Unexpected Error. Try Again.";
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -122,11 +127,13 @@ class AuthProvider with ChangeNotifier {
 
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('user_data', jsonEncode(user.toMap()));
+
+        return null;
       }
 
-      return null;
+      return "Error in Updating User. Try Again.";
     } catch (e) {
-      return "Unexpected Error. Try Again";
+      return "Unexpected Error. Try Again.";
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -139,7 +146,10 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      return await userUseCase.deleteUser(_user?.id, context);
+      final result = await userUseCase.deleteUser(user?.id);
+
+      if(result > 0) return null;
+      return "Error deleting the User. Try Again.";
     } catch (e) {
       return "Unexpected error. Try Again";
     } finally {
