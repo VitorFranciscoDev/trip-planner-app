@@ -21,17 +21,16 @@ class AuthProvider with ChangeNotifier {
   String? _errorEmail;
   String? _errorPassword;
 
-  // Errors Getters
   String? get errorName => _errorName;
   String? get errorEmail => _errorEmail;
   String? get errorPassword => _errorPassword;
 
-  // Constructor [Load the User(if it already has one)]
+  // Constructor [Load User(if it already has one)]
   AuthProvider({required this.userUseCase}) {
     loadUser();
   }
 
-  // Function to get the User's Data from SharedPreferences
+  // Get User's Data from SharedPreferences
   Future<void> loadUser() async {
     final prefs = await SharedPreferences.getInstance();
     final userData = prefs.getString('user_data');
@@ -67,13 +66,14 @@ class AuthProvider with ChangeNotifier {
     return _errorEmail == null && _errorPassword == null;
   }
 
-  // Function to Register the User in the DB and SharedPreferences
-  Future<String?> registerUser(String name, String email, String password, BuildContext context) async {
+  // Register User in the DB and SharedPreferences
+  Future<String?> registerUser(User user, BuildContext context) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      return await userUseCase.registerUser(name, email, password, context);
+      // 
+      return await userUseCase.registerUser(user, context);
     } catch (e) {
       return "Unexpected error. Try Again";
     } finally {
@@ -82,7 +82,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  // Function to do Login in the App [if User exists, he's saved on SharedPreferences]
+  // Login in App [if User exists, he's saved on SharedPreferences]
   Future<String?> doLogin(String email, String password) async {
     _isLoading = true;
     notifyListeners();
@@ -108,6 +108,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+  // Update User
   Future<String?> updateUser(User? user) async {
     _isLoading = true;
     notifyListeners();
@@ -125,28 +126,29 @@ class AuthProvider with ChangeNotifier {
 
       return null;
     } catch (e) {
-      return null;
+      return "Unexpected Error. Try Again";
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  Future<String?> deleteUser(int? id, BuildContext context) async {
+  // Delete User
+  Future<String?> deleteUser(BuildContext context) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      return await userUseCase.deleteUser(id, context);
+      return await userUseCase.deleteUser(_user?.id, context);
     } catch (e) {
-      return "Unexpected error: ${e.toString()}";
+      return "Unexpected error. Try Again";
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  // Function to Log Out of the App [Removes the User from SharedPreferences]
+  // Log Out of App [Removes the User from SharedPreferences]
   Future<void> logout() async {
     _user = null;
     notifyListeners();

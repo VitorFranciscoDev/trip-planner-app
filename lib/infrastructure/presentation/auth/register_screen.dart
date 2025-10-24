@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trip_planner/entities/user.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
 import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
@@ -25,7 +26,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     if(!isValid) return;
 
-    final result = await provider.registerUser(controllerName.text, controllerEmail.text, controllerPassword.text, context);
+    User user = User(name: controllerName.text, email: controllerEmail.text, password: controllerPassword.text);
+
+    final result = await provider.registerUser(user, context);
 
     if(result == null) {
       showDialog(
@@ -43,6 +46,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 );
               },
               child: const Text("Go to Login"),
+            ),
+          ],
+        ),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Error in Register"),
+          content: Text(result),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("Ok"),
             ),
           ],
         ),
