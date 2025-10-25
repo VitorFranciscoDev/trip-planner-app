@@ -33,7 +33,7 @@ class _TextFieldComponentState extends State<TextFieldComponent> {
         suffixIcon: widget.isPassword
           ? IconButton(
             icon: Icon(
-              _obscureText ? Icons.visibility_off : Icons.visibility,
+              _obscureText ? Icons.visibility : Icons.visibility_off,
             ),
             onPressed: () {
               setState(() {

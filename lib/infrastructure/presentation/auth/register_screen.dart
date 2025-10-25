@@ -23,8 +23,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
 
+  @override
+  void dispose() {
+    controllerName.dispose();
+    controllerEmail.dispose();
+    controllerPassword.dispose();
+    super.dispose();
+  }
+
   // Try to Register User in DB
   void registerUser() async {
+    if (!mounted) return;
+
     final provider = context.read<AuthProvider>();
 
     final isValid = provider.validateRegisterFields(controllerName.text, controllerEmail.text, controllerPassword.text, context);
@@ -38,7 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if(result == null) {
       showDialog(
         context: context,
-        builder: (context) => AlertDialogComponent(
+        builder: (dialogContext) => AlertDialogComponent(
           title: "Register Succesful",
           message: "You can now Login", 
           function2: () {
@@ -73,20 +83,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 60),
               TripPlannerLogoComponent(),
               const SizedBox(height: 50),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: ContainerTextFieldComponent(
                   child: Column(
                     children: [
-                      const SizedBox(height: 50),
+                      const SizedBox(height: 30),
                       Text(
                         l10n.createAccount,
                         style: TextStyle(
                           fontSize: 20,
                           color: theme.colorScheme.primary,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                       const SizedBox(height: 30),
@@ -122,7 +132,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 30),
                         child: ButtonComponent(function: registerUser, message: l10n.signUp),
                       ),
-                      const SizedBox(height: 10),
                       TextButton(
                         onPressed: () {
                           Navigator.pop(context);
@@ -133,7 +142,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: TextStyle(color: theme.colorScheme.secondary),
                         ),
                       ),
-                      const SizedBox(height: 50),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),

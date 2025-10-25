@@ -5,8 +5,16 @@ class AppLocalizations {
 
   AppLocalizations(this.locale);
 
+  // Versão SAFE que retorna uma instância padrão ao invés de dar erro
   static AppLocalizations of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+    final localizations = Localizations.of<AppLocalizations>(context, AppLocalizations);
+    
+    // Se não encontrar, retorna instância padrão com inglês
+    if (localizations == null) {
+      return AppLocalizations(const Locale('en', 'US'));
+    }
+    
+    return localizations;
   }
 
   static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
@@ -320,7 +328,7 @@ class AppLocalizations {
     return translation;
   }
 
-  // Getters convenientes para as telas
+  // Getters for Login Screen
   String get welcomeBack => translate('welcome_back');
   String get email => translate('email');
   String get password => translate('password');
@@ -333,6 +341,7 @@ class AppLocalizations {
   String get emailPasswordIncorrect => translate('email_password_incorrect');
   String get tryAgain => translate('try_again');
   
+  // Getters for Register Screen
   String get createAccount => translate('create_account');
   String get name => translate('name');
   String get signUp => translate('sign_up');
@@ -341,11 +350,16 @@ class AppLocalizations {
   String get canLoginNow => translate('can_login_now');
   String get goToLogin => translate('go_to_login');
   
+  // Getters for Validation Errors
   String get fieldRequired => translate('field_required');
   String get invalidEmail => translate('invalid_email');
   String get passwordTooShort => translate('password_too_short');
+  String get emailAlreadyRegistered => translate('email_already_registered');
+  String get registerError => translate('register_error');
+  String get deleteUserError => translate('delete_user_error');
   
-  // Home Screen getters
+  // Getters for Home Screen
+  String welcome(String name) => translate('welcome', [name]);
   String get searchDestinations => translate('search_destinations');
   String get noResultsFound => translate('no_results_found');
   String selected(String location) => translate('selected', [location]);
@@ -353,7 +367,7 @@ class AppLocalizations {
   String get brazilianNortheast => translate('brazilian_northeast');
   String get southernBrazil => translate('southern_brazil');
   
-  // Trip Register Screen getters
+  // Getters for Trip Register Screen
   String get newTrip => translate('new_trip');
   String get tripData => translate('trip_data');
   String get tripTitle => translate('trip_title');
@@ -375,7 +389,7 @@ class AppLocalizations {
   String get ok => translate('ok');
   String get error => translate('error');
   
-  // Trip validation getters
+  // Getters for Trip Validation
   String get tripTitleRequired => translate('trip_title_required');
   String get startDateRequired => translate('start_date_required');
   String get endDateRequired => translate('end_date_required');
@@ -389,12 +403,12 @@ class AppLocalizations {
   String get tripCreateError => translate('trip_create_error');
   String get unexpectedError => translate('unexpected_error');
   
-  // List Trips getters
+  // Getters for List Trips Screen
   String get yourTrips => translate('your_trips');
   String get activeTrips => translate('active_trips');
   String get concludedTrips => translate('concluded_trips');
   
-  // Config Screen getters
+  // Getters for Config Screen
   String get preferences => translate('preferences');
   String get darkMode => translate('dark_mode');
   String get language => translate('language');

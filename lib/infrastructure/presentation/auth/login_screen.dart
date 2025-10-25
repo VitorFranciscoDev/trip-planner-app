@@ -22,7 +22,16 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
 
+  @override
+  void dispose() {
+    controllerEmail.dispose();
+    controllerPassword.dispose();
+    super.dispose();
+  }
+
   Future<void> doLogin() async {
+    if (!mounted) return;
+
     final provider = context.read<AuthProvider>();
 
     final isValid = provider.validateLoginFields(controllerEmail.text, controllerPassword.text, context);
@@ -34,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if(result == null) {
       showDialog(
         context: context,
-        builder: (context) => AlertDialogComponent(
+        builder: (dialogContext) => AlertDialogComponent(
           title: "Login Successful", 
           message: "Welcome Back, ${provider.user!.name}",
           function2: () {
@@ -69,59 +78,63 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 60),
               TripPlannerLogoComponent(),
               const SizedBox(height: 50),
-              ContainerTextFieldComponent(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 50),
-                    Text(
-                      l10n.welcomeBack,
-                      style: TextStyle(fontSize: 20, color: theme.colorScheme.primary),
-                    ),
-                    const SizedBox(height: 30),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 30),
-                      child: TextFieldComponent(
-                        controller: controllerEmail, 
-                        hint: l10n.email, 
-                        error: provider.errorEmail,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 30),
-                      child: TextFieldComponent(
-                        controller: controllerPassword, 
-                        hint: l10n.password,
-                        error: provider.errorPassword,
-                        isPassword: true,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: ButtonComponent(function: doLogin, message: l10n.signIn),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context, 
-                          MaterialPageRoute(builder: (context) => RegisterScreen()),
-                        );
-                        provider.clearErrors();
-                      },
-                      child: Text(
-                        l10n.noAccount,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: ContainerTextFieldComponent(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 30),
+                      Text(
+                        l10n.welcomeBack,
                         style: TextStyle(
-                          color: theme.colorScheme.secondary,
-                          fontSize: 12,
+                          fontSize: 20, 
+                          color: theme.colorScheme.primary, 
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 50),
-                  ],
+                      const SizedBox(height: 30),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: TextFieldComponent(
+                          controller: controllerEmail, 
+                          hint: l10n.email, 
+                          error: provider.errorEmail,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: TextFieldComponent(
+                          controller: controllerPassword, 
+                          hint: l10n.password,
+                          error: provider.errorPassword,
+                          isPassword: true,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: ButtonComponent(function: doLogin, message: l10n.signIn),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterScreen()));
+                          provider.clearErrors();
+                        },
+                        child: Text(
+                          l10n.noAccount,
+                          style: TextStyle(
+                            color: theme.colorScheme.secondary,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
                 ),
               ),
             ],
