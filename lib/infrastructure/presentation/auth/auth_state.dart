@@ -66,12 +66,19 @@ class AuthProvider with ChangeNotifier {
     return _errorEmail == null && _errorPassword == null;
   }
 
+  void clearErrors() {
+    _errorName = null;
+    _errorEmail = null;
+    _errorPassword = null;
+  }
+
   // Register User in the DB and SharedPreferences
   Future<String?> registerUser(User user, BuildContext context) async {
     _isLoading = true;
     notifyListeners();
 
     try {
+      // Verifies if User with same Email already exists
       final existingUser = await userUseCase.getUserByEmail(user.email);
 
       if(existingUser!=null) {

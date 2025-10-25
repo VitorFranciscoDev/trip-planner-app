@@ -152,9 +152,9 @@ class _TripScreenState extends State<TripScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          Center(
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25),
             child: Container(
-              width: 320,
               decoration: BoxDecoration(
                 color: theme.colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(20),
@@ -259,9 +259,9 @@ class _TripScreenState extends State<TripScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          Center(
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25),
             child: Container(
-              width: 320,
               decoration: BoxDecoration(
                 color: theme.colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(20),
@@ -371,9 +371,9 @@ class _TripScreenState extends State<TripScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          Center(
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25),
             child: Container(
-              width: 320,
               decoration: BoxDecoration(
                 color: theme.colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(20),
