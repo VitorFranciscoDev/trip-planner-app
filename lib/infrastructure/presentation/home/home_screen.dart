@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/app/components/recomendations_list_component.dart';
 import 'package:trip_planner/infrastructure/presentation/home/home_state.dart';
 import 'package:trip_planner/infrastructure/presentation/home/search_result_state.dart';
 import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
@@ -13,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  //Controller
+  // Controller
   final TextEditingController controllerSearch = TextEditingController();
 
   @override
@@ -180,174 +181,12 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 30),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
-            child: GestureDetector(
-              child: Container(
-                width: 360,
-                height: 220,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.background,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(width: 2, color: theme.colorScheme.primary),
-                ),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        const SizedBox(width: 15),
-                        Text(
-                          "Nordeste Brasileiro",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: theme.colorScheme.primary,
-                            fontFamily: "Times New Roman",
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Spacer(),
-                        Text(
-                          "30 days",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: theme.colorScheme.primary,
-                            fontFamily: "Times New Roman",
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const SizedBox(width: 15),
-                      ],
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: recomendation1.length,
-                        itemBuilder: (context, index) {
-                          final location = recomendation1[index];
-                          return Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Image.asset(
-                                        location.img,
-                                        fit: BoxFit.cover,
-                                        width: 170,
-                                        height: 130,
-                                      ),
-                                    ),
-                                  ),
-                                  Icon(Icons.arrow_right, size: 30),
-                                ],
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 5, right: 20),
-                                child: Text(
-                                  location.name,
-                                  style: TextStyle(
-                                    color: theme.colorScheme.primary,
-                                    fontFamily: "Times New Roman",
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            child: RecomendationsListComponent(stopRecomendations: recomendation1),
           ),
           const SizedBox(height: 30),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
-            child: GestureDetector(
-              child: Container(
-                width: 360,
-                height: 220,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.background,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(width: 2, color: theme.colorScheme.primary),
-                ),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        const SizedBox(width: 15),
-                        Text(
-                          "Sul do Brasil",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: theme.colorScheme.primary,
-                            fontFamily: "Times New Roman",
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Spacer(),
-                        Text(
-                          "30 days",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: theme.colorScheme.primary,
-                            fontFamily: "Times New Roman",
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const SizedBox(width: 15),
-                      ],
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: recomendation2.length,
-                        itemBuilder: (context, index) {
-                          final location = recomendation2[index];
-                          return Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Image.asset(
-                                        location.img,
-                                        fit: BoxFit.cover,
-                                        width: 170,
-                                        height: 130,
-                                      ),
-                                    ),
-                                  ),
-                                  Icon(Icons.arrow_right, size: 30),
-                                ],
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 5, right: 20),
-                                child: Text(
-                                  location.name,
-                                  style: TextStyle(
-                                    color: theme.colorScheme.primary,
-                                    fontFamily: "Times New Roman",
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            child: RecomendationsListComponent(stopRecomendations: recomendation2),
           ),
         ],
       ),
