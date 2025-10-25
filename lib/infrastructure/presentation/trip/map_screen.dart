@@ -89,14 +89,12 @@ class _MapScreenState extends State<MapScreen> {
     final address = await _stopRepository.getAddressFromCoordinates(latlng);
     final locationName = address ?? "Unknown Place";
 
-    // Reset checkboxes
     _differentCulture = true;
     _alternativeCuisine = false;
     _historicalSites = false;
     _localEstablishments = false;
     _contactWithNature = false;
     
-    // Clear date controllers
     _startDateController.clear();
     _endDateController.clear();
 

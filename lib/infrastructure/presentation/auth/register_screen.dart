@@ -51,11 +51,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         builder: (dialogContext) => AlertDialogComponent(
           title: "Register Succesful",
           message: "You can now Login", 
-          function2: () {
+          fn2: () {
             Navigator.of(context).pop();
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
           }, 
-          function2Message: "Go To Login",
+          fn2Message: "Go To Login",
         ),
       );
     } else {
@@ -64,8 +64,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         builder: (context) => AlertDialogComponent(
           title: "Error in Register", 
           message: result,
-          function2: () => Navigator.of(context).pop(), 
-          function2Message: "Ok",
+          fn2: () => Navigator.of(context).pop(), 
+          fn2Message: "Ok",
         ),
       );
     }

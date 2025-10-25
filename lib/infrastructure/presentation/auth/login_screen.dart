@@ -46,11 +46,12 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (dialogContext) => AlertDialogComponent(
           title: "Login Successful", 
           message: "Welcome Back, ${provider.user!.name}",
-          function2: () {
+          icon: Icons.person,
+          fn2: () {
             Navigator.of(context).pop();
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavigatorScreen()));
           }, 
-          function2Message: "Join",
+          fn2Message: "Join",
         ),
       );
     } else {
@@ -59,8 +60,8 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (context) => AlertDialogComponent(
           title: "Error in Login",
           message: result,
-          function2: () => Navigator.of(context).pop(), 
-          function2Message: "Try Again",
+          fn2: () => Navigator.of(context).pop(), 
+          fn2Message: "Try Again",
         ),
       );
     }
