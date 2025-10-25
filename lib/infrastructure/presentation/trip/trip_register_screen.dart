@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/trip.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/app/components/button_component.dart';
+import 'package:trip_planner/infrastructure/presentation/app/components/container_textfield_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_date_component.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/map_screen.dart';
@@ -154,11 +156,7 @@ class _TripScreenState extends State<TripScreen> {
           const SizedBox(height: 10),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
-            child: Container(
-              decoration: BoxDecoration(
-                color: theme.colorScheme.tertiary,
-                borderRadius: BorderRadius.circular(20),
-              ),
+            child: ContainerTextFieldComponent(
               child: Column(
                 children: [
                   const SizedBox(height: 20),
@@ -261,11 +259,7 @@ class _TripScreenState extends State<TripScreen> {
           const SizedBox(height: 10),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
-            child: Container(
-              decoration: BoxDecoration(
-                color: theme.colorScheme.tertiary,
-                borderRadius: BorderRadius.circular(20),
-              ),
+            child: ContainerTextFieldComponent(
               child: Column(
                 children: [
                   const SizedBox(height: 20),
@@ -288,38 +282,27 @@ class _TripScreenState extends State<TripScreen> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 30, right: 30, bottom: 20),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          final isValid = provider.validatePerson(
-                            controllerName.text,
-                            controllerAge.text,
-                            context,
-                          );
-                          if (!isValid) return;
+                    child: ButtonComponent(
+                      function: () {
+                        final isValid = provider.validatePerson(
+                          controllerName.text,
+                          controllerAge.text,
+                          context,
+                        );
+                        
+                        if (!isValid) return;
 
-                          Person person = Person(
-                            name: controllerName.text,
-                            age: int.parse(controllerAge.text),
-                          );
-                          provider.addPerson(person);
-                          controllerName.clear();
-                          controllerAge.clear();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: theme.colorScheme.secondary,
-                          foregroundColor: theme.colorScheme.tertiary,
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: Text(
-                          intl.addPerson,
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
-                        ),
-                      ),
+                        Person person = Person(
+                          name: controllerName.text,
+                          age: int.parse(controllerAge.text),
+                        );
+
+                        provider.addPerson(person);
+                        
+                        controllerName.clear();
+                        controllerAge.clear();
+                      }, 
+                      message: intl.addPerson,
                     ),
                   ),
                   if (provider.group.isNotEmpty)
@@ -373,11 +356,7 @@ class _TripScreenState extends State<TripScreen> {
           const SizedBox(height: 10),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
-            child: Container(
-              decoration: BoxDecoration(
-                color: theme.colorScheme.tertiary,
-                borderRadius: BorderRadius.circular(20),
-              ),
+            child: ContainerTextFieldComponent(
               child: Column(
                 children: [
                   Padding(
@@ -455,23 +434,9 @@ class _TripScreenState extends State<TripScreen> {
           const SizedBox(height: 30),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 65),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () => registerTrip(),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: theme.colorScheme.secondary,
-                  foregroundColor: theme.colorScheme.tertiary,
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: Text(
-                  intl.registerTrip,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
-                ),
-              ),
+            child: ButtonComponent(
+              function: registerTrip, 
+              message: intl.registerTrip,
             ),
           ),
           const SizedBox(height: 30),

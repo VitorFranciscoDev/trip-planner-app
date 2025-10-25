@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/app/components/alert_dialog_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/button_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/container_textfield_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
@@ -33,34 +34,24 @@ class _LoginScreenState extends State<LoginScreen> {
     if(result == null) {
       showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Login Successful"),
-          content: Text("Welcome, ${provider.user?.name ?? "User"}!"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavigatorScreen()));
-              },
-              child: const Text("Continue"),
-            ),
-          ],
+        builder: (context) => AlertDialogComponent(
+          title: "Login Successful", 
+          message: "Welcome Back, ${provider.user!.name}",
+          function2: () {
+            Navigator.of(context).pop();
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavigatorScreen()));
+          }, 
+          function2Message: "Join",
         ),
       );
     } else {
       showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Login Failed"),
-          content: Text(result),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("Try Again"),
-            ),
-          ],
+        builder: (context) => AlertDialogComponent(
+          title: "Error in Login",
+          message: result,
+          function2: () => Navigator.of(context).pop(), 
+          function2Message: "Try Again",
         ),
       );
     }

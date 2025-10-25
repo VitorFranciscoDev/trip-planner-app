@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/user.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/app/components/alert_dialog_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/button_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/container_textfield_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
@@ -37,35 +38,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if(result == null) {
       showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Register Successful"),
-          content: const Text("You can now login with your credentials"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
-              },
-              child: const Text("Go to Login"),
-            ),
-          ],
+        builder: (context) => AlertDialogComponent(
+          title: "Register Succesful",
+          message: "You can now Login", 
+          function2: () {
+            Navigator.of(context).pop();
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+          }, 
+          function2Message: "Go To Login",
         ),
       );
     } else {
       showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Error in Register"),
-          content: Text(result),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text("Ok"),
-            ),
-          ],
+        builder: (context) => AlertDialogComponent(
+          title: "Error in Register", 
+          message: result,
+          function2: () => Navigator.of(context).pop(), 
+          function2Message: "Ok",
         ),
       );
     }
