@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ContainerTextField extends StatelessWidget {
-  const ContainerTextField({super.key, required this.child});
+class ContainerTextFieldComponent extends StatelessWidget {
+  const ContainerTextFieldComponent({ super.key, required this.child });
   final Widget child;
 
   @override

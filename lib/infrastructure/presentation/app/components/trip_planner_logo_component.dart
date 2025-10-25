@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TripPlannerLogo extends StatelessWidget {
-  const TripPlannerLogo({super.key});
+class TripPlannerLogoComponent extends StatelessWidget {
+  const TripPlannerLogoComponent({super.key});
 
   @override
   Widget build(BuildContext context) {

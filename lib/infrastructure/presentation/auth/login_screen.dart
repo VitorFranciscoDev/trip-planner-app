@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/button_component.dart';
-import 'package:trip_planner/infrastructure/presentation/app/components/container_textfield.dart';
+import 'package:trip_planner/infrastructure/presentation/app/components/container_textfield_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
-import 'package:trip_planner/infrastructure/presentation/app/components/trip_planner_logo.dart';
+import 'package:trip_planner/infrastructure/presentation/app/components/trip_planner_logo_component.dart';
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
 import 'package:trip_planner/infrastructure/presentation/auth/register_screen.dart';
@@ -79,9 +79,9 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               const SizedBox(height: 60),
-              TripPlannerLogo(),
+              TripPlannerLogoComponent(),
               const SizedBox(height: 50),
-              ContainerTextField(
+              ContainerTextFieldComponent(
                 child: Column(
                   children: [
                     const SizedBox(height: 50),
