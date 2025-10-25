@@ -30,9 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> doLogin() async {
-    if (!mounted) return;
-
     final provider = context.read<AuthProvider>();
+    final currentContext = context;
 
     final isValid = provider.validateLoginFields(controllerEmail.text, controllerPassword.text, context);
 
@@ -42,23 +41,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if(result == null) {
       showDialog(
-        context: context,
+        context: currentContext,
         builder: (dialogContext) => AlertDialogComponent(
-          title: "Login Successful", 
-          message: "Welcome Back, ${provider.user!.name}",
-          icon: Icons.person,
+          title: "Login Successful!", 
+          message: "Welcome back, ${provider.user!.name}!",
+          icon: Icons.check,
           fn2: () {
             Navigator.of(context).pop();
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavigatorScreen()));
           }, 
-          fn2Message: "Join",
+          fn2Message: "Enter",
         ),
       );
     } else {
       showDialog(
-        context: context,
+        context: currentContext,
         builder: (context) => AlertDialogComponent(
-          title: "Error in Login",
+          icon: Icons.error,
+          title: "Error in Login!",
           message: result,
           fn2: () => Navigator.of(context).pop(), 
           fn2Message: "Try Again",

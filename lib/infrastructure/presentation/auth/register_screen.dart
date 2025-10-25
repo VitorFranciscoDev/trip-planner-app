@@ -33,9 +33,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   // Try to Register User in DB
   void registerUser() async {
-    if (!mounted) return;
-
     final provider = context.read<AuthProvider>();
+    final currentContext = context;
 
     final isValid = provider.validateRegisterFields(controllerName.text, controllerEmail.text, controllerPassword.text, context);
 
@@ -47,10 +46,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     if(result == null) {
       showDialog(
-        context: context,
+        context: currentContext,
         builder: (dialogContext) => AlertDialogComponent(
-          title: "Register Succesful",
-          message: "You can now Login", 
+          icon: Icons.person,
+          title: "Register Succesful!",
+          message: "You can now Login.", 
           fn2: () {
             Navigator.of(context).pop();
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
@@ -60,8 +60,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
     } else {
       showDialog(
-        context: context,
+        context: currentContext,
         builder: (context) => AlertDialogComponent(
+          icon: Icons.error,
           title: "Error in Register", 
           message: result,
           fn2: () => Navigator.of(context).pop(), 
