@@ -7,6 +7,7 @@ import 'package:trip_planner/infrastructure/presentation/app/intl/intl_state.dar
 import 'package:trip_planner/infrastructure/presentation/auth/login_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/app/theme/theme_provider.dart';
 import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
+import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_state.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -346,6 +347,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           context.read<AuthProvider>().deleteUser(context);
                           Navigator.of(context).pop();
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                          context.read<BottomNavigatorProvider>().index = 0;
                         },
                         child: Text(intl.deleteAccountConfirm),
                       ),
@@ -400,6 +402,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           context.read<AuthProvider>().logout();
                           Navigator.of(context).pop();
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                          context.read<BottomNavigatorProvider>().index = 0;
                         },
                         child: Text(intl.logOutConfirm),
                       ),

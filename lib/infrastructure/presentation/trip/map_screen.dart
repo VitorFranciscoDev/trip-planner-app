@@ -10,6 +10,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/entities/user_experience.dart';
+import 'package:trip_planner/infrastructure/presentation/app/components/checkbox_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_date_component.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 import 'package:trip_planner/modules/stop/stop_repository.dart';
@@ -158,7 +159,7 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                _buildCheckboxTile(
+                CheckboxComponent(
                   value: _differentCulture,
                   label: "Immersion in a Different Culture",
                   icon: Icons.public,
@@ -168,7 +169,7 @@ class _MapScreenState extends State<MapScreen> {
                     });
                   },
                 ),
-                _buildCheckboxTile(
+                CheckboxComponent(
                   value: _alternativeCuisine,
                   label: "Explore Alternative Cuisines",
                   icon: Icons.restaurant,
@@ -178,7 +179,7 @@ class _MapScreenState extends State<MapScreen> {
                     });
                   },
                 ),
-                _buildCheckboxTile(
+                CheckboxComponent(
                   value: _historicalSites,
                   label: "Visit Historical Sites",
                   icon: Icons.account_balance,
@@ -188,7 +189,7 @@ class _MapScreenState extends State<MapScreen> {
                     });
                   },
                 ),
-                _buildCheckboxTile(
+                CheckboxComponent(
                   value: _localEstablishments,
                   label: "Visit Local Establishments",
                   icon: Icons.store,
@@ -198,7 +199,7 @@ class _MapScreenState extends State<MapScreen> {
                     });
                   },
                 ),
-                _buildCheckboxTile(
+                CheckboxComponent(
                   value: _contactWithNature,
                   label: "Contact With Nature",
                   icon: Icons.nature,
@@ -293,34 +294,6 @@ class _MapScreenState extends State<MapScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildCheckboxTile({
-    required bool value,
-    required String label,
-    required IconData icon,
-    required ValueChanged<bool?> onChanged,
-  }) {
-    final theme = Theme.of(context);
-    return CheckboxListTile(
-      value: value,
-      onChanged: onChanged,
-      title: Row(
-        children: [
-          Icon(icon, size: 20, color: theme.colorScheme.primary),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              label,
-              style: const TextStyle(fontSize: 14),
-            ),
-          ),
-        ],
-      ),
-      contentPadding: EdgeInsets.zero,
-      controlAffinity: ListTileControlAffinity.leading,
-      dense: true,
     );
   }
 

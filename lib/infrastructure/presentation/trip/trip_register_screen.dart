@@ -105,7 +105,7 @@ class _TripScreenState extends State<TripScreen> {
     );
 
     if (picked != null) {
-      controller.text = "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+      controller.text = "${picked.day}/${picked.month}/${picked.year}";
       
       // Update trip dates in provider for stop validation
       if (controllerStartDate.text.isNotEmpty && controllerEndDate.text.isNotEmpty) {

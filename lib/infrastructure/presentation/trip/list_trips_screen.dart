@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/app/components/container_textfield_component.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_details_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 
@@ -50,14 +51,9 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
           ),
           const SizedBox(height: 10),
           Padding(
-            padding: EdgeInsets.only(left: 25),
-            child: Container(
-              width: 310,
-              height: 230,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
+            padding: EdgeInsets.symmetric(horizontal: 25),
+            child: ContainerTextFieldComponent(
+              height: 250,
               child: ListView.builder(
                 shrinkWrap: true,
                 physics: AlwaysScrollableScrollPhysics(),
@@ -129,13 +125,8 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
           const SizedBox(height: 10),
           Padding(
             padding: EdgeInsets.only(left: 25),
-            child: Container(
-              width: 310,
-              height: 230,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
+            child: ContainerTextFieldComponent(
+              height: 250,
               child: ListView.builder(
                 shrinkWrap: true,
                 physics: AlwaysScrollableScrollPhysics(),
