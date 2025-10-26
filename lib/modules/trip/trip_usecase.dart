@@ -15,38 +15,6 @@ class TripUseCase {
     return tripTitle.isEmpty ? l10n.tripTitleRequired : null;
   }
 
-  String? validateStartDate(String startDate, BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return startDate.isEmpty ? l10n.startDateRequired : null;
-  }
-
-  String? validateEndDate(String endDate, BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return endDate.isEmpty ? l10n.endDateRequired : null;
-  }
-
-  DateTime? parseDate(String text) { 
-    try { 
-      return DateTime.parse(text); 
-    } catch(e) { 
-      return null; 
-    } 
-  }
-
-  String? validateDates(String startDate, String endDate, BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    DateTime? start = parseDate(startDate);
-    DateTime? end = parseDate(endDate);
-
-    if (start != null && end != null) {
-      if (start.isAfter(end)) {
-        return l10n.startAfterEnd;
-      }
-    }
-
-    return null;
-  }
-
   String? validateGroup(List<Person> group, BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return group.isEmpty ? l10n.groupEmpty : null;
@@ -57,56 +25,35 @@ class TripUseCase {
     return stops.isEmpty ? l10n.stopsEmpty : null;
   }
 
-  Future<String?> createTrip(Trip trip, BuildContext context) async {
-    final l10n = AppLocalizations.of(context);
-    
+  Future<int> addTrip(Trip trip) async {
     try {
-      final result = await tripRepository.registerTrip(trip);
-      
-      if (result > 0) {
-        return null;
-      }
-      return l10n.tripCreateFailed;
+      return await tripRepository.addTrip(trip);
     } catch (e) {
-      return l10n.tripCreateError;
+      throw Exception("Error in Add Trip Use Case: $e");
     }
   }
 
-  Future<List<Trip>> getAllTrips(int user_id) async {
-    return await tripRepository.getAllTrips(user_id);
-  }
-
-  Future<Trip?> getTripById(int id) async {
-    return await tripRepository.getTripById(id);
-  }
-
-  Future<String?> updateTrip(Trip trip, BuildContext context) async {
-    final l10n = AppLocalizations.of(context);
-    
+  Future<int> deleteTrip(int id) async {
     try {
-      final result = await tripRepository.updateTrip(trip);
-      
-      if (result > 0) {
-        return null;
-      }
-      return l10n.tripCreateFailed;
+      return await tripRepository.deleteTrip(id);
     } catch (e) {
-      return l10n.tripCreateError;
+      throw Exception("Error in Delete Trip Use Case: $e");
     }
   }
 
-  Future<String?> deleteTrip(int id, BuildContext context) async {
-    final l10n = AppLocalizations.of(context);
-    
+  Future<int> updateTrip(Trip trip) async {
     try {
-      final result = await tripRepository.deleteTrip(id);
-      
-      if (result > 0) {
-        return null;
-      }
-      return l10n.tripCreateFailed;
+      return await tripRepository.updateTrip(trip);
     } catch (e) {
-      return l10n.tripCreateError;
+      throw Exception("Error in Update Trip Use Case: $e");
+    }
+  }
+
+  Future<List<Trip>?> getAllTrips(int user_id) async {
+    try {
+      return await tripRepository.getAllTrips(user_id);
+    } catch(e) {
+      throw Exception("Error in Get All Trips Use Case: $e");
     }
   }
 }

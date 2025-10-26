@@ -140,14 +140,14 @@ class _MapScreenState extends State<MapScreen> {
                 TextFieldDateComponent(
                   controller: _startDateController,
                   hint: "Start Date",
-                  error: provider.errorStopStartDate,
+                  error: provider.errorStartDate,
                   function: () => _selectDate(_startDateController),
                 ),
                 const SizedBox(height: 12),
                 TextFieldDateComponent(
                   controller: _endDateController,
                   hint: "End Date",
-                  error: provider.errorStopEndDate,
+                  error: provider.errorEndDate,
                   function: () => _selectDate(_endDateController),
                 ),
                 const SizedBox(height: 20),
@@ -224,17 +224,21 @@ class _MapScreenState extends State<MapScreen> {
             ElevatedButton(
               onPressed: () async {
                 // Validate dates
+                /*
                 final isValid = provider.validateStopDates(
                   startDate: _startDateController.text,
                   endDate: _endDateController.text,
                   context: context,
                 );
+                
 
                 if (!isValid) {
                   // Force rebuild to show errors
                   setDialogState(() {});
                   return;
                 }
+
+                */
 
                 final experiences = <UserExperience>[];
 

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/trip.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/app/components/alert_dialog_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/button_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/container_textfield_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
@@ -18,29 +19,28 @@ class TripRegisterScreen extends StatefulWidget {
 }
 
 class _TripRegisterScreenState extends State<TripRegisterScreen> {
-  // controllers
+  // Controllers
   TextEditingController controllerTripTitle = TextEditingController();
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerAge = TextEditingController();
 
+  // DropDown Value
   String dropdownValue = "Car";
 
-  Future<void> registerTrip() async {
+  // Add Trip
+  Future<void> addTrip() async {
+    // Providers
     final provider = context.read<TripProvider>();
     final userProvider = context.read<AuthProvider>();
 
     // Validate trip
-    final isValid = provider.validateTrip(
-      tripTitle: controllerTripTitle.text,
-      group: provider.group,
-      stops: provider.stops,
-      context: context,
-    );
+    final isValid = provider.validateTrip(controllerTripTitle.text, context);
 
     if (!isValid) return;
 
+    // New Trip
     Trip trip = Trip(
-      user_id: userProvider.user?.id,
+      user_id: userProvider.user!.id,
       title: controllerTripTitle.text,
       transport: dropdownValue,
       start_date: provider.stops[0].start_date,
@@ -50,40 +50,24 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
       stops: provider.stops,
     );
 
-    final result = await provider.createTrip(trip, context);
+    final result = await provider.addTrip(trip);
 
     if (result == null) {
       showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Success!"),
-          content: const Text("Trip created successfully"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                controllerTripTitle.clear();
-                setState(() {
-                  dropdownValue = "Car";
-                });
-              },
-              child: const Text("OK"),
-            ),
-          ],
+        builder: (context) => AlertDialogComponent(
+          title: "Trip created successfully", 
+          fn2: () => Navigator.of(context).pop(), 
+          fn2Message: "Ok",
         ),
       );
     } else {
       showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Error"),
-          content: Text(result),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text("OK"),
-            ),
-          ],
+        builder: (context) => AlertDialogComponent(
+          title: result, 
+          fn2: () => Navigator.of(context).pop(), 
+          fn2Message: "Ok",
         ),
       );
     }
@@ -97,7 +81,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
     if(provider.trip != null) {
       controllerTripTitle.text = provider.trip!.title;
       dropdownValue = provider.trip!.transport;
-      provider.stops = provider.trip!.stops;
+      provider.stops = provider.trip!.stops!;
     }
   }
 
@@ -281,7 +265,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                                 label: Text("${person.name}(${person.age})"),
                                 deleteIcon: Icon(Icons.close),
                                 onDeleted: () {
-                                  provider.removePerson(person);
+                                  provider.deletePerson(person);
                                 },
                               ),
                             );
@@ -372,7 +356,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                                 label: Text(stop.location),
                                 deleteIcon: Icon(Icons.close),
                                 onDeleted: () {
-                                  provider.removeStop(stop);
+                                  provider.deleteStop(stop);
                                 },
                               ),
                             );
@@ -399,7 +383,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 65),
             child: ButtonComponent(
-              function: registerTrip, 
+              function: addTrip, 
               message: intl.registerTrip,
             ),
           ),
