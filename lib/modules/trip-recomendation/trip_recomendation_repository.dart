@@ -1,12 +1,14 @@
 import 'package:trip_planner/entities/trip.dart';
 import 'package:trip_planner/entities/stop.dart';
+import 'package:trip_planner/modules/trip-recomendation/trip_recomendation_spec.dart';
 
-class TripRecomendationRepository {
-  
+// Trip Recomendation Repository [Mocked Data]
+class TripRecomendationRepository implements ITripRecomendationRepository {
   String _formatDate(DateTime date) {
     return "${date.day}/${date.month}/${date.year}";
   }
 
+  @override
   Trip getBrazilNortheastBeaches() {
     final now = DateTime.now();
     DateTime currentDate = now.add(Duration(days: 7));
@@ -76,6 +78,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   Trip getBrazilSouth() {
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
@@ -134,6 +137,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   Trip getBrazilSoutheast() {
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
@@ -203,6 +207,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   Trip getWesternEurope() {
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
@@ -272,6 +277,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   Trip getCentralEurope() {
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
@@ -341,6 +347,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   Trip getItaly() {
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
@@ -410,6 +417,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   Trip getUSWestCoast() {
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
@@ -479,6 +487,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   Trip getUSEastCoast() {
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
@@ -548,6 +557,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   Trip getCanada() {
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
@@ -617,6 +627,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   Trip getNorthAfrica() {
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
@@ -686,6 +697,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   Trip getSouthAfrica() {
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
@@ -755,6 +767,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   Trip getSoutheastAsia() {
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
@@ -824,6 +837,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   Trip getEastAsia() {
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
@@ -893,6 +907,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   Trip getOceania() {
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
@@ -962,6 +977,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   Trip getAndes() {
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
@@ -1031,6 +1047,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   Trip getMexicoCaribbean() {
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
@@ -1100,6 +1117,7 @@ class TripRecomendationRepository {
     );
   }
 
+  @override
   List<Trip> getAllRecommendations() {
     return [
       getBrazilNortheastBeaches(),
