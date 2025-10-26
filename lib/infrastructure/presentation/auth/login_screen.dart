@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 30),
                         child: TextFieldComponent(
                           controller: controllerEmail, 
-                          hint: l10n.email, 
+                          label: "Email",
                           error: provider.errorEmail,
                         ),
                       ),
@@ -109,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 30),
                         child: TextFieldComponent(
                           controller: controllerPassword, 
-                          hint: l10n.password,
+                          label: "Password",
                           error: provider.errorPassword,
                           isPassword: true,
                         ),

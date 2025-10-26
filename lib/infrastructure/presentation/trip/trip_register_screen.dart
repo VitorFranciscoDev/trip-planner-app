@@ -148,7 +148,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: TextFieldComponent(
                       controller: controllerTripTitle,
-                      hint: intl.tripTitle,
+                      label: "Trip Title",
                       error: provider.errorTripTitle,
                     ),
                   ),
@@ -231,7 +231,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: TextFieldComponent(
                       controller: controllerName,
-                      hint: intl.name,
+                      label: "Name",
                       error: provider.errorName,
                     ),
                   ),
@@ -240,7 +240,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                     padding: EdgeInsets.only(left: 30, right: 30, bottom: 20),
                     child: TextFieldComponent(
                       controller: controllerAge,
-                      hint: intl.age,
+                      label: "Age",
                       error: provider.errorAge,
                     ),
                   ),

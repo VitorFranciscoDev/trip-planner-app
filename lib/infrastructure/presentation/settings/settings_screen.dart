@@ -280,7 +280,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             padding: EdgeInsets.only(top: 10, right: 30, left: 30),
                             child: TextFieldComponent(
                               controller: _controllerName, 
-                              hint: intl.name,
+                              label: "Name",
                               error: provider.errorName,
                             ),
                           ),
@@ -288,7 +288,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             padding: EdgeInsets.only(top: 10, right: 30, left: 30),
                             child: TextFieldComponent(
                               controller: _controllerEmail, 
-                              hint: intl.email,
+                              label: "Email",
                               error: provider.errorEmail,
                             ),
                           ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class TextFieldComponent extends StatefulWidget {
-  const TextFieldComponent({super.key, required this.controller, required this.hint, this.error, this.isPassword = false});
+  const TextFieldComponent({super.key, required this.controller, required this.label, this.error, this.isPassword = false});
   final TextEditingController controller;
-  final String hint;
+  final String label;
   final String? error;
   final bool isPassword;
 
@@ -28,7 +28,7 @@ class _TextFieldComponentState extends State<TextFieldComponent> {
       controller: widget.controller,
       obscureText: _obscureText,
       decoration: InputDecoration(
-        hintText: widget.hint,
+        labelText: widget.label,
         errorText: widget.error,
         suffixIcon: widget.isPassword
           ? IconButton(
