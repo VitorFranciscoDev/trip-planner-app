@@ -10,7 +10,7 @@ class BottomNavigatorScreen extends StatelessWidget {
   BottomNavigatorScreen({super.key});
 
   // pages of the Bottom Navigator
-  final List<Widget> pages = [HomeScreen(), TripScreen(), ListTripsScreen(), SettingsScreen()];
+  final List<Widget> pages = [HomeScreen(), TripRegisterScreen(), ListTripsScreen(), SettingsScreen()];
 
   @override
   Widget build(BuildContext context) {

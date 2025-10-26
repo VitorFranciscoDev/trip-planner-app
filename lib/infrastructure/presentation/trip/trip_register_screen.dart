@@ -6,23 +6,20 @@ import 'package:trip_planner/infrastructure/presentation/app/app_localizations.d
 import 'package:trip_planner/infrastructure/presentation/app/components/button_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/container_textfield_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
-import 'package:trip_planner/infrastructure/presentation/app/components/text_field_date_component.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/map_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
 
-class TripScreen extends StatefulWidget {
-  const TripScreen({super.key});
+class TripRegisterScreen extends StatefulWidget {
+  const TripRegisterScreen({super.key});
 
   @override
-  State<TripScreen> createState() => _TripScreenState();
+  State<TripRegisterScreen> createState() => _TripRegisterScreenState();
 }
 
-class _TripScreenState extends State<TripScreen> {
+class _TripRegisterScreenState extends State<TripRegisterScreen> {
   // controllers
   TextEditingController controllerTripTitle = TextEditingController();
-  TextEditingController controllerStartDate = TextEditingController();
-  TextEditingController controllerEndDate = TextEditingController();
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerAge = TextEditingController();
 
@@ -35,8 +32,6 @@ class _TripScreenState extends State<TripScreen> {
     // Validate trip
     final isValid = provider.validateTrip(
       tripTitle: controllerTripTitle.text,
-      startDate: controllerStartDate.text,
-      endDate: controllerEndDate.text,
       group: provider.group,
       stops: provider.stops,
       context: context,
@@ -48,8 +43,8 @@ class _TripScreenState extends State<TripScreen> {
       user_id: userProvider.user?.id,
       title: controllerTripTitle.text,
       transport: dropdownValue,
-      start_date: controllerStartDate.text,
-      end_date: controllerEndDate.text,
+      start_date: provider.stops[0].start_date,
+      end_date: provider.stops[0-1].end_date,
       concluded: false,
       group: provider.group,
       stops: provider.stops,
@@ -68,8 +63,6 @@ class _TripScreenState extends State<TripScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
                 controllerTripTitle.clear();
-                controllerStartDate.clear();
-                controllerEndDate.clear();
                 setState(() {
                   dropdownValue = "Car";
                 });
@@ -96,24 +89,15 @@ class _TripScreenState extends State<TripScreen> {
     }
   }
 
-  Future<void> selectDate(TextEditingController controller) async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2030),
-    );
+  @override
+  void initState() {
+    super.initState();
+    final provider = context.read<TripProvider>();
 
-    if (picked != null) {
-      controller.text = "${picked.day}/${picked.month}/${picked.year}";
-      
-      // Update trip dates in provider for stop validation
-      if (controllerStartDate.text.isNotEmpty && controllerEndDate.text.isNotEmpty) {
-        context.read<TripProvider>().setTripDates(
-          controllerStartDate.text,
-          controllerEndDate.text,
-        );
-      }
+    if(provider.trip != null) {
+      controllerTripTitle.text = provider.trip!.title;
+      dropdownValue = provider.trip!.transport;
+      provider.stops = provider.trip!.stops;
     }
   }
 
@@ -159,7 +143,7 @@ class _TripScreenState extends State<TripScreen> {
             child: ContainerTextFieldComponent(
               child: Column(
                 children: [
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 30),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: TextFieldComponent(
@@ -218,27 +202,7 @@ class _TripScreenState extends State<TripScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: TextFieldDateComponent(
-                      controller: controllerStartDate,
-                      hint: intl.startDate,
-                      error: provider.errorStartDate,
-                      function: () => selectDate(controllerStartDate),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: TextFieldDateComponent(
-                      controller: controllerEndDate,
-                      hint: intl.endDate,
-                      error: provider.errorEndDate,
-                      function: () => selectDate(controllerEndDate),
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.only(bottom: 20)),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),
@@ -262,7 +226,7 @@ class _TripScreenState extends State<TripScreen> {
             child: ContainerTextFieldComponent(
               child: Column(
                 children: [
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 30),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: TextFieldComponent(
@@ -281,7 +245,7 @@ class _TripScreenState extends State<TripScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 30, right: 30, bottom: 20),
+                    padding: EdgeInsets.only(left: 30, right: 30, bottom: 30),
                     child: ButtonComponent(
                       function: () {
                         final isValid = provider.validatePerson(
@@ -307,7 +271,7 @@ class _TripScreenState extends State<TripScreen> {
                   ),
                   if (provider.group.isNotEmpty)
                     Padding(
-                      padding: EdgeInsets.only(bottom: 20),
+                      padding: EdgeInsets.only(bottom: 30),
                       child: Wrap(
                         children: [
                           ...provider.group.map((person) {
@@ -327,7 +291,7 @@ class _TripScreenState extends State<TripScreen> {
                     ),
                   if (provider.errorGroup != null)
                     Padding(
-                      padding: EdgeInsets.only(bottom: 20),
+                      padding: EdgeInsets.only(bottom: 30),
                       child: Text(
                         provider.errorGroup!,
                         style: TextStyle(
@@ -360,7 +324,7 @@ class _TripScreenState extends State<TripScreen> {
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 30),
                     child: Card(
                       elevation: 4,
                       shape: RoundedRectangleBorder(

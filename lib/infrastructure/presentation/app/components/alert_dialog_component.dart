@@ -63,7 +63,7 @@ class AlertDialogComponent extends StatelessWidget {
           TextButton(
             onPressed: () => fn1!(),
             style: TextButton.styleFrom(
-              foregroundColor: theme.colorScheme.tertiary,
+              foregroundColor: theme.colorScheme.primary,
             ),
             child: Text(
               fn1Message!,

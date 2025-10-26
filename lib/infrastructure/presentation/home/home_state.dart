@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:trip_planner/entities/stop_recomendation.dart';
-import 'package:trip_planner/modules/stop-recomendation/stop_recomendation_repository.dart';
+import 'package:trip_planner/entities/trip.dart';
+import 'package:trip_planner/modules/trip-recomendation/trip_recomendation_repository.dart';
 
 class HomeProvider with ChangeNotifier {
-  final StopRecomendationRepository stopRecomendationRepository;
+  final TripRecomendationRepository tripRecomendationRepository;
 
-  HomeProvider({ required this.stopRecomendationRepository }) {
+  HomeProvider({ required this.tripRecomendationRepository }) {
     loadRecommendations();
   }
 
-  List<StopRecomendation> _brNERecommendations = [];
-  List<StopRecomendation> _brSORecommendations = [];
+  late Trip _brNERecommendations;
+  late Trip _brSORecommendations;
 
-  List<StopRecomendation> get brNERecommendations => _brNERecommendations;
-  List<StopRecomendation> get brSORecommendations => _brSORecommendations;
+  Trip get brNERecommendations => _brNERecommendations;
+  Trip get brSORecommendations => _brSORecommendations;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -23,11 +23,10 @@ class HomeProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      _brNERecommendations = stopRecomendationRepository.getBrazilNortheastBeaches();
-      _brSORecommendations = stopRecomendationRepository.getBrazilSouth();
+      _brNERecommendations = tripRecomendationRepository.getBrazilNortheastBeaches();
+      _brSORecommendations = tripRecomendationRepository.getBrazilSouth();
     } catch (e) {
-      _brNERecommendations = [];
-      _brSORecommendations = [];
+      throw Exception("Error in Loading Recomended Trips: $e");
     } finally {
       _isLoading = false;
       notifyListeners();

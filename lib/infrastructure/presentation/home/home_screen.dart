@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/app/components/alert_dialog_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/recomendations_list_component.dart';
+import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_state.dart';
 import 'package:trip_planner/infrastructure/presentation/home/home_state.dart';
 import 'package:trip_planner/infrastructure/presentation/home/search_result_state.dart';
 import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
+import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -181,12 +184,48 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 30),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
-            child: RecomendationsListComponent(stopRecomendations: recomendation1),
+            child: RecomendationsListComponent(
+              tripRecomendation: recomendation1, 
+              fn: () {
+                showDialog(
+                  context: context, 
+                  builder: (dialogContext) => AlertDialogComponent(
+                    title: "Select Trip?", 
+                    fn1: () => Navigator.of(context).pop(),
+                    fn1Message: "No",
+                    fn2: () {
+                      context.read<TripProvider>().trip = recomendation1;
+                      Navigator.of(dialogContext).pop();
+                      context.read<BottomNavigatorProvider>().setIndex(1);
+                    },
+                    fn2Message: "Yes",
+                  ),
+                );
+              },
+            ),
           ),
           const SizedBox(height: 30),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
-            child: RecomendationsListComponent(stopRecomendations: recomendation2),
+            child: RecomendationsListComponent(
+              tripRecomendation: recomendation2,
+              fn: () {
+                showDialog(
+                  context: context, 
+                  builder: (dialogContext) => AlertDialogComponent(
+                    title: "Select Trip?", 
+                    fn1: () => Navigator.of(context).pop(),
+                    fn1Message: "No",
+                    fn2: () {
+                      context.read<TripProvider>().trip = recomendation2;
+                      Navigator.of(dialogContext).pop();
+                      context.read<BottomNavigatorProvider>().setIndex(1);
+                    },
+                    fn2Message: "Yes",
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),

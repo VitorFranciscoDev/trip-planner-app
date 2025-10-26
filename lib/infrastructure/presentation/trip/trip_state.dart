@@ -16,6 +16,11 @@ class TripProvider extends ChangeNotifier {
   Trip? _trip;
   Trip? get trip => _trip;
 
+  set trip(Trip? value) {
+    _trip = value;
+    notifyListeners();
+  }
+
   // List of Trips
   List<Trip> _trips = [];
   List<Trip> get trips => _trips;
@@ -27,6 +32,11 @@ class TripProvider extends ChangeNotifier {
   // Stops data
   List<Stop> _stops = [];
   List<Stop> get stops => _stops;
+
+  set stops(List<Stop>? value) {
+    _stops = value ?? [];
+    notifyListeners();
+  }
 
   // Loading boolean
   bool _isLoading = false;
@@ -188,19 +198,11 @@ class TripProvider extends ChangeNotifier {
   // Function to validate the data of the Trip
   bool validateTrip({
     required String tripTitle,
-    required String startDate,
-    required String endDate,
     required List<Person> group,
     required List<Stop> stops,
     required BuildContext context,
   }) {
     _errorTripTitle = tripUseCase.validateTripTitle(tripTitle, context);
-    _errorStartDate = tripUseCase.validateStartDate(startDate, context);
-    _errorEndDate = tripUseCase.validateEndDate(endDate, context);
-
-    if (_errorStartDate == null && _errorEndDate == null) {
-      _errorDate = tripUseCase.validateDates(startDate, endDate, context);
-    }
 
     _errorGroup = tripUseCase.validateGroup(group, context);
     _errorStops = tripUseCase.validateStops(stops, context);

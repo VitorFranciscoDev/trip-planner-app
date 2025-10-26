@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:trip_planner/entities/stop_recomendation.dart';
+import 'package:trip_planner/entities/trip.dart';
 
 class RecomendationsListComponent extends StatefulWidget {
-  const RecomendationsListComponent({ super.key, required this.stopRecomendations });
-  final List<StopRecomendation> stopRecomendations;
+  const RecomendationsListComponent({ super.key, required this.tripRecomendation, required this.fn });
+  final Trip tripRecomendation;
+  final VoidCallback fn;
 
   @override
   State<RecomendationsListComponent> createState() => _RecomendationsListComponentState();
@@ -15,9 +16,10 @@ class _RecomendationsListComponentState extends State<RecomendationsListComponen
     final theme = Theme.of(context);
 
     return GestureDetector(
+      onTap: () => widget.fn(),
       child: Container(
         width: 360,
-        height: 220,
+        height: 250,
         decoration: BoxDecoration(
           color: theme.colorScheme.background,
           borderRadius: BorderRadius.circular(20),
@@ -30,7 +32,7 @@ class _RecomendationsListComponentState extends State<RecomendationsListComponen
               children: [
                 const SizedBox(width: 15),
                 Text(
-                  "Nordeste Brasileiro",
+                  widget.tripRecomendation.title,
                   style: TextStyle(
                     fontSize: 15,
                     color: theme.colorScheme.primary,
@@ -38,25 +40,29 @@ class _RecomendationsListComponentState extends State<RecomendationsListComponen
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                Spacer(),
-                Text(
-                  "30 days",
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: theme.colorScheme.primary,
-                    fontFamily: "Times New Roman",
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+              ],
+            ),
+            const SizedBox(height: 3),
+            Row(
+              children: [
                 const SizedBox(width: 15),
+                Text(
+                  "${widget.tripRecomendation.start_date} - ${widget.tripRecomendation.end_date}",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: theme.colorScheme.primary,
+                    fontFamily: "Times New Roman",
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ],
             ),
             Expanded(
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: widget.stopRecomendations.length,
+                itemCount: widget.tripRecomendation.stops!.length,
                 itemBuilder: (context, index) {
-                  final location = widget.stopRecomendations[index];
+                  final stop = widget.tripRecomendation.stops![index];
                   return Column(
                     children: [
                       Row(
@@ -66,7 +72,7 @@ class _RecomendationsListComponentState extends State<RecomendationsListComponen
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Image.asset(
-                                location.img,
+                                stop.img!,
                                 fit: BoxFit.cover,
                                 width: 170,
                                 height: 130,
@@ -79,7 +85,7 @@ class _RecomendationsListComponentState extends State<RecomendationsListComponen
                       Padding(
                         padding: EdgeInsets.only(top: 5, right: 20),
                         child: Text(
-                          location.name,
+                          stop.location,
                           style: TextStyle(
                             color: theme.colorScheme.primary,
                             fontFamily: "Times New Roman",

@@ -4,6 +4,7 @@ class Stop {
   final int? id;
   final int? trip_id; // Trip's ID
   final String location;
+  final String? img;
   final String start_date;
   final String end_date;
   final double latitude;
@@ -11,7 +12,7 @@ class Stop {
   final List<UserExperience>? userExperiences; // Stop's experiences
 
   // Constructor
-  Stop({ this.id, this.trip_id, required this.location, required this.start_date, required this.end_date, required this.latitude, required this.longitude, this.userExperiences });
+  Stop({ this.id, this.trip_id, required this.location, this.img, required this.start_date, required this.end_date, required this.latitude, required this.longitude, this.userExperiences });
 
   // Transforms Stop in Map<String, dynamic>
   Map<String, dynamic> toMap() {
