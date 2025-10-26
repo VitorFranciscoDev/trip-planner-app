@@ -16,7 +16,8 @@ import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 import 'package:trip_planner/modules/stop/stop_repository.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({super.key});
+  const MapScreen({super.key, this.stops});
+  final List<Stop>? stops;
 
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -301,6 +302,11 @@ class _MapScreenState extends State<MapScreen> {
   void initState() {
     super.initState();
     _requestPermissionAndLocate();
+    if(widget.stops != null) {
+      for(final stop in widget.stops!) {
+        _points.add(LatLng(stop.latitude, stop.latitude));
+      }
+    }
   }
 
   @override
@@ -312,7 +318,14 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _mapController.move(_currentLocation!, 15),
+        backgroundColor: theme.colorScheme.primary,
+        child: Icon(Icons.location_on, color: theme.colorScheme.tertiary),
+      ),
       body: Stack(
         children: [
           FlutterMap(
