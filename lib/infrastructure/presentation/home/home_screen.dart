@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trip_planner/entities/trip.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/alert_dialog_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/recomendations_list_component.dart';
@@ -26,9 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final intl = AppLocalizations.of(context);
     final name = context.read<AuthProvider>().user!.name;
     final provider = context.watch<HomeProvider>();
-    final List<Trip> tripRecomendations = provider.loadRecomendations();
-    final recomendation1 = tripRecomendations[0];
-    final recomendation2 = tripRecomendations[1];
 
     return SingleChildScrollView(
       child: Column(
@@ -185,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
             child: RecomendationsListComponent(
-              tripRecomendation: recomendation1, 
+              tripRecomendation: provider.recomendation1, 
               fn: () {
                 showDialog(
                   context: context, 
@@ -194,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fn1: () => Navigator.of(context).pop(),
                     fn1Message: "No",
                     fn2: () {
-                      context.read<TripProvider>().trip = recomendation1;
+                      context.read<TripProvider>().trip = provider.recomendation1;
                       Navigator.of(dialogContext).pop();
                       context.read<BottomNavigatorProvider>().setIndex(1);
                     },
@@ -208,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
             child: RecomendationsListComponent(
-              tripRecomendation: recomendation2,
+              tripRecomendation: provider.recomendation2,
               fn: () {
                 showDialog(
                   context: context, 
@@ -217,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fn1: () => Navigator.of(context).pop(),
                     fn1Message: "No",
                     fn2: () {
-                      context.read<TripProvider>().trip = recomendation2;
+                      context.read<TripProvider>().trip = provider.recomendation2;
                       Navigator.of(dialogContext).pop();
                       context.read<BottomNavigatorProvider>().setIndex(1);
                     },

@@ -139,6 +139,7 @@ class TripProvider extends ChangeNotifier {
 
       if(allTrips != null) {
         _trips = allTrips;
+        notifyListeners();
         return null;
       }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/container_textfield_component.dart';
+import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_details_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 
@@ -13,6 +14,18 @@ class ListTripsScreen extends StatefulWidget {
 }
 
 class _ListTripsScreenState extends State<ListTripsScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      final user = context.read<AuthProvider>().user;
+      if (user != null) {
+        context.read<TripProvider>().getAllTrips(user.id);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -124,7 +137,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
           ),
           const SizedBox(height: 10),
           Padding(
-            padding: EdgeInsets.only(left: 25),
+            padding: EdgeInsets.symmetric(horizontal: 25),
             child: ContainerTextFieldComponent(
               height: 250,
               child: ListView.builder(
@@ -180,6 +193,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
               ),
             ),
           ),
+          const SizedBox(height: 50),
         ],
       ),
     );

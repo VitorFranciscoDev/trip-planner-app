@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ButtonComponent extends StatefulWidget {
   const ButtonComponent({ super.key, required this.function, required this.message });
-  final Function function;
+  final VoidCallback function;
   final String message;
 
   @override

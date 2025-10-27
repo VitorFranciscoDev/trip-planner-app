@@ -34,7 +34,7 @@ class _RecomendationsListComponentState extends State<RecomendationsListComponen
                 Text(
                   widget.tripRecomendation.title,
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 13,
                     color: theme.colorScheme.primary,
                     fontFamily: "Times New Roman",
                     fontWeight: FontWeight.w700,
@@ -44,7 +44,7 @@ class _RecomendationsListComponentState extends State<RecomendationsListComponen
                 Text(
                   widget.tripRecomendation.transport,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 11,
                     color: theme.colorScheme.primary,
                     fontFamily: "Times New Roman",
                     fontWeight: FontWeight.w700,
@@ -60,7 +60,7 @@ class _RecomendationsListComponentState extends State<RecomendationsListComponen
                 Text(
                   "${widget.tripRecomendation.start_date} - ${widget.tripRecomendation.end_date}",
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: 12,
                     color: theme.colorScheme.primary,
                     fontFamily: "Times New Roman",
                     fontWeight: FontWeight.w700,

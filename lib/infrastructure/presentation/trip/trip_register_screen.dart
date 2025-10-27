@@ -32,6 +32,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
     // Providers
     final provider = context.read<TripProvider>();
     final userProvider = context.read<AuthProvider>();
+    final currentContext = context;
 
     // Validate trip
     final isValid = provider.validateTrip(controllerTripTitle.text, context);
@@ -43,8 +44,8 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
       user_id: userProvider.user!.id,
       title: controllerTripTitle.text,
       transport: dropdownValue,
-      start_date: provider.stops[0].start_date,
-      end_date: provider.stops[0-1].end_date,
+      start_date: provider.stops.first.start_date,
+      end_date: provider.stops.last.end_date,
       concluded: false,
       group: provider.group,
       stops: provider.stops,
@@ -54,8 +55,8 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
 
     if (result == null) {
       showDialog(
-        context: context,
-        builder: (context) => AlertDialogComponent(
+        context: currentContext,
+        builder: (dialogContext) => AlertDialogComponent(
           title: "Trip created successfully", 
           fn2: () => Navigator.of(context).pop(), 
           fn2Message: "Ok",
@@ -63,8 +64,8 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
       );
     } else {
       showDialog(
-        context: context,
-        builder: (context) => AlertDialogComponent(
+        context: currentContext,
+        builder: (dialogContext) => AlertDialogComponent(
           title: result, 
           fn2: () => Navigator.of(context).pop(), 
           fn2Message: "Ok",
