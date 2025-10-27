@@ -12,6 +12,7 @@ class StopRepository implements IStopRepository {
   };
 
   // Get Address based on Coordinates(lat, lng) from an API[Web Nominatin]
+  @override
   Future<String?> getAddressFromCoordinates(LatLng position) async {
     try {
       final url = Uri.parse('$_baseUrl/reverse?lat=${position.latitude}&lon=${position.longitude}&format=json');
