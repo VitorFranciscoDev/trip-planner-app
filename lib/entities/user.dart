@@ -1,15 +1,12 @@
-import 'package:trip_planner/entities/trip.dart';
-
 // Model of User
 class User {
   final int? id;
   final String name;
   final String email;
   final String password;
-  final List<Trip>? trips; // The User's Trips
 
   // Constructor
-  User({ this.id, required this.name, required this.email, required this.password, this.trips });
+  User({ this.id, required this.name, required this.email, required this.password });
 
   // Transforms User in Map<String, dynamic>
   Map<String, dynamic> toMap() {

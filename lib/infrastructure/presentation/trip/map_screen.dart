@@ -16,8 +16,7 @@ import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 import 'package:trip_planner/modules/stop/stop_repository.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({super.key, this.stops});
-  final List<Stop>? stops;
+  const MapScreen({super.key});
 
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -306,10 +305,39 @@ class _MapScreenState extends State<MapScreen> {
   void initState() {
     super.initState();
     _requestPermissionAndLocate();
-    if(widget.stops != null) {
-      for(final stop in widget.stops!) {
-        _points.add(LatLng(stop.latitude, stop.latitude));
+    final provider = context.read<TripProvider>();
+    
+    if (provider.stops.isNotEmpty) {
+      for (final stop in provider.stops) {
+        final latlng = LatLng(stop.latitude, stop.longitude);
+        
+        _points.add(latlng);
+        _markers.add(
+          Marker(
+            point: latlng,
+            width: 40,
+            height: 40,
+            child: const Icon(Icons.location_on, color: Colors.red, size: 40),
+          ),
+        );
       }
+
+      _getRoute(_points).then((routedPoints) {
+        if (mounted) {
+          setState(() {
+            _points = routedPoints;
+          });
+        }
+      });
+
+      Future.delayed(const Duration(milliseconds: 300), () {
+        if (mounted) {
+          _mapController.move(
+            LatLng(provider.stops.first.latitude, provider.stops.first.longitude),
+            13,
+          );
+        }
+      });
     }
   }
 
@@ -335,7 +363,7 @@ class _MapScreenState extends State<MapScreen> {
           FlutterMap(
             mapController: _mapController,
             options: MapOptions(
-              initialCenter: _currentLocation ?? LatLng(-22.908333, -43.196388),
+              initialCenter: _currentLocation!,
               initialZoom: 13,
               minZoom: 0,
               maxZoom: 19,
