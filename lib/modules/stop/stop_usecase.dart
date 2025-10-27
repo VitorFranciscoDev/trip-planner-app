@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
-import 'package:trip_planner/modules/stop/stop_repository.dart';
+import 'package:trip_planner/modules/stop/stop_spec.dart';
 
 // Stop's Use Cases
 class StopUseCase {
   StopUseCase({ required this.stopRepository });
 
-  final StopRepository stopRepository;
+  final IStopRepository stopRepository;
 
   // Validation of Start Date
   String? validateStartDate(String startDate, BuildContext context) {

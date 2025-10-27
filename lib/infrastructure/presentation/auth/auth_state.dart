@@ -72,6 +72,15 @@ class AuthProvider with ChangeNotifier {
     _errorPassword = null;
   }
 
+  // Log Out of App [Removes the User from SharedPreferences]
+  Future<void> logout() async {
+    _user = null;
+    notifyListeners();
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('user_data');
+  }
+
   // Register User in the DB and SharedPreferences
   Future<String?> registerUser(User user, BuildContext context) async {
     _isLoading = true;
@@ -169,14 +178,5 @@ class AuthProvider with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
-  }
-
-  // Log Out of App [Removes the User from SharedPreferences]
-  Future<void> logout() async {
-    _user = null;
-    notifyListeners();
-
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('user_data');
   }
 }

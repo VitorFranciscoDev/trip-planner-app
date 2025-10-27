@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trip_planner/entities/trip.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/alert_dialog_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/recomendations_list_component.dart';
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_state.dart';
 import 'package:trip_planner/infrastructure/presentation/home/home_state.dart';
-import 'package:trip_planner/infrastructure/presentation/home/search_result_state.dart';
 import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 
@@ -26,9 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
     final intl = AppLocalizations.of(context);
     final name = context.read<AuthProvider>().user!.name;
     final provider = context.watch<HomeProvider>();
-    final searchProvider = context.watch<SearchResultProvider>();
-    final recomendation1 = provider.brNERecommendations;
-    final recomendation2 = provider.brSORecommendations;
+    final List<Trip> tripRecomendations = provider.loadRecomendations();
+    final recomendation1 = tripRecomendations[0];
+    final recomendation2 = tripRecomendations[1];
 
     return SingleChildScrollView(
       child: Column(
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: const Icon(Icons.clear),
                       onPressed: () {
                         controllerSearch.clear();
-                        searchProvider.clearSearch();
+                        provider.clearSearch();
                       },
                   )
                   : null,
@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          if (searchProvider.isSearching)
+          if (provider.isSearching)
             Container(
               margin: const EdgeInsets.only(top: 8),
               padding: const EdgeInsets.all(16),
@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CircularProgressIndicator(),
               ),
             )
-            else if (searchProvider.searchResults.isNotEmpty)
+            else if (provider.searchResults.isNotEmpty)
               Container(
                 margin: const EdgeInsets.only(top: 8),
                 decoration: BoxDecoration(
@@ -124,10 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: searchProvider.searchResults.length,
+                  itemCount: provider.searchResults.length,
                   separatorBuilder: (context, index) => const Divider(height: 1),
                   itemBuilder: (context, index) {
-                    final result = searchProvider.searchResults[index];
+                    final result = provider.searchResults[index];
                     return ListTile(
                       leading: Icon(
                         Icons.location_on,
@@ -152,15 +152,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                         controllerSearch.clear();
-                        searchProvider.clearSearch();
+                        provider.clearSearch();
                       },
                     );
                   },
                 ),
               )
-            else if (searchProvider.query.isNotEmpty && 
-                      searchProvider.query.length >= 3 &&
-                      !searchProvider.isSearching)
+            else if (provider.query.isNotEmpty && 
+                      provider.query.length >= 3 &&
+                      !provider.isSearching)
               Container(
                 margin: const EdgeInsets.only(top: 8),
                 padding: const EdgeInsets.all(16),

@@ -1,12 +1,12 @@
 import 'dart:math';
 import 'package:trip_planner/entities/trip.dart';
-import 'package:trip_planner/modules/trip-recomendation/trip_recomendation_repository.dart';
+import 'package:trip_planner/modules/trip-recomendation/trip_recomendation_spec.dart';
 
 // Trip Recomendations Use Cases
 class TripRecomendationUseCase {
   TripRecomendationUseCase({ required this.tripRecomendationRepository });
 
-  final TripRecomendationRepository tripRecomendationRepository;
+  final ITripRecomendationRepository tripRecomendationRepository;
 
   // Get Two Random Recomendations
   List<Trip> getTwoRecomendations() {
