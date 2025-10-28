@@ -89,29 +89,16 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                         ),
                         child: Row(
                           children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 15),
-                              child: Text(
-                                activeTrip.title,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: "Times New Roman",
-                                  fontWeight: FontWeight.w700,
-                                  color: theme.colorScheme.primary,
-                                ),
-                              ),
-                            ),
-                            Spacer(),
-                            Padding(
-                              padding: EdgeInsets.only(right: 15),
-                              child: Text(
-                                "${activeTrip.start_date} - ${activeTrip.end_date}",
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  fontFamily: "Times New Roman",
-                                  fontWeight: FontWeight.w700,
-                                  color: theme.colorScheme.primary,
-                                ),
+                            const SizedBox(width: 15),
+                            Icon(Icons.airplanemode_active, color: theme.colorScheme.primary, size: 18),
+                            const SizedBox(width: 10),
+                            Text(
+                              activeTrip.title, 
+                              style: TextStyle(
+                                color: theme.colorScheme.primary,
+                                fontFamily: "Times New Roman",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ],

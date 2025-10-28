@@ -1,3 +1,5 @@
+import 'package:trip_planner/entities/person.dart';
+import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/entities/trip.dart';
 import 'package:trip_planner/infrastructure/database/database.dart';
 import 'package:trip_planner/modules/trip/trip_spec.dart';
@@ -91,7 +93,6 @@ class TripRepository implements ITripRepository {
     final db = await database.database;
 
     try {
-      // Query in DB
       final result = await db.query(
         'trips', 
         where: 'user_id = ?',
@@ -99,8 +100,38 @@ class TripRepository implements ITripRepository {
         orderBy: 'id DESC',
       );
 
-      // Returns List of Trips
-      return result.map((map) => Trip.fromMap(map)).toList();
+      List<Trip> trips = [];
+      
+      for (var map in result) {
+        final stopsResult = await db.query(
+          'stops',
+          where: 'trip_id = ?',
+          whereArgs: [map['id']],
+        );
+        
+        final groupResult = await db.query(
+          'persons',
+          where: 'trip_id = ?',
+          whereArgs: [map['id']],
+        );
+        
+        final stops = stopsResult.map((s) => Stop.fromMap(s)).toList();
+        final group = groupResult.map((p) => Person.fromMap(p)).toList();
+        
+        trips.add(Trip(
+          id: map['id'] as int?,
+          user_id: map['user_id'] as int?,
+          title: map['title'] as String,
+          transport: map['transport'] as String,
+          start_date: map['start_date'] as String,
+          end_date: map['end_date'] as String,
+          concluded: map['concluded'] == 1,
+          stops: stops,
+          group: group,
+        ));
+      }
+
+      return trips;
     } catch (e) {
       throw Exception("Error in Get All Trips Repository: $e");
     }
