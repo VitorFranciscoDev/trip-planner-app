@@ -34,9 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 15),
-                child: Image.asset(
-                  "assets/logos/trip-planner-icon.png",
-                  height: 55,
+                child: Text(
+                  "TP",
+                  style: TextStyle(
+                    fontFamily: "Times New Roman", 
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: theme.colorScheme.primary,
+                  ),
                 ),
               ),
               Text(

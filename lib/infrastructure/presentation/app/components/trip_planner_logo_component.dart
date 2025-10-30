@@ -5,10 +5,15 @@ class TripPlannerLogoComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      "assets/logos/trip-planner-logo.png",
-      width: 350,
-      fit: BoxFit.cover,
+    final theme = Theme.of(context);
+
+    return Text(
+      "Trip Planner",
+      style: TextStyle(
+        fontSize: 45,
+        fontFamily: "Times New Roman",
+        color: theme.colorScheme.primary,
+      ),
     );
   }
 }

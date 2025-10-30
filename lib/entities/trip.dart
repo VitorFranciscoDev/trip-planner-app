@@ -37,7 +37,7 @@ class Trip {
       transport: map['transport'],
       start_date: map['start_date'],
       end_date: map['end_date'],
-      concluded: map['concluded'] == 1,
+      concluded: map['concluded'] == 1, // Transforms in Bool
     );
   }
 }

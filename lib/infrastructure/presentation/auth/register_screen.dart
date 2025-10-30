@@ -85,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             children: [
               TripPlannerLogoComponent(),
-              const SizedBox(height: 50),
+              const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: ContainerTextFieldComponent(

@@ -15,7 +15,7 @@ final darkTheme = ThemeData(
   colorScheme: ColorScheme.dark(
     primary: const Color(0xFF5A3410),
     secondary: const Color(0xFFFF8C69),
-    tertiary: const Color(0xFF2E2E2E),
+    tertiary: const Color.fromARGB(255, 183, 183, 183),
     background: const Color(0xFF121212),
   ),
 );
