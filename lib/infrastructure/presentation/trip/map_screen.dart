@@ -351,6 +351,13 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final provider = context.watch<TripProvider>();
+
+    if(_currentLocation == null) {
+      return Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -363,7 +370,7 @@ class _MapScreenState extends State<MapScreen> {
           FlutterMap(
             mapController: _mapController,
             options: MapOptions(
-              initialCenter: _currentLocation!,
+              initialCenter: provider.stops.isNotEmpty ? LatLng(provider.stops[0].latitude, provider.stops[0].longitude) : _currentLocation!,
               initialZoom: 13,
               minZoom: 0,
               maxZoom: 19,
