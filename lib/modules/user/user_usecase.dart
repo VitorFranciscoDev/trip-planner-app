@@ -71,9 +71,8 @@ class UserUseCase {
   }
 
   // Update the User
-  Future<User?> updateUser(User user) async {
+  Future<int> updateUser(User user) async {
     try {
-      // Returns the User from Repository
       return await userRepository.updateUser(user);
     } catch(e) {
       throw Exception("Error in Update User Use Case: $e");

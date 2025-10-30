@@ -5,6 +5,6 @@ abstract class IUserRepository {
   Future<User?> getUserByEmail(String email);
   Future<int> registerUser(User user);
   Future<User?> doLogin(String email, String password);
-  Future<User?> updateUser(User user);
+  Future<int> updateUser(User user);
   Future<int> deleteUser(int? id);
 }

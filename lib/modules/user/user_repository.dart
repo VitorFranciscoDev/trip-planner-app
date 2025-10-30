@@ -69,22 +69,17 @@ class UserRepository implements IUserRepository {
 
   // Update the User in DB
   @override
-  Future<User?> updateUser(User user) async {
+  Future<int> updateUser(User user) async {
     final db = await database.database;
 
     try {
-      // Update the User in DB and receive the number of lines affected
-      final result = await db.update(
+      // Update the User in DB and returns the number of lines affected
+      return await db.update(
         'users',
         user.toMap(),
         where: 'id = ?',
         whereArgs: [user.id],
       );
-
-      // If it has any rows affected, return the user
-      if (result > 0) return user;
-
-      return null;
     } catch (e) {
       throw Exception("Error updating user: $e");
     }

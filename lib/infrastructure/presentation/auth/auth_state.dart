@@ -141,9 +141,9 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      final updatedUser = await userUseCase.updateUser(user!);
+      final result = await userUseCase.updateUser(user!);
       
-      if(updatedUser != null) {
+      if(result > 0) {
         _user = user;
         notifyListeners();
 
