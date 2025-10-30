@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/app/intl/intl_state.dart';
 import 'package:trip_planner/infrastructure/presentation/auth/login_screen.dart';

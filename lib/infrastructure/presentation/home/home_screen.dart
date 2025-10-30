@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/alert_dialog_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/recomendations_list_component.dart';
 import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_state.dart';
@@ -59,6 +59,9 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.symmetric(horizontal: 25),
             child: TextField(
               controller: controllerSearch,
+              onChanged: (value) {
+                context.read<HomeProvider>().searchLocations(value);
+              },
               decoration: InputDecoration(
                 hintText: intl.searchDestinations,
                 prefixIcon: Icon(Icons.search),

@@ -69,42 +69,44 @@ class _RecomendationsListComponentState extends State<RecomendationsListComponen
               ],
             ),
             Expanded(
-              child: ListView.builder(
+              child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: widget.tripRecomendation.stops!.length,
+                separatorBuilder: (context, index) => Center(
+                  child: Icon(
+                    Icons.arrow_right,
+                    size: 30,
+                    color: theme.colorScheme.primary,
+                  ),
+                ),
                 itemBuilder: (context, index) {
                   final stop = widget.tripRecomendation.stops![index];
-                  return Column(
-                    children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.asset(
-                                stop.img!,
-                                fit: BoxFit.cover,
-                                width: 170,
-                                height: 130,
-                              ),
-                            ),
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.asset(
+                            stop.img!,
+                            fit: BoxFit.cover,
+                            width: 170,
+                            height: 130,
                           ),
-                          Icon(Icons.arrow_right, size: 30),
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 5, right: 20),
-                        child: Text(
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
                           stop.location,
                           style: TextStyle(
                             color: theme.colorScheme.primary,
                             fontFamily: "Times New Roman",
                             fontWeight: FontWeight.w700,
                           ),
+                          textAlign: TextAlign.center,
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   );
                 },
               ),

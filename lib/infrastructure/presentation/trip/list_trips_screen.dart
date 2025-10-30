@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/container_textfield_component.dart';
 import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_details_screen.dart';

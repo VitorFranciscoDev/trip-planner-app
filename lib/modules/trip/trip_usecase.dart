@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/entities/trip.dart';
-import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizations.dart';
 import 'package:trip_planner/modules/trip/trip_spec.dart';
 
 // Trip's Use Cases

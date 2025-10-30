@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/trip.dart';
-import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/alert_dialog_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/button_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/container_textfield_component.dart';

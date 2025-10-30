@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/user.dart';
-import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/alert_dialog_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/button_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/container_textfield_component.dart';
@@ -140,7 +140,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                         child: Text(
                           l10n.haveAccount,
-                          style: TextStyle(color: theme.colorScheme.secondary),
+                          style: TextStyle(
+                            color: theme.colorScheme.secondary,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 20),

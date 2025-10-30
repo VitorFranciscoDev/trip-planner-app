@@ -263,7 +263,7 @@ class _MapScreenState extends State<MapScreen> {
                   end_date: _endDateController.text,
                   latitude: latlng.latitude,
                   longitude: latlng.longitude,
-                  experiences: experiences,
+                  stopExperiences: experiences,
                 );
                 provider.addStop(stop);
 

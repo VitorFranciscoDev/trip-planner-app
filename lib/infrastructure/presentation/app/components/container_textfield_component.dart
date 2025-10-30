@@ -7,10 +7,12 @@ class ContainerTextFieldComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       height: height,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.tertiary,
         borderRadius: BorderRadius.circular(35),
       ),
       child: child,

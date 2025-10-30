@@ -36,7 +36,7 @@ class TripRepository implements ITripRepository {
           }); 
 
           // Add the User Experiences in DB
-          for(var userExperience in stop.experiences!) {
+          for(var userExperience in stop.stopExperiences!) {
             await txn.insert('user_experiences', {
               ...userExperience.toMap(),
               'stop_id': stop_id,

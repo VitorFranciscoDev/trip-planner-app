@@ -74,7 +74,7 @@ class AlertDialogComponent extends StatelessWidget {
           onPressed: () => fn2(),
           style: ElevatedButton.styleFrom(
             backgroundColor: theme.colorScheme.primary,
-            foregroundColor: Colors.white,
+            foregroundColor: theme.colorScheme.tertiary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),

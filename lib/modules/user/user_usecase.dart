@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trip_planner/entities/user.dart';
 import 'package:trip_planner/modules/user/user_spec.dart';
-import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizations.dart';
 
 // User's Use Cases
 class UserUseCase {
