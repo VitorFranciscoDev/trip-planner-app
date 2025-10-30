@@ -10,7 +10,7 @@ class PersonsTable {
         trip_id INTEGER NOT NULL,
         name TEXT NOT NULL,
         age INTEGER NOT NULL,
-        img TEXT,
+        img BLOB,
         FOREIGN KEY(trip_id) REFERENCES trips(id)
       )
     ''');

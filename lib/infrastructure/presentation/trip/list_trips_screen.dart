@@ -66,7 +66,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
             child: ContainerTextFieldComponent(
-              height: 250,
+              height: 220,
               child: ListView.builder(
                 shrinkWrap: true,
                 physics: AlwaysScrollableScrollPhysics(),
@@ -126,7 +126,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
             child: ContainerTextFieldComponent(
-              height: 250,
+              height: 220,
               child: ListView.builder(
                 shrinkWrap: true,
                 physics: AlwaysScrollableScrollPhysics(),

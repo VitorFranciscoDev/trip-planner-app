@@ -9,7 +9,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/stop.dart';
-import 'package:trip_planner/entities/user_experience.dart';
+import 'package:trip_planner/entities/stop_experience.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/checkbox_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_date_component.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
@@ -239,22 +239,22 @@ class _MapScreenState extends State<MapScreen> {
 
                 */
 
-                final experiences = <UserExperience>[];
+                final experiences = <StopExperience>[];
 
                 if (_differentCulture) {
-                  experiences.add(UserExperience(experience: "Immersion in a Different Culture"));
+                  experiences.add(StopExperience(experience: "Immersion in a Different Culture"));
                 }
                 if (_alternativeCuisine) {
-                  experiences.add(UserExperience(experience: "Explore Alternative Cuisines"));
+                  experiences.add(StopExperience(experience: "Explore Alternative Cuisines"));
                 }
                 if (_historicalSites) {
-                  experiences.add(UserExperience(experience: "Visit Historical Sites"));
+                  experiences.add(StopExperience(experience: "Visit Historical Sites"));
                 }
                 if (_localEstablishments) {
-                  experiences.add(UserExperience(experience: "Visit Local Establishments"));
+                  experiences.add(StopExperience(experience: "Visit Local Establishments"));
                 }
                 if (_contactWithNature) {
-                  experiences.add(UserExperience(experience: "Contact With Nature"));
+                  experiences.add(StopExperience(experience: "Contact With Nature"));
                 }
 
                 final stop = Stop(
@@ -263,7 +263,7 @@ class _MapScreenState extends State<MapScreen> {
                   end_date: _endDateController.text,
                   latitude: latlng.latitude,
                   longitude: latlng.longitude,
-                  userExperiences: experiences,
+                  experiences: experiences,
                 );
                 provider.addStop(stop);
 
