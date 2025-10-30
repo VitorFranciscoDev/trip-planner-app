@@ -29,21 +29,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(height: 50),
+          const SizedBox(height: 60),
           Row(
             children: [
-              Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Text(
-                  "TP",
-                  style: TextStyle(
-                    fontFamily: "Times New Roman", 
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: theme.colorScheme.primary,
-                  ),
+              const SizedBox(width: 25),
+              Text(
+                "TP",
+                style: TextStyle(
+                  fontFamily: "Times New Roman", 
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: theme.colorScheme.primary,
                 ),
               ),
+              const SizedBox(width: 10),
               Text(
                 intl.welcomeUser(name),
                 style: TextStyle(
@@ -55,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
             child: TextField(

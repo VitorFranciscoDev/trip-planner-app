@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/user.dart';
 import 'package:trip_planner/infrastructure/presentation/app/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
+import 'package:trip_planner/infrastructure/presentation/app/components/trip_planner_logo_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/intl/intl_state.dart';
 import 'package:trip_planner/infrastructure/presentation/auth/login_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/app/theme/theme_provider.dart';
@@ -43,7 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 80),
-          Center(child: Image.asset("assets/logos/trip-planner-logo.png", height: 75)),
+          Center(child: TripPlannerLogoComponent()),
           const SizedBox(height: 30),
           Padding(
             padding: EdgeInsets.only(left: 30),

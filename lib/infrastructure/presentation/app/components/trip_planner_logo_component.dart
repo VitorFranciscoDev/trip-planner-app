@@ -11,6 +11,7 @@ class TripPlannerLogoComponent extends StatelessWidget {
       "Trip Planner",
       style: TextStyle(
         fontSize: 45,
+        fontWeight: FontWeight.w700,
         fontFamily: "Times New Roman",
         color: theme.colorScheme.primary,
       ),
