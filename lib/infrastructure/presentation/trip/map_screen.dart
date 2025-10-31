@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +10,6 @@ import 'package:trip_planner/entities/stop_experience.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/checkbox_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_date_component.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
-import 'package:trip_planner/modules/stop/stop_repository.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -23,23 +19,28 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  // Controller of Map
   final MapController _mapController = MapController();
-  final StopRepository _stopRepository = StopRepository();
   
+  // Controller for Dates Text Fields
   final TextEditingController _startDateController = TextEditingController();
   final TextEditingController _endDateController = TextEditingController();
 
+  // User's Current Location
   LatLng? _currentLocation;
 
+  // Map's Markers and Points
   List<Marker> _markers = [];
   List<LatLng> _points = [];
 
-  bool _differentCulture = true;
+  // Checkbox boolean variables
+  bool _differentCulture = false;
   bool _alternativeCuisine = false;
   bool _historicalSites = false;
   bool _localEstablishments = false;
   bool _contactWithNature = false;
 
+  // Request User's Permission and Get His Current Position
   Future<void> _requestPermissionAndLocate() async {
     final status = await Permission.location.request();
     if (!status.isGranted) return;
@@ -48,38 +49,38 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {
       _currentLocation = LatLng(position.latitude, position.longitude);
     });
-
-    _mapController.move(_currentLocation!, 15);
   }
 
-  Future<List<LatLng>> _getRoute(List<LatLng> points) async {
-    if (points.length < 2) return points;
-
-    final coords = points.map((p) => "${p.longitude},${p.latitude}").join(";");
-    final url = Uri.parse(
-      "https://router.project-osrm.org/route/v1/driving/$coords?overview=full&geometries=geojson",
-    );
-
-    final response = await http.get(url);
-    if (response.statusCode != 200) return points;
-
-    final data = json.decode(response.body);
-    final route = data['routes'][0]['geometry']['coordinates'] as List;
-    return route
-        .map((coord) => LatLng(coord[1].toDouble(), coord[0].toDouble()))
-        .toList();
-  }
-
+  // Date Picker
   Future<void> _selectDate(TextEditingController controller) async {
-    DateTime? picked = await showDatePicker(
+    final provider = context.read<TripProvider>();
+    
+    DateTime firstAvailableDate = DateTime.now();
+    
+    if (provider.stops.isNotEmpty) {
+      final lastStop = provider.stops.last;
+      final dateParts = lastStop.end_date.split('/');
+      
+      if (dateParts.length == 3) {
+        final day = int.tryParse(dateParts[0]);
+        final month = int.tryParse(dateParts[1]);
+        final year = int.tryParse(dateParts[2]);
+        
+        if (day != null && month != null && year != null) {
+          firstAvailableDate = DateTime(year, month, day);
+        }
+      }
+    }
+    
+    DateTime? _picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
+      initialDate: firstAvailableDate,
+      firstDate: firstAvailableDate,
       lastDate: DateTime(2030),
     );
 
-    if (picked != null) {
-      controller.text = "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+    if (_picked != null) {
+      controller.text = "${_picked.day}/${_picked.month}/${_picked.year}";
     }
   }
 
@@ -87,10 +88,10 @@ class _MapScreenState extends State<MapScreen> {
     final provider = context.read<TripProvider>();
     final theme = Theme.of(context);
 
-    final address = await _stopRepository.getAddressFromCoordinates(latlng);
+    final address = await provider.getAddressFromCoordinates(latlng);
     final locationName = address ?? "Unknown Place";
 
-    _differentCulture = true;
+    _differentCulture = false;
     _alternativeCuisine = false;
     _historicalSites = false;
     _localEstablishments = false;
@@ -216,45 +217,36 @@ class _MapScreenState extends State<MapScreen> {
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               style: TextButton.styleFrom(
-                foregroundColor: Colors.grey,
+                foregroundColor: theme.colorScheme.primary,
               ),
               child: const Text("Cancel", style: TextStyle(fontWeight: FontWeight.w600)),
             ),
             ElevatedButton(
               onPressed: () async {
-                // Validate dates
-                /*
-                final isValid = provider.validateStopDates(
-                  startDate: _startDateController.text,
-                  endDate: _endDateController.text,
-                  context: context,
-                );
-                
+                final isValid = provider.validateStopDates(_startDateController.text, _endDateController.text);
 
-                if (!isValid) {
-                  // Force rebuild to show errors
-                  setDialogState(() {});
-                  return;
-                }
+                if (!isValid) return;
 
-                */
-
-                final experiences = <StopExperience>[];
+                final List<StopExperience> _experiences = [];
 
                 if (_differentCulture) {
-                  experiences.add(StopExperience(experience: "Immersion in a Different Culture"));
+                  _experiences.add(StopExperience(experience: "Immersion in a Different Culture"));
                 }
+
                 if (_alternativeCuisine) {
-                  experiences.add(StopExperience(experience: "Explore Alternative Cuisines"));
+                  _experiences.add(StopExperience(experience: "Explore Alternative Cuisines"));
                 }
+
                 if (_historicalSites) {
-                  experiences.add(StopExperience(experience: "Visit Historical Sites"));
+                  _experiences.add(StopExperience(experience: "Visit Historical Sites"));
                 }
+
                 if (_localEstablishments) {
-                  experiences.add(StopExperience(experience: "Visit Local Establishments"));
+                  _experiences.add(StopExperience(experience: "Visit Local Establishments"));
                 }
+
                 if (_contactWithNature) {
-                  experiences.add(StopExperience(experience: "Contact With Nature"));
+                  _experiences.add(StopExperience(experience: "Contact With Nature"));
                 }
 
                 final stop = Stop(
@@ -263,8 +255,9 @@ class _MapScreenState extends State<MapScreen> {
                   end_date: _endDateController.text,
                   latitude: latlng.latitude,
                   longitude: latlng.longitude,
-                  stopExperiences: experiences,
+                  stopExperiences: _experiences,
                 );
+
                 provider.addStop(stop);
 
                 setState(() {
@@ -279,7 +272,8 @@ class _MapScreenState extends State<MapScreen> {
                   _points.add(latlng);
                 });
 
-                final routedPoints = await _getRoute(_points);
+                final routedPoints = await provider.getRoute(_points);
+
                 setState(() {
                   _points = routedPoints;
                 });
@@ -288,7 +282,7 @@ class _MapScreenState extends State<MapScreen> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: theme.colorScheme.primary,
-                foregroundColor: Colors.white,
+                foregroundColor: theme.colorScheme.tertiary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -315,14 +309,14 @@ class _MapScreenState extends State<MapScreen> {
         _markers.add(
           Marker(
             point: latlng,
-            width: 40,
-            height: 40,
-            child: const Icon(Icons.location_on, color: Colors.red, size: 40),
+            width: 25,
+            height: 25,
+            child: Icon(Icons.location_on, color: Colors.red, size: 25),
           ),
         );
       }
 
-      _getRoute(_points).then((routedPoints) {
+      provider.getRoute(_points).then((routedPoints) {
         if (mounted) {
           setState(() {
             _points = routedPoints;
@@ -400,8 +394,8 @@ class _MapScreenState extends State<MapScreen> {
                   if (_points.isNotEmpty)
                     Polyline(
                       points: _points,
-                      strokeWidth: 4,
-                      color: Colors.red,
+                      strokeWidth: 6,
+                      color: theme.colorScheme.primary,
                     ),
                 ],
               ),

@@ -11,6 +11,8 @@ import 'package:trip_planner/modules/person/person_repository.dart';
 import 'package:trip_planner/modules/person/person_usecase.dart';
 import 'package:trip_planner/modules/search-result/search_result_repository.dart';
 import 'package:trip_planner/modules/search-result/search_result_usecase.dart';
+import 'package:trip_planner/modules/stop/stop_repository.dart';
+import 'package:trip_planner/modules/stop/stop_usecase.dart';
 import 'package:trip_planner/modules/trip-recomendation/trip_recomendation_repository.dart';
 import 'package:trip_planner/modules/trip-recomendation/trip_recomendation_usecase.dart';
 import 'package:trip_planner/modules/trip/trip_repository.dart';
@@ -29,6 +31,9 @@ void main() async {
 
   final personRepository = PersonRepository();
   final personUseCase = PersonUseCase(personRepository: personRepository);
+  
+  final stopRepository = StopRepository();
+  final stopUseCase = StopUseCase(stopRepository: stopRepository);
 
   final tripRecomendationRepository = TripRecomendationRepository();
   final tripRecomendationUseCase = TripRecomendationUseCase(tripRecomendationRepository: tripRecomendationRepository);
@@ -44,7 +49,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthProvider(userUseCase: userUseCase)),
         ChangeNotifierProvider(create: (_) => BottomNavigatorProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider(tripRecomendationUseCase: tripRecomendationUseCase, searchResultUseCase: searchResultUseCase)),
-        ChangeNotifierProvider(create: (_) => TripProvider(tripUseCase: tripUseCase, personUseCase: personUseCase)),
+        ChangeNotifierProvider(create: (_) => TripProvider(tripUseCase: tripUseCase, personUseCase: personUseCase, stopUseCase: stopUseCase)),
       ],
       child: const MyApp(),
     ),

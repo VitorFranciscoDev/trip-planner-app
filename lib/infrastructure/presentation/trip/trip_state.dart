@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/entities/trip.dart';
 import 'package:trip_planner/modules/person/person_usecase.dart';
+import 'package:trip_planner/modules/stop/stop_usecase.dart';
 import 'package:trip_planner/modules/trip/trip_usecase.dart';
 
 class TripProvider extends ChangeNotifier {
   // Constructor
-  TripProvider({ required this.tripUseCase, required this.personUseCase });
+  TripProvider({ required this.tripUseCase, required this.personUseCase, required this.stopUseCase });
 
   // Use Cases
   final TripUseCase tripUseCase;
   final PersonUseCase personUseCase;
+  final StopUseCase stopUseCase;
 
   // Trip Data
   Trip? _trip;
@@ -73,11 +76,16 @@ class TripProvider extends ChangeNotifier {
     return _errorName == null && _errorAge == null;
   }
 
-  /*
-  bool validateStop(String startDate, String endDate) {
-    _errorStartDate = s
+  bool validateStopDates(String startDate, String endDate) {
+    _errorStartDate = stopUseCase.validateStartDate(startDate);
+    _errorEndDate = stopUseCase.validateEndDate(endDate);
+    if(_errorStartDate == null && _errorEndDate == null) {
+      _errorStartDate = stopUseCase.validateDates(startDate, endDate);
+      _errorEndDate = stopUseCase.validateDates(startDate, endDate);
+    }
+
+    return _errorStartDate == null && _errorEndDate == null;
   }
-  */
 
   Future<String?> addTrip(Trip trip) async {
     _isLoading = true;
@@ -170,5 +178,17 @@ class TripProvider extends ChangeNotifier {
   void deleteStop(Stop stop) {
     _stops.remove(stop);
     notifyListeners();
+  }
+
+  Future<String?> getAddressFromCoordinates(LatLng position) async {
+    try {
+      return await stopUseCase.getAddressFromCoordinates(position);
+    } catch(e) {
+      return "Unexpected Error. Try Again.";
+    }
+  }
+
+  Future<List<LatLng>> getRoute(List<LatLng> points) async {
+    return stopUseCase.getRoute(points);
   }
 }

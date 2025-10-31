@@ -230,7 +230,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 30, right: 30, bottom: 30),
+                    padding: EdgeInsets.only(left: 30, right: 30, bottom: 15),
                     child: ButtonComponent(
                       function: () {
                         final isValid = provider.validatePerson(
@@ -256,13 +256,18 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                   ),
                   if (provider.group.isNotEmpty)
                     Padding(
-                      padding: EdgeInsets.only(bottom: 30),
+                      padding: EdgeInsets.only(bottom: 15),
                       child: Wrap(
                         children: [
                           ...provider.group.map((person) {
                             return Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 3),
+                              padding: EdgeInsets.symmetric(horizontal: 10),
                               child: Chip(
+                                backgroundColor: theme.colorScheme.background,
+                                side: BorderSide(
+                                  color: theme.colorScheme.primary,
+                                  width: 2,
+                                ),
                                 label: Text("${person.name}(${person.age})"),
                                 deleteIcon: Icon(Icons.close),
                                 onDeleted: () {
@@ -276,7 +281,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                     ),
                   if (provider.errorGroup != null)
                     Padding(
-                      padding: EdgeInsets.only(bottom: 30),
+                      padding: EdgeInsets.only(bottom: 15),
                       child: Text(
                         provider.errorGroup!,
                         style: TextStyle(
@@ -345,26 +350,6 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                       ),
                     ),
                   ),
-                  if (provider.stops.isNotEmpty)
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                      child: Wrap(
-                        children: [
-                          ...provider.stops.map((stop) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 3),
-                              child: Chip(
-                                label: Text(stop.location),
-                                deleteIcon: Icon(Icons.close),
-                                onDeleted: () {
-                                  provider.deleteStop(stop);
-                                },
-                              ),
-                            );
-                          }),
-                        ],
-                      ),
-                    ),
                   if (provider.errorStops != null)
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
