@@ -175,8 +175,13 @@ class TripProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteStop(Stop stop) {
-    _stops.remove(stop);
+  void deleteStop(int index) {
+    _stops.removeAt(index);
+    notifyListeners();
+  }
+
+  void updateStop(int index, Stop stop) {
+    _stops[index] = stop;
     notifyListeners();
   }
 

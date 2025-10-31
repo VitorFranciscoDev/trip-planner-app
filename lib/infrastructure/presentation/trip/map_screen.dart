@@ -84,6 +84,362 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  Future<void> _onMarkerTap(int index) async {
+    final provider = context.read<TripProvider>();
+    final theme = Theme.of(context);
+    final stop = provider.stops[index];
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: Row(
+          children: [
+            Icon(Icons.location_on, color: theme.colorScheme.primary),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                stop.location,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: theme.colorScheme.primary,
+                ),
+              ),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Dates: ${stop.start_date} - ${stop.end_date}",
+              style: TextStyle(
+                fontSize: 14,
+                color: theme.colorScheme.onSurface,
+              ),
+            ),
+            const SizedBox(height: 8),
+            if (stop.stopExperiences!.isNotEmpty) ...[
+              Text(
+                "Experiences:",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: theme.colorScheme.primary,
+                ),
+              ),
+              const SizedBox(height: 4),
+              ...stop.stopExperiences!.map((exp) => Padding(
+                padding: const EdgeInsets.only(left: 8, top: 2),
+                child: Text(
+                  "• ${exp.experience}",
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ),
+              )),
+            ],
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            style: TextButton.styleFrom(
+              foregroundColor: theme.colorScheme.onSurface,
+            ),
+            child: const Text("Cancel", style: TextStyle(fontWeight: FontWeight.w600)),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _onEditStop(index);
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: theme.colorScheme.primary,
+            ),
+            child: const Text("Edit", style: TextStyle(fontWeight: FontWeight.w600)),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _onDeleteStop(index);
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.red,
+            ),
+            child: const Text("Delete", style: TextStyle(fontWeight: FontWeight.w600)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Função para editar uma parada
+  Future<void> _onEditStop(int index) async {
+    final provider = context.read<TripProvider>();
+    final theme = Theme.of(context);
+    final stop = provider.stops[index];
+
+    _startDateController.text = stop.start_date;
+    _endDateController.text = stop.end_date;
+    
+    _differentCulture = stop.stopExperiences!.any((e) => e.experience == "Immersion in a Different Culture");
+    _alternativeCuisine = stop.stopExperiences!.any((e) => e.experience == "Explore Alternative Cuisines");
+    _historicalSites = stop.stopExperiences!.any((e) => e.experience == "Visit Historical Sites");
+    _localEstablishments = stop.stopExperiences!.any((e) => e.experience == "Visit Local Establishments");
+    _contactWithNature = stop.stopExperiences!.any((e) => e.experience == "Contact With Nature");
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Row(
+            children: [
+              Icon(Icons.edit_location, color: theme.colorScheme.primary),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  "Edit ${stop.location}",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: theme.colorScheme.primary,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Select Dates",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: theme.colorScheme.primary,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextFieldDateComponent(
+                  controller: _startDateController,
+                  hint: "Start Date",
+                  error: provider.errorStartDate,
+                  function: () => _selectDate(_startDateController),
+                ),
+                const SizedBox(height: 12),
+                TextFieldDateComponent(
+                  controller: _endDateController,
+                  hint: "End Date",
+                  error: provider.errorEndDate,
+                  function: () => _selectDate(_endDateController),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  "Select Experiences",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: theme.colorScheme.primary,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                CheckboxComponent(
+                  value: _differentCulture,
+                  label: "Immersion in a Different Culture",
+                  icon: Icons.public,
+                  onChanged: (value) {
+                    setDialogState(() {
+                      _differentCulture = value!;
+                    });
+                  },
+                ),
+                CheckboxComponent(
+                  value: _alternativeCuisine,
+                  label: "Explore Alternative Cuisines",
+                  icon: Icons.restaurant,
+                  onChanged: (value) {
+                    setDialogState(() {
+                      _alternativeCuisine = value!;
+                    });
+                  },
+                ),
+                CheckboxComponent(
+                  value: _historicalSites,
+                  label: "Visit Historical Sites",
+                  icon: Icons.account_balance,
+                  onChanged: (value) {
+                    setDialogState(() {
+                      _historicalSites = value!;
+                    });
+                  },
+                ),
+                CheckboxComponent(
+                  value: _localEstablishments,
+                  label: "Visit Local Establishments",
+                  icon: Icons.store,
+                  onChanged: (value) {
+                    setDialogState(() {
+                      _localEstablishments = value!;
+                    });
+                  },
+                ),
+                CheckboxComponent(
+                  value: _contactWithNature,
+                  label: "Contact With Nature",
+                  icon: Icons.nature,
+                  onChanged: (value) {
+                    setDialogState(() {
+                      _contactWithNature = value!;
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              style: TextButton.styleFrom(
+                foregroundColor: theme.colorScheme.primary,
+              ),
+              child: const Text("Cancel", style: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final isValid = provider.validateStopDates(_startDateController.text, _endDateController.text);
+
+                if (!isValid) return;
+
+                final List<StopExperience> _experiences = [];
+
+                if (_differentCulture) {
+                  _experiences.add(StopExperience(experience: "Immersion in a Different Culture"));
+                }
+
+                if (_alternativeCuisine) {
+                  _experiences.add(StopExperience(experience: "Explore Alternative Cuisines"));
+                }
+
+                if (_historicalSites) {
+                  _experiences.add(StopExperience(experience: "Visit Historical Sites"));
+                }
+
+                if (_localEstablishments) {
+                  _experiences.add(StopExperience(experience: "Visit Local Establishments"));
+                }
+
+                if (_contactWithNature) {
+                  _experiences.add(StopExperience(experience: "Contact With Nature"));
+                }
+
+                final updatedStop = Stop(
+                  location: stop.location,
+                  start_date: _startDateController.text,
+                  end_date: _endDateController.text,
+                  latitude: stop.latitude,
+                  longitude: stop.longitude,
+                  stopExperiences: _experiences,
+                );
+
+                provider.updateStop(index, updatedStop);
+
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: theme.colorScheme.primary,
+                foregroundColor: theme.colorScheme.tertiary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text("Save Changes", style: TextStyle(fontWeight: FontWeight.w700)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Função para deletar uma parada
+  Future<void> _onDeleteStop(int index) async {
+    final provider = context.read<TripProvider>();
+    final theme = Theme.of(context);
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: Row(
+          children: [
+            Icon(Icons.warning, color: Colors.red),
+            const SizedBox(width: 8),
+            Text(
+              "Delete Stop",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: Colors.red,
+              ),
+            ),
+          ],
+        ),
+        content: Text(
+          "Are you sure you want to delete this stop? This action cannot be undone.",
+          style: TextStyle(fontSize: 14),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            style: TextButton.styleFrom(
+              foregroundColor: theme.colorScheme.onSurface,
+            ),
+            child: const Text("Cancel", style: TextStyle(fontWeight: FontWeight.w600)),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              provider.deleteStop(index);
+
+              setState(() {
+                _markers.removeAt(index);
+                _points.removeAt(index);
+              });
+
+              if (_points.isNotEmpty) {
+                final routedPoints = await provider.getRoute(_points);
+                setState(() {
+                  _points = routedPoints;
+                });
+              }
+
+              Navigator.of(context).pop();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: const Text("Delete", style: TextStyle(fontWeight: FontWeight.w700)),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> _onMapTap(LatLng latlng) async {
     final provider = context.read<TripProvider>();
     final theme = Theme.of(context);
@@ -260,13 +616,18 @@ class _MapScreenState extends State<MapScreen> {
 
                 provider.addStop(stop);
 
+                final markerIndex = _markers.length;
+
                 setState(() {
                   _markers.add(
                     Marker(
                       point: latlng,
                       width: 40,
                       height: 40,
-                      child: const Icon(Icons.location_on, color: Colors.red, size: 40),
+                      child: GestureDetector(
+                        onTap: () => _onMarkerTap(markerIndex),
+                        child: const Icon(Icons.location_on, color: Colors.red, size: 40),
+                      ),
                     ),
                   );
                   _points.add(latlng);
@@ -302,16 +663,21 @@ class _MapScreenState extends State<MapScreen> {
     final provider = context.read<TripProvider>();
     
     if (provider.stops.isNotEmpty) {
-      for (final stop in provider.stops) {
+      for (int i = 0; i < provider.stops.length; i++) {
+        final stop = provider.stops[i];
         final latlng = LatLng(stop.latitude, stop.longitude);
+        final index = i;
         
         _points.add(latlng);
         _markers.add(
           Marker(
             point: latlng,
-            width: 25,
-            height: 25,
-            child: Icon(Icons.location_on, color: Colors.red, size: 25),
+            width: 40,
+            height: 40,
+            child: GestureDetector(
+              onTap: () => _onMarkerTap(index),
+              child: Icon(Icons.location_on, color: Colors.red, size: 40),
+            ),
           ),
         );
       }
@@ -321,15 +687,6 @@ class _MapScreenState extends State<MapScreen> {
           setState(() {
             _points = routedPoints;
           });
-        }
-      });
-
-      Future.delayed(const Duration(milliseconds: 300), () {
-        if (mounted) {
-          _mapController.move(
-            LatLng(provider.stops.first.latitude, provider.stops.first.longitude),
-            13,
-          );
         }
       });
     }
