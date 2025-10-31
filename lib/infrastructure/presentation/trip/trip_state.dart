@@ -31,6 +31,10 @@ class TripProvider extends ChangeNotifier {
   // Group Data
   List<Person> _group = [];
   List<Person> get group => _group;
+  set group(List<Person> newGroup) {
+    _group = newGroup;
+    notifyListeners();
+  }
 
   // Stops Data
   List<Stop> _stops = [];
