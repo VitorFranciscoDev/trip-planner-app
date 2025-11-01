@@ -179,7 +179,6 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  // Função para editar uma parada
   Future<void> _onEditStop(int index) async {
     final provider = context.read<TripProvider>();
     final theme = Theme.of(context);
@@ -371,7 +370,6 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  // Função para deletar uma parada
   Future<void> _onDeleteStop(int index) async {
     final provider = context.read<TripProvider>();
     final theme = Theme.of(context);
@@ -579,6 +577,7 @@ class _MapScreenState extends State<MapScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
+                final currentContext = context;
                 final isValid = provider.validateStopDates(_startDateController.text, _endDateController.text);
 
                 if (!isValid) return;
@@ -603,6 +602,62 @@ class _MapScreenState extends State<MapScreen> {
 
                 if (_contactWithNature) {
                   _experiences.add(StopExperience(experience: "Contact With Nature"));
+                }
+
+                if(_experiences.isEmpty) {
+                  showDialog(
+                    context: currentContext,
+                    builder: (dialogContext) => AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      title: Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.red.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Icon(Icons.error, color: Colors.red, size: 28),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              "Error in Add Stop",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      content: Text(
+                        "You need to have, at least, one experience.",
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () => Navigator.of(dialogContext).pop(),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            foregroundColor: theme.colorScheme.tertiary,
+                            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: Text(
+                            "Ok",
+                            style: TextStyle(fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                  return;
                 }
 
                 final stop = Stop(

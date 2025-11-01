@@ -11,8 +11,7 @@ class UserUseCase {
 
   // Validate the User's name
   String? validateName(String name, BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return name.isEmpty ? l10n.fieldRequired : null;
+    return name.isEmpty ? "Name cannot be blank" : null;
   }
 
   // Validate the User's Email
@@ -20,7 +19,7 @@ class UserUseCase {
     final l10n = AppLocalizations.of(context);
     
     if(email.isEmpty) {
-      return l10n.fieldRequired;
+      return "Email cannot be blank";
     } else if(!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email)) {
       return l10n.invalidEmail;
     }
@@ -33,7 +32,7 @@ class UserUseCase {
     final l10n = AppLocalizations.of(context);
     
     if(password.isEmpty) {
-      return l10n.fieldRequired;
+      return "Password cannot be blank";
     } else if(password.length < 8) {
       return l10n.passwordTooShort;
     }

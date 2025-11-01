@@ -207,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const SizedBox(height: 35),
+                        const SizedBox(height: 20),
 
                         // Email Field
                         TextFieldComponent(
@@ -215,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           label: "Email",
                           error: provider.errorEmail,
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
 
                         // Password Field
                         TextFieldComponent(
@@ -224,7 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           error: provider.errorPassword,
                           isPassword: true,
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 15),
 
                         // Sign In Button
                         ButtonComponent(

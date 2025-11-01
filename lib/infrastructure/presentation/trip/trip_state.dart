@@ -69,6 +69,7 @@ class TripProvider extends ChangeNotifier {
     _errorTripTitle = tripUseCase.validateTripTitle(title, context);
     _errorGroup = tripUseCase.validateGroup(_group, context);
     _errorStops = tripUseCase.validateStops(_stops, context);
+    notifyListeners();
 
     return _errorTripTitle == null && _errorGroup == null && _errorStops == null;
   }
@@ -76,6 +77,7 @@ class TripProvider extends ChangeNotifier {
   bool validatePerson(String name, String age, BuildContext context) {
     _errorName = personUseCase.validateName(name, context);
     _errorAge = personUseCase.validateAge(age, context);
+    notifyListeners();
 
     return _errorName == null && _errorAge == null;
   }
@@ -87,6 +89,7 @@ class TripProvider extends ChangeNotifier {
       _errorStartDate = stopUseCase.validateDates(startDate, endDate);
       _errorEndDate = stopUseCase.validateDates(startDate, endDate);
     }
+    notifyListeners();
 
     return _errorStartDate == null && _errorEndDate == null;
   }

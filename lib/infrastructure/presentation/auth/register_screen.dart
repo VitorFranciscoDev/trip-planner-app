@@ -220,7 +220,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Text(
                           l10n.createAccount,
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 20,
                             color: theme.colorScheme.primary,
                             fontWeight: FontWeight.w900,
                             fontFamily: "Times New Roman",
@@ -235,7 +235,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const SizedBox(height: 35),
+                        const SizedBox(height: 20),
 
                         // Name Field
                         TextFieldComponent(
@@ -243,7 +243,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           label: "Name",
                           error: provider.errorName,
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
 
                         // Email Field
                         TextFieldComponent(
@@ -251,7 +251,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           label: "Email",
                           error: provider.errorEmail,
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
 
                         // Password Field
                         TextFieldComponent(
@@ -260,7 +260,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           error: provider.errorPassword,
                           isPassword: true,
                         ),
-                        const SizedBox(height: 25),
+                        const SizedBox(height: 15),
 
                         // Register Button
                         ButtonComponent(
