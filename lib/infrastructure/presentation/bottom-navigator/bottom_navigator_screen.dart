@@ -9,29 +9,69 @@ import 'package:trip_planner/infrastructure/presentation/trip/trip_register_scre
 class BottomNavigatorScreen extends StatelessWidget {
   BottomNavigatorScreen({super.key});
 
-  // pages of the Bottom Navigator
-  final List<Widget> pages = [HomeScreen(), TripRegisterScreen(), ListTripsScreen(), SettingsScreen()];
+  final List<Widget> pages = [
+    HomeScreen(),
+    TripRegisterScreen(),
+    ListTripsScreen(),
+    SettingsScreen()
+  ];
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final index = context.watch<BottomNavigatorProvider>().index;
-    
+
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
       body: pages[index],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: index,
-        type: BottomNavigationBarType.shifting,
-        selectedItemColor: theme.colorScheme.background,
-        unselectedItemColor: theme.colorScheme.background,
-        onTap: (newIndex) => context.read<BottomNavigatorProvider>().setIndex(newIndex),
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home", backgroundColor: theme.colorScheme.primary),
-          BottomNavigationBarItem(icon: Icon(Icons.map), label: "Trip", backgroundColor: theme.colorScheme.primary),
-          BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "List of Trips", backgroundColor: theme.colorScheme.primary),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings", backgroundColor: theme.colorScheme.primary),
-        ],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 20,
+              offset: Offset(0, -5),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(25),
+            topRight: Radius.circular(25),
+          ),
+          child: BottomNavigationBar(
+            currentIndex: index,
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: theme.colorScheme.primary,
+            selectedItemColor: theme.colorScheme.background,
+            unselectedItemColor: Colors.grey[400],
+            selectedFontSize: 12,
+            unselectedFontSize: 11,
+            onTap: (newIndex) => context.read<BottomNavigatorProvider>().setIndex(newIndex),
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_outlined, size: 26),
+                activeIcon: Icon(Icons.home, size: 26),
+                label: "Home",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.add_location_alt_outlined, size: 26),
+                activeIcon: Icon(Icons.add_location_alt, size: 26),
+                label: "New Trip",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.list_alt_outlined, size: 26),
+                activeIcon: Icon(Icons.list_alt, size: 26),
+                label: "My Trips",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings_outlined, size: 26),
+                activeIcon: Icon(Icons.settings, size: 26),
+                label: "Settings",
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

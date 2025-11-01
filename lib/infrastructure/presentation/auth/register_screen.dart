@@ -17,41 +17,43 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   // Controllers
-  TextEditingController controllerName = TextEditingController();
-  TextEditingController controllerEmail = TextEditingController();
-  TextEditingController controllerPassword = TextEditingController();
+  final TextEditingController _controllerName = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
 
   @override
   void dispose() {
-    controllerName.dispose();
-    controllerEmail.dispose();
-    controllerPassword.dispose();
+    _controllerName.dispose();
+    _controllerEmail.dispose();
+    _controllerPassword.dispose();
     super.dispose();
   }
 
   // Try to Register User in DB
   void registerUser() async {
+    final theme = Theme.of(context);
     final provider = context.read<AuthProvider>();
     final currentContext = context;
 
     final isValid = provider.validateRegisterFields(
-      controllerName.text,
-      controllerEmail.text,
-      controllerPassword.text,
+      _controllerName.text,
+      _controllerEmail.text,
+      _controllerPassword.text,
       context,
     );
 
     if (!isValid) return;
 
     User user = User(
-      name: controllerName.text,
-      email: controllerEmail.text,
-      password: controllerPassword.text,
+      name: _controllerName.text,
+      email: _controllerEmail.text,
+      password: _controllerPassword.text,
     );
 
     final result = await provider.registerUser(user, context);
 
     if (result == null) {
+      // Successful Feedback Alert
       showDialog(
         context: currentContext,
         builder: (dialogContext) => AlertDialog(
@@ -63,10 +65,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Container(
                 padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.1),
+                  color: theme.colorScheme.primary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(Icons.check_circle, color: Colors.green, size: 28),
+                child: Icon(Icons.check_circle, color: theme.colorScheme.primary, size: 28),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -75,7 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
-                    color: Colors.green,
+                    color: theme.colorScheme.primary,
                   ),
                 ),
               ),
@@ -95,8 +97,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
+                backgroundColor: theme.colorScheme.primary,
+                foregroundColor: theme.colorScheme.tertiary,
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -111,6 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       );
     } else {
+      // Error Feedback Alert
       showDialog(
         context: currentContext,
         builder: (dialogContext) => AlertDialog(
@@ -149,7 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               onPressed: () => Navigator.of(dialogContext).pop(),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
+                foregroundColor: theme.colorScheme.tertiary,
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -174,6 +177,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
+
+      // App Bar
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: IconButton(
@@ -191,7 +196,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // Logo
                 TripPlannerLogoComponent(),
+
+                // Text Fields Container
                 const SizedBox(height: 40),
                 Container(
                   decoration: BoxDecoration(
@@ -228,30 +236,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         const SizedBox(height: 35),
+
+                        // Name Field
                         TextFieldComponent(
-                          controller: controllerName,
+                          controller: _controllerName,
                           label: "Name",
                           error: provider.errorName,
                         ),
                         const SizedBox(height: 20),
+
+                        // Email Field
                         TextFieldComponent(
-                          controller: controllerEmail,
+                          controller: _controllerEmail,
                           label: "Email",
                           error: provider.errorEmail,
                         ),
                         const SizedBox(height: 20),
+
+                        // Password Field
                         TextFieldComponent(
-                          controller: controllerPassword,
+                          controller: _controllerPassword,
                           label: "Password",
                           error: provider.errorPassword,
                           isPassword: true,
                         ),
                         const SizedBox(height: 25),
+
+                        // Register Button
                         ButtonComponent(
                           function: registerUser,
                           message: l10n.signUp,
                         ),
                         const SizedBox(height: 20),
+
+                        // Divider
                         Row(
                           children: [
                             Expanded(child: Divider(color: Colors.grey[300])),
@@ -270,6 +288,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ],
                         ),
                         const SizedBox(height: 20),
+
+                        // Go to Login
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -292,7 +312,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   color: theme.colorScheme.secondary,
                                   fontSize: 13,
                                   fontWeight: FontWeight.w900,
-                                  decoration: TextDecoration.underline,
                                 ),
                               ),
                             ),

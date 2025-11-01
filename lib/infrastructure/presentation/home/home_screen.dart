@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 25),
           
-          // Search Bar
+          // Search Field
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Container(
@@ -158,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           
-          // Results
+          // Searching Destination
           if (provider.isSearching)
             Padding(
               padding: const EdgeInsets.all(25),
@@ -347,7 +347,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               
                               _controllerSearch.clear();
                               provider.clearSearch();
-                              setState(() {});
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -424,6 +423,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             )
+
+            // No Results Found
           else if (provider.query.isNotEmpty &&
               provider.query.length >= 3 &&
               !provider.isSearching)
@@ -461,7 +462,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Try searching with different keywords',
+                      'Try searching with different words',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey[400],
@@ -473,9 +474,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+          const SizedBox(height: 20),
           
           // Recommendations Section
-          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Row(

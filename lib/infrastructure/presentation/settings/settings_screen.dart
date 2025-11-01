@@ -22,7 +22,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   final TextEditingController _controllerEmail = TextEditingController();
 
   String languageSelected = "Portuguese";
-  bool darkMode = false;
   bool showLanguage = false;
   bool showInformations = false;
 
@@ -52,46 +51,69 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 80),
+            const SizedBox(height: 60),
+            
+            // Logo
             Center(child: TripPlannerLogoComponent()),
             const SizedBox(height: 30),
-            
+
             // Preferences Section
-            Padding(
-              padding: EdgeInsets.only(left: 5),
-              child: Text(
-                intl.preferences,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: "Times New Roman",
-                  fontWeight: FontWeight.w700,
-                  color: theme.colorScheme.primary,
+            Row(
+              children: [
+                Icon(Icons.tune, color: theme.colorScheme.primary, size: 22),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    intl.preferences,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: "Times New Roman",
+                      fontWeight: FontWeight.w900,
+                      color: theme.colorScheme.primary,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
+              ],
             ),
-            const SizedBox(height: 10),
-            
-            // Dark Mode Container
+            const SizedBox(height: 12),
+
+            // Dark Mode
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               decoration: BoxDecoration(
-                color: theme.colorScheme.tertiary,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  width: 2,
-                  color: theme.colorScheme.primary,
-                ),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.dark_mode),
-                  const SizedBox(width: 8),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.primary.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(
+                      Icons.dark_mode,
+                      color: theme.colorScheme.primary,
+                      size: 20,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: Text(
                       intl.darkMode,
                       style: TextStyle(
                         fontFamily: "Times New Roman",
-                        fontSize: 16,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -105,9 +127,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 10),
-            
-            // Language Container
+            const SizedBox(height: 12),
+
+            // Language
             GestureDetector(
               onTap: () {
                 setState(() {
@@ -117,98 +139,110 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 250),
                 curve: Curves.easeInOut,
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.tertiary,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    width: 2,
-                    color: theme.colorScheme.primary,
-                  ),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.flag),
-                        const SizedBox(width: 8),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.primary.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(
+                            Icons.language,
+                            color: theme.colorScheme.primary,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
                         Expanded(
                           child: Text(
                             intl.language,
                             style: TextStyle(
                               fontFamily: "Times New Roman",
-                              fontSize: 16,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         Icon(
-                          showLanguage ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                          size: 28,
+                          showLanguage ? Icons.expand_less : Icons.expand_more,
+                          color: theme.colorScheme.primary,
+                          size: 24,
                         ),
                       ],
                     ),
                     if (showLanguage) ...[
                       const SizedBox(height: 15),
-                      _buildLanguageOption(
-                        "🇺🇸",
-                        intl.english,
-                        () {
-                          setState(() {
-                            languageSelected = "English";
-                            showLanguage = false;
-                          });
-                          context.read<IntlProvider>().setLanguage('en');
-                        },
-                      ),
-                      const SizedBox(height: 12),
-                      _buildLanguageOption(
-                        "🇧🇷",
-                        intl.portuguese,
-                        () {
-                          setState(() {
-                            languageSelected = "Portuguese";
-                            showLanguage = false;
-                          });
-                          context.read<IntlProvider>().setLanguage('pt');
-                        },
-                      ),
-                      const SizedBox(height: 12),
-                      _buildLanguageOption(
-                        "🇪🇸",
-                        intl.spanish,
-                        () {
-                          setState(() {
-                            languageSelected = "Spanish";
-                            showLanguage = false;
-                          });
-                          context.read<IntlProvider>().setLanguage('es');
-                        },
-                      ),
+                      Divider(color: Colors.grey[200]),
+                      const SizedBox(height: 10),
+                      _buildLanguageOption("🇺🇸", intl.english, () {
+                        setState(() {
+                          languageSelected = "English";
+                          showLanguage = false;
+                        });
+                        context.read<IntlProvider>().setLanguage('en');
+                      }),
+                      const SizedBox(height: 10),
+                      _buildLanguageOption("🇧🇷", intl.portuguese, () {
+                        setState(() {
+                          languageSelected = "Portuguese";
+                          showLanguage = false;
+                        });
+                        context.read<IntlProvider>().setLanguage('pt');
+                      }),
+                      const SizedBox(height: 10),
+                      _buildLanguageOption("🇪🇸", intl.spanish, () {
+                        setState(() {
+                          languageSelected = "Spanish";
+                          showLanguage = false;
+                        });
+                        context.read<IntlProvider>().setLanguage('es');
+                      }),
                     ],
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            
+            const SizedBox(height: 30),
+
             // Account Section
-            Padding(
-              padding: EdgeInsets.only(left: 5),
-              child: Text(
-                intl.account,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: "Times New Roman",
-                  fontWeight: FontWeight.w700,
-                  color: theme.colorScheme.primary,
+            Row(
+              children: [
+                Icon(Icons.person, color: theme.colorScheme.primary, size: 22),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    intl.account,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: "Times New Roman",
+                      fontWeight: FontWeight.w900,
+                      color: theme.colorScheme.primary,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
+              ],
             ),
-            const SizedBox(height: 10),
-            
-            // Your Information Container
+            const SizedBox(height: 12),
+
+            // Your Information
             GestureDetector(
               onTap: () {
                 setState(() {
@@ -218,52 +252,68 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 250),
                 curve: Curves.easeInOut,
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.tertiary,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    width: 2,
-                    color: theme.colorScheme.primary,
-                  ),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.settings),
-                        const SizedBox(width: 8),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.primary.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(
+                            Icons.edit,
+                            color: theme.colorScheme.primary,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
                         Expanded(
                           child: Text(
                             intl.yourInformation,
                             style: TextStyle(
                               fontFamily: "Times New Roman",
-                              fontSize: 16,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         Icon(
-                          showInformations ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                          size: 28,
+                          showInformations ? Icons.expand_less : Icons.expand_more,
+                          color: theme.colorScheme.primary,
+                          size: 24,
                         ),
                       ],
                     ),
                     if (showInformations) ...[
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 20),
                       TextFieldComponent(
                         controller: _controllerName,
                         label: "Name",
                         error: provider.errorName,
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 15),
                       TextFieldComponent(
                         controller: _controllerEmail,
                         label: "Email",
                         error: provider.errorEmail,
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 20),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
@@ -274,19 +324,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               email: _controllerEmail.text,
                               password: provider.user!.password,
                             );
-                            await provider.updateUser(updatedUser);
+                            final result = await provider.updateUser(updatedUser);
+                            
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Row(
+                                    children: [
+                                      Icon(
+                                        result == null ? Icons.check_circle : Icons.error,
+                                        color: Colors.white,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(result ?? "Information updated successfully!"),
+                                    ],
+                                  ),
+                                  backgroundColor: result == null ? Colors.green : Colors.red,
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: theme.colorScheme.secondary,
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                           child: Text(
                             intl.updateInfo,
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                           ),
                         ),
                       ),
@@ -295,10 +368,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            
-            // Delete Account Container
-            GestureDetector(
+            const SizedBox(height: 12),
+
+            // Delete Account
+            InkWell(
               onTap: () {
                 showDialog(
                   context: context,
@@ -308,8 +381,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     title: Row(
                       children: [
-                        Icon(Icons.warning, color: Colors.red),
-                        const SizedBox(width: 8),
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.red.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(Icons.warning, color: Colors.red, size: 24),
+                        ),
+                        const SizedBox(width: 12),
                         Expanded(
                           child: Text(
                             intl.deleteAccount,
@@ -333,7 +413,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           intl.cancel,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            color: theme.colorScheme.onSurface,
+                            color: Colors.grey[600],
                           ),
                         ),
                       ),
@@ -350,6 +430,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.red,
                           foregroundColor: Colors.white,
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -363,39 +444,53 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 );
               },
+              borderRadius: BorderRadius.circular(15),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.tertiary,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    width: 2,
-                    color: theme.colorScheme.primary,
-                  ),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: Colors.red.withOpacity(0.3), width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.delete, color: Colors.red),
-                    const SizedBox(width: 8),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.red.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(Icons.delete_forever, color: Colors.red, size: 20),
+                    ),
+                    const SizedBox(width: 12),
                     Expanded(
                       child: Text(
                         intl.deleteAccount,
                         style: TextStyle(
                           fontFamily: "Times New Roman",
-                          fontSize: 16,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
                           color: Colors.red,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                    Icon(Icons.arrow_forward_ios, color: Colors.red, size: 16),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            
-            // Log Out Container
-            GestureDetector(
+            const SizedBox(height: 12),
+
+            // Log Out
+            InkWell(
               onTap: () {
                 showDialog(
                   context: context,
@@ -405,8 +500,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     title: Row(
                       children: [
-                        Icon(Icons.logout, color: theme.colorScheme.primary),
-                        const SizedBox(width: 8),
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.primary.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(
+                            Icons.logout,
+                            color: theme.colorScheme.primary,
+                            size: 24,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
                         Expanded(
                           child: Text(
                             intl.logOut,
@@ -430,7 +536,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           intl.cancel,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            color: theme.colorScheme.onSurface,
+                            color: Colors.grey[600],
                           ),
                         ),
                       ),
@@ -447,6 +553,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: theme.colorScheme.primary,
                           foregroundColor: Colors.white,
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -460,36 +567,61 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 );
               },
+              borderRadius: BorderRadius.circular(15),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.tertiary,
-                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
                   border: Border.all(
+                    color: theme.colorScheme.primary.withOpacity(0.3),
                     width: 2,
-                    color: theme.colorScheme.primary,
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.logout, color: Colors.red),
-                    const SizedBox(width: 8),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primary.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(
+                        Icons.logout,
+                        color: theme.colorScheme.primary,
+                        size: 20,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
                     Expanded(
                       child: Text(
                         "Log Out",
                         style: TextStyle(
                           fontFamily: "Times New Roman",
-                          fontSize: 16,
-                          color: Colors.red,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: theme.colorScheme.primary,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: theme.colorScheme.primary,
+                      size: 16,
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 50),
           ],
         ),
       ),
@@ -497,27 +629,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget _buildLanguageOption(String flag, String label, VoidCallback onTap) {
-    return GestureDetector(
+    final theme = Theme.of(context);
+    
+    return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.circular(10),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
         decoration: BoxDecoration(
+          color: theme.colorScheme.primary.withOpacity(0.03),
           borderRadius: BorderRadius.circular(10),
-          color: Colors.transparent,
         ),
         child: Row(
           children: [
-            Text(flag, style: TextStyle(fontSize: 20)),
-            const SizedBox(width: 10),
+            Text(flag, style: TextStyle(fontSize: 24)),
+            const SizedBox(width: 12),
             Expanded(
               child: Text(
                 label,
                 style: TextStyle(
                   fontFamily: "Times New Roman",
                   fontSize: 15,
+                  fontWeight: FontWeight.w600,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
+            ),
+            Icon(
+              Icons.check_circle,
+              color: theme.colorScheme.primary.withOpacity(0.3),
+              size: 20,
             ),
           ],
         ),

@@ -17,28 +17,30 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   // Controllers
-  TextEditingController controllerEmail = TextEditingController();
-  TextEditingController controllerPassword = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
 
   @override
   void dispose() {
-    controllerEmail.dispose();
-    controllerPassword.dispose();
+    _controllerEmail.dispose();
+    _controllerPassword.dispose();
     super.dispose();
   }
 
   // Try to Login in App
   Future<void> doLogin() async {
+    final theme = Theme.of(context);
     final provider = context.read<AuthProvider>();
     final currentContext = context;
 
-    final isValid = provider.validateLoginFields(controllerEmail.text, controllerPassword.text, context);
+    final isValid = provider.validateLoginFields(_controllerEmail.text, _controllerPassword.text, context);
 
     if (!isValid) return;
 
-    final result = await provider.doLogin(controllerEmail.text, controllerPassword.text);
+    final result = await provider.doLogin(_controllerEmail.text, _controllerPassword.text);
 
     if (result == null) {
+      // Successful Feedback Alert
       showDialog(
         context: currentContext,
         builder: (dialogContext) => AlertDialog(
@@ -50,10 +52,10 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.1),
+                  color: theme.colorScheme.primary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(Icons.check_circle, color: Colors.green, size: 28),
+                child: Icon(Icons.check_circle, color: theme.colorScheme.primary, size: 28),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -62,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
-                    color: Colors.green,
+                    color: theme.colorScheme.primary,
                   ),
                 ),
               ),
@@ -76,15 +78,11 @@ class _LoginScreenState extends State<LoginScreen> {
             ElevatedButton(
               onPressed: () {
                 Navigator.of(dialogContext).pop();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => BottomNavigatorScreen()),
-                );
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavigatorScreen()));
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
+                backgroundColor: theme.colorScheme.primary,
+                foregroundColor: theme.colorScheme.tertiary,
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -99,6 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     } else {
+      // Error Feedback Alert
       showDialog(
         context: currentContext,
         builder: (dialogContext) => AlertDialog(
@@ -137,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () => Navigator.of(dialogContext).pop(),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
+                foregroundColor: theme.colorScheme.tertiary,
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -169,9 +168,11 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 40),
+                // Logo
                 TripPlannerLogoComponent(),
                 const SizedBox(height: 40),
+
+                // Text Fields Container
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -207,24 +208,32 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         const SizedBox(height: 35),
+
+                        // Email Field
                         TextFieldComponent(
-                          controller: controllerEmail,
+                          controller: _controllerEmail,
                           label: "Email",
                           error: provider.errorEmail,
                         ),
                         const SizedBox(height: 20),
+
+                        // Password Field
                         TextFieldComponent(
-                          controller: controllerPassword,
+                          controller: _controllerPassword,
                           label: "Password",
                           error: provider.errorPassword,
                           isPassword: true,
                         ),
                         const SizedBox(height: 30),
+
+                        // Sign In Button
                         ButtonComponent(
                           function: doLogin,
                           message: l10n.signIn,
                         ),
                         const SizedBox(height: 20),
+
+                        // Divider
                         Row(
                           children: [
                             Expanded(child: Divider(color: Colors.grey[300])),
@@ -243,6 +252,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                         const SizedBox(height: 20),
+
+                        // Go to Register
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -265,7 +276,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   color: theme.colorScheme.secondary,
                                   fontSize: 13,
                                   fontWeight: FontWeight.w900,
-                                  decoration: TextDecoration.underline,
                                 ),
                               ),
                             ),
