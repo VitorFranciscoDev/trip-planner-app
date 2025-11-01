@@ -18,12 +18,34 @@ class MyApp extends StatelessWidget {
     final themeProvider = context.watch<ThemeProvider>();
     final userProvider = context.watch<AuthProvider>();
 
-    if (userProvider.isLoading || intlProvider.isLoading) {
+    if (intlProvider.isLoading || themeProvider.isLoading || userProvider.isLoading) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
+          backgroundColor: const Color(0xFFFFF8DC),
           body: Center(
-            child: CircularProgressIndicator(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Logo
+                Container(
+                  padding: const EdgeInsets.all(30),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF8B4513).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    "TP",
+                    style: TextStyle(
+                      fontFamily: "Times New Roman",
+                      fontSize: 60,
+                      fontWeight: FontWeight.w900,
+                      color: const Color(0xFF8B4513),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
