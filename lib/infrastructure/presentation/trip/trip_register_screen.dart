@@ -47,7 +47,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
       stops: provider.stops,
     );
 
-    final result = await provider.addTrip(trip);
+    final result = await provider.addTrip(trip, currentContext);
 
     if (result == null) {
       // Successful Feedback Alert
@@ -431,7 +431,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                           ),
                           deleteIcon: Icon(Icons.close, size: 18),
                           onDeleted: () {
-                            provider.deletePerson(person);
+                            provider.deletePerson(person.id!);
                           },
                           backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
                           side: BorderSide(

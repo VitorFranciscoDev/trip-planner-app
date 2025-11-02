@@ -15,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Controller
   final TextEditingController _controllerSearch = TextEditingController();
 
   @override
@@ -106,7 +105,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: TextField(
                 controller: _controllerSearch,
                 onChanged: (value) {
-                  setState(() {});
                   context.read<HomeProvider>().searchLocations(value);
                 },
                 style: TextStyle(fontSize: 15),
@@ -119,20 +117,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     size: 24,
                   ),
                   suffixIcon: _controllerSearch.text.isNotEmpty
-                      ? IconButton(
-                          icon: Icon(
-                            Icons.clear,
-                            color: Colors.grey[600],
-                            size: 20,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _controllerSearch.clear();
-                            });
-                            provider.clearSearch();
-                          },
-                        )
-                      : null,
+                    ? IconButton(
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.grey[600],
+                          size: 20,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _controllerSearch.clear();
+                          });
+                          provider.clearSearch();
+                        },
+                      )
+                    : null,
                   filled: true,
                   fillColor: Colors.white,
                   contentPadding: const EdgeInsets.symmetric(
@@ -159,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           
           // Searching Destination
-          if (provider.isSearching)
+          if (provider.isLoading)
             Padding(
               padding: const EdgeInsets.all(25),
               child: Container(
@@ -199,7 +197,6 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
               child: Container(
-                constraints: BoxConstraints(maxHeight: 400),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -427,7 +424,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // No Results Found
           else if (provider.query.isNotEmpty &&
               provider.query.length >= 3 &&
-              !provider.isSearching)
+              !provider.isLoading)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
               child: Container(
@@ -544,7 +541,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: () {
                           context.read<TripProvider>().trip = provider.recomendation1;
                           Navigator.of(dialogContext).pop();
-                          context.read<BottomNavigatorProvider>().setIndex(1);
+                          context.read<BottomNavigatorProvider>().index = 1;
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: theme.colorScheme.primary,
@@ -609,7 +606,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: () {
                           context.read<TripProvider>().trip = provider.recomendation2;
                           Navigator.of(dialogContext).pop();
-                          context.read<BottomNavigatorProvider>().setIndex(1);
+                          context.read<BottomNavigatorProvider>().index = 1;
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: theme.colorScheme.primary,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class BottomNavigatorProvider with ChangeNotifier {
-  int index = 0;
+  int _index = 0;
 
-  void setIndex(int newIndex) {
-    index = newIndex;
+  int get index => _index;
+
+  set index(int newIndex) {
+    _index = newIndex;
     notifyListeners();
   }
 }

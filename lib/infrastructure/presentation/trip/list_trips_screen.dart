@@ -118,6 +118,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
               Navigator.of(dialogContext).pop();
 
               final provider = context.read<TripProvider>();
+
               final updatedTrip = Trip(
                 id: trip.id,
                 user_id: trip.user_id,
@@ -130,7 +131,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                 stops: trip.stops,
               );
 
-              final result = await provider.updateTrip(updatedTrip);
+              final result = await provider.updateTrip(updatedTrip, context);
 
               if (result == null) {
                 final user = context.read<AuthProvider>().user;

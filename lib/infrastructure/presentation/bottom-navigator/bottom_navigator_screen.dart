@@ -47,7 +47,7 @@ class BottomNavigatorScreen extends StatelessWidget {
             unselectedItemColor: Colors.grey[400],
             selectedFontSize: 12,
             unselectedFontSize: 11,
-            onTap: (newIndex) => context.read<BottomNavigatorProvider>().setIndex(newIndex),
+            onTap: (newIndex) => context.read<BottomNavigatorProvider>().index = newIndex,
             items: [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home_outlined, size: 26),

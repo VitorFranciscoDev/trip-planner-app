@@ -16,7 +16,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  // Controllers
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
@@ -29,8 +28,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  // Try to Register User in DB
-  void registerUser() async {
+  void addUser() async {
     final theme = Theme.of(context);
     final provider = context.read<AuthProvider>();
     final currentContext = context;
@@ -50,6 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       password: _controllerPassword.text,
     );
 
+    // Error message
     final result = await provider.addUser(user, currentContext);
 
     if (result == null) {
@@ -264,7 +263,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                         // Register Button
                         ButtonComponent(
-                          function: registerUser,
+                          function: addUser,
                           message: l10n.signUp,
                         ),
                         const SizedBox(height: 20),

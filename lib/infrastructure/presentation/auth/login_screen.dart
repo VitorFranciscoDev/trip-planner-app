@@ -16,7 +16,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // Controllers
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
 
@@ -27,7 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  // Try to Login in App
   Future<void> doLogin() async {
     final theme = Theme.of(context);
     final provider = context.read<AuthProvider>();
@@ -37,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (!isValid) return;
 
+    // Error message
     final result = await provider.doLogin(_controllerEmail.text, _controllerPassword.text, currentContext);
 
     if (result == null) {

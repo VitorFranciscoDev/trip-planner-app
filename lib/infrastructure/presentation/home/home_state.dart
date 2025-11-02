@@ -9,58 +9,49 @@ class HomeProvider with ChangeNotifier {
     loadRecomendations();
   }
 
-  // Use Cases
   final TripRecomendationUseCase tripRecomendationUseCase;
   final SearchResultUseCase searchResultUseCase;
 
-  // Query from User
   String _query = '';
   String get query => _query;
 
-  // Search Results
   List<SearchResult> _searchResults = [];
   List<SearchResult> get searchResults => _searchResults;
 
-  // Trip Recomendations
   late Trip recomendation1;
   late Trip recomendation2;
 
-  // Searching boolean
-  bool _isSearching = false;
-  bool get isSearching => _isSearching;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
-
-  // Load Recomendations
   void loadRecomendations() {
     List<Trip> temp = tripRecomendationUseCase.getTwoRecomendations();
     recomendation1 = temp[0];
     recomendation2 = temp[1];
   }
 
-  // Search Location based on the query
   Future<void> searchLocations(String query) async {
     _query = query;
     
-    if (query.isEmpty) {
+    if (_query.isEmpty) {
       _searchResults = [];
       notifyListeners();
       return;
     }
 
-    _isSearching = true;
+    _isLoading = true;
     notifyListeners();
 
     try {
-      _searchResults = await searchResultUseCase.searchLocation(query);
+      _searchResults = await searchResultUseCase.searchLocation(_query);
     } catch (e) {
       _searchResults = [];
     } finally {
-      _isSearching = false;
+      _isLoading = false;
       notifyListeners();
     }
   }
 
-  // Clear the search
   void clearSearch() {
     _query = '';
     _searchResults = [];

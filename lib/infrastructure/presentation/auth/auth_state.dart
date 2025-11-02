@@ -6,7 +6,7 @@ import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizati
 import 'package:trip_planner/modules/user/user_usecase.dart';
 
 class AuthProvider with ChangeNotifier {
-  AuthProvider({required this.userUseCase}) { loadUser(); }
+  AuthProvider({ required this.userUseCase }) { loadUser(); }
 
   final UserUseCase userUseCase;
 
@@ -16,7 +16,7 @@ class AuthProvider with ChangeNotifier {
   bool _isInitialized = false;
   bool get isInitialized => _isInitialized;
 
-  bool _isLoading = true;
+  bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   String? _errorName;

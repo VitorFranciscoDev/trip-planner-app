@@ -11,7 +11,7 @@ class ThemeProvider with ChangeNotifier {
   bool _isInitialized = false;
   bool get isInitialized => _isInitialized;
 
-  bool _isLoading = true;
+  bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   Future<void> loadTheme() async {

@@ -79,7 +79,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                               context.read<TripProvider>().group = widget.trip.group ?? [];
                               Navigator.of(dialogContext).pop();
                               Navigator.pop(context);
-                              context.read<BottomNavigatorProvider>().setIndex(1);
+                              context.read<BottomNavigatorProvider>().index = 1;
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: theme.colorScheme.primary,

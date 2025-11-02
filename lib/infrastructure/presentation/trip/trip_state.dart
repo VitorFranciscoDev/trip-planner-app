@@ -3,20 +3,18 @@ import 'package:latlong2/latlong.dart';
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/entities/trip.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizations.dart';
 import 'package:trip_planner/modules/person/person_usecase.dart';
 import 'package:trip_planner/modules/stop/stop_usecase.dart';
 import 'package:trip_planner/modules/trip/trip_usecase.dart';
 
 class TripProvider extends ChangeNotifier {
-  // Constructor
   TripProvider({ required this.tripUseCase, required this.personUseCase, required this.stopUseCase });
 
-  // Use Cases
   final TripUseCase tripUseCase;
   final PersonUseCase personUseCase;
   final StopUseCase stopUseCase;
 
-  // Trip Data
   Trip? _trip;
   Trip? get trip => _trip;
   set trip(Trip? newTrip) {
@@ -24,11 +22,9 @@ class TripProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // List of Trips
   List<Trip> _trips = [];
   List<Trip> get trips => _trips;
 
-  // Group Data
   List<Person> _group = [];
   List<Person> get group => _group;
   set group(List<Person> newGroup) {
@@ -36,7 +32,6 @@ class TripProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Stops Data
   List<Stop> _stops = [];
   List<Stop> get stops => _stops;
   set stops(List<Stop> newStops) {
@@ -44,11 +39,9 @@ class TripProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Loading boolean
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  // Errors
   String? _errorTripTitle;
   String? _errorName;
   String? _errorAge;
@@ -69,6 +62,7 @@ class TripProvider extends ChangeNotifier {
     _errorTripTitle = tripUseCase.validateTripTitle(title, context);
     _errorGroup = tripUseCase.validateGroup(_group, context);
     _errorStops = tripUseCase.validateStops(_stops, context);
+
     notifyListeners();
 
     return _errorTripTitle == null && _errorGroup == null && _errorStops == null;
@@ -77,6 +71,7 @@ class TripProvider extends ChangeNotifier {
   bool validatePerson(String name, String age, BuildContext context) {
     _errorName = personUseCase.validateName(name, context);
     _errorAge = personUseCase.validateAge(age, context);
+
     notifyListeners();
 
     return _errorName == null && _errorAge == null;
@@ -85,33 +80,38 @@ class TripProvider extends ChangeNotifier {
   bool validateStopDates(String startDate, String endDate, BuildContext context) {
     _errorStartDate = stopUseCase.validateStartDate(startDate, context);
     _errorEndDate = stopUseCase.validateEndDate(endDate, context);
+
     if(_errorStartDate == null && _errorEndDate == null) {
       _errorStartDate = stopUseCase.validateDates(startDate, endDate, context);
       _errorEndDate = stopUseCase.validateDates(startDate, endDate, context);
     }
+
     notifyListeners();
 
     return _errorStartDate == null && _errorEndDate == null;
   }
 
-  Future<String?> addTrip(Trip trip) async {
+  Future<String?> addTrip(Trip trip, BuildContext context) async {
+    final intl = AppLocalizations.of(context);
     _isLoading = true;
     notifyListeners();
 
     try {
+      // Receives index of new User
       final result = await tripUseCase.addTrip(trip);
 
       if(result > 0) return null;
-      return "Error in Adding Trip";
+      return intl.error;
     } catch(e) {
-      return "Unexpected Error. Try Again.";
+      return intl.unexpectedError;
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  Future<String?> deleteTrip(int? id) async {
+  Future<String?> deleteTrip(int? id, BuildContext context) async {
+    final intl = AppLocalizations.of(context);
     _isLoading = true;
     notifyListeners();
 
@@ -119,16 +119,17 @@ class TripProvider extends ChangeNotifier {
       final result = await tripUseCase.deleteTrip(id!);
 
       if(result > 0) return null;
-      return "Error in Deleting Trip";
+      return intl.error;
     } catch(e) {
-      return "Unexpected Error. Try Again.";
+      return intl.unexpectedError;
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  Future<String?> updateTrip(Trip trip) async {
+  Future<String?> updateTrip(Trip trip, BuildContext context) async {
+    final intl = AppLocalizations.of(context);
     _isLoading = true;
     notifyListeners();
 
@@ -136,16 +137,16 @@ class TripProvider extends ChangeNotifier {
       final result = await tripUseCase.updateTrip(trip);
 
       if(result > 0) return null;
-      return "Error in Updating Trip";
+      return intl.error;
     } catch(e) {
-      return "Unexpected Error. Try Again";
+      return intl.unexpectedError;
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  Future<String?> getAllTrips(int? user_id) async {
+  Future<void> getAllTrips(int? user_id) async {
     _isLoading = true;
     notifyListeners();
 
@@ -155,12 +156,9 @@ class TripProvider extends ChangeNotifier {
       if(allTrips != null) {
         _trips = allTrips;
         notifyListeners();
-        return null;
       }
-
-      return "Error in Getting Trips";
     } catch(e) {
-      return "Unexpected Error. Try Again.";
+      _trips = [];
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -172,8 +170,8 @@ class TripProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deletePerson(Person person) {
-    _group.remove(person);
+  void deletePerson(int index) {
+    _group.removeAt(index);
     notifyListeners();
   }
 
@@ -193,14 +191,33 @@ class TripProvider extends ChangeNotifier {
   }
 
   Future<String?> getAddressFromCoordinates(LatLng position) async {
+    _isLoading = true;
+    notifyListeners();
+
     try {
+      // Returns address
       return await stopUseCase.getAddressFromCoordinates(position);
     } catch(e) {
-      return "Unexpected Error. Try Again.";
+      return null;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
   }
 
   Future<List<LatLng>> getRoute(List<LatLng> points) async {
-    return stopUseCase.getRoute(points);
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      // Returns route
+      return stopUseCase.getRoute(points);
+    } catch(e) {
+      return [];
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+    
   }
 }

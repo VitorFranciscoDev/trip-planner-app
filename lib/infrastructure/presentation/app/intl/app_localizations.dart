@@ -5,11 +5,9 @@ class AppLocalizations {
 
   AppLocalizations(this.locale);
 
-  // Versão SAFE que retorna uma instância padrão ao invés de dar erro
   static AppLocalizations of(BuildContext context) {
     final localizations = Localizations.of<AppLocalizations>(context, AppLocalizations);
     
-    // Se não encontrar, retorna instância padrão com inglês
     if (localizations == null) {
       return AppLocalizations(const Locale('en', 'US'));
     }
