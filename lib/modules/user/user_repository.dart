@@ -6,42 +6,53 @@ import 'package:trip_planner/modules/user/user_spec.dart';
 class UserRepository implements IUserRepository {
   final database = TripPlannerDatabase();
 
-  // Get the User by Email [Validation for Register (Can't have two users with the same Email)]
+  // Add the User in DB
   @override
-  Future<User?> getUserByEmail(String email) async {
-    final db = await database.database;
-
-    try {
-      // Query in the DB
-      final existingUser = await db.query(
-        'users',
-        where: 'email = ?',
-        whereArgs: [email],
-      );
-
-      // If the user exists, returns
-      if(existingUser.isNotEmpty) {
-        return User.fromMap(existingUser.first);
-      }
-
-      return null;
-    } catch(e) {
-      throw Exception("Error in Getting the User by Email: $e");
-    }
-  }
-
-  // Register the User in DB
-  @override
-  Future<int> registerUser(User user) async {
+  Future<int> addUser(User user) async {
     final db = await database.database;
 
     try {
       // Return the index of the User
       return await db.insert('users', user.toMap());
     } catch (e) {
-      throw Exception("Error in Register: $e");
+      throw Exception("Error in Add User Repository: $e");
     }
   } 
+
+  // Delete the User from DB
+  @override
+  Future<int> deleteUser(int? id) async {
+    final db = await database.database;
+
+    try {
+      // Return the number of rows affected
+      return await db.delete(
+        'users',
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+    } catch(e) {
+      throw Exception("Error in Delete User Repository: $e");
+    }
+  }
+
+  // Update the User in DB
+  @override
+  Future<int> updateUser(User user) async {
+    final db = await database.database;
+
+    try {
+      // Update the User in DB and returns the number of lines affected
+      return await db.update(
+        'users',
+        user.toMap(),
+        where: 'id = ?',
+        whereArgs: [user.id],
+      );
+    } catch (e) {
+      throw Exception("Error in Update User Repository: $e");
+    }
+  }
 
   // Login in App
   @override
@@ -63,42 +74,31 @@ class UserRepository implements IUserRepository {
 
       return null;
     } catch(e) {
-      throw Exception("Error in Login: $e");
+      throw Exception("Error in Do Login Repository: $e");
     }
   }
 
-  // Update the User in DB
+  // Get the User by Email [Validation for Register (Can't have two users with the same Email)]
   @override
-  Future<int> updateUser(User user) async {
+  Future<User?> getUserByEmail(String email) async {
     final db = await database.database;
 
     try {
-      // Update the User in DB and returns the number of lines affected
-      return await db.update(
+      // Query in the DB
+      final existingUser = await db.query(
         'users',
-        user.toMap(),
-        where: 'id = ?',
-        whereArgs: [user.id],
+        where: 'email = ?',
+        whereArgs: [email],
       );
-    } catch (e) {
-      throw Exception("Error updating user: $e");
-    }
-  }
 
-  // Delete the User from DB
-  @override
-  Future<int> deleteUser(int? id) async {
-    final db = await database.database;
+      // If the user exists, returns
+      if(existingUser.isNotEmpty) {
+        return User.fromMap(existingUser.first);
+      }
 
-    try {
-      // Return the number of rows affected
-      return await db.delete(
-        'users',
-        where: 'id = ?',
-        whereArgs: [id],
-      );
+      return null;
     } catch(e) {
-      throw Exception("Error deleting user: $e");
+      throw Exception("Error in Get User By Email Repository: $e");
     }
   }
 

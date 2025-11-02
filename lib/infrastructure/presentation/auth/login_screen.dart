@@ -33,11 +33,11 @@ class _LoginScreenState extends State<LoginScreen> {
     final provider = context.read<AuthProvider>();
     final currentContext = context;
 
-    final isValid = provider.validateLoginFields(_controllerEmail.text, _controllerPassword.text, context);
+    final isValid = provider.validateLoginFields(_controllerEmail.text, _controllerPassword.text, currentContext);
 
     if (!isValid) return;
 
-    final result = await provider.doLogin(_controllerEmail.text, _controllerPassword.text);
+    final result = await provider.doLogin(_controllerEmail.text, _controllerPassword.text, currentContext);
 
     if (result == null) {
       // Successful Feedback Alert

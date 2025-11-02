@@ -10,6 +10,7 @@ class SearchResultRepository implements ISearchResultRepository {
     'User-Agent': 'TripPlannerApp/1.0 (tripplanner@gmail.com)',
   };
 
+  // Search Location based on Query
   @override
   Future<List<SearchResult>> searchLocation(String query) async {
     if (query.isEmpty) return [];

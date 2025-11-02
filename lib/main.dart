@@ -7,7 +7,6 @@ import 'package:trip_planner/infrastructure/presentation/app/intl/intl_state.dar
 import 'package:trip_planner/infrastructure/presentation/app/theme/theme_provider.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 import 'package:trip_planner/infrastructure/presentation/auth/auth_state.dart';
-import 'package:trip_planner/modules/person/person_repository.dart';
 import 'package:trip_planner/modules/person/person_usecase.dart';
 import 'package:trip_planner/modules/search-result/search_result_repository.dart';
 import 'package:trip_planner/modules/search-result/search_result_usecase.dart';
@@ -29,8 +28,7 @@ void main() async {
   final tripRepository = TripRepository();
   final tripUseCase = TripUseCase(tripRepository: tripRepository);
 
-  final personRepository = PersonRepository();
-  final personUseCase = PersonUseCase(personRepository: personRepository);
+  final personUseCase = PersonUseCase();
   
   final stopRepository = StopRepository();
   final stopUseCase = StopUseCase(stopRepository: stopRepository);

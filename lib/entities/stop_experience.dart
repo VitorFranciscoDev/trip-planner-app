@@ -1,3 +1,4 @@
+// Model of Stop Experience
 class StopExperience {
   final int? id;
   final int? stop_id; // Stop's ID

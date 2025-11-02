@@ -316,7 +316,7 @@ class _MapScreenState extends State<MapScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
-                final isValid = provider.validateStopDates(_startDateController.text, _endDateController.text);
+                final isValid = provider.validateStopDates(_startDateController.text, _endDateController.text, context);
 
                 if (!isValid) return;
 
@@ -578,7 +578,7 @@ class _MapScreenState extends State<MapScreen> {
             ElevatedButton(
               onPressed: () async {
                 final currentContext = context;
-                final isValid = provider.validateStopDates(_startDateController.text, _endDateController.text);
+                final isValid = provider.validateStopDates(_startDateController.text, _endDateController.text, currentContext);
 
                 if (!isValid) return;
 

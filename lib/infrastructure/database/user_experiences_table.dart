@@ -9,7 +9,7 @@ class UserExperiencesTable {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         stop_id INTEGER NOT NULL,
         experience TEXT NOT NULL,
-        FOREIGN KEY(stop_id) REFERENCES stops(id)
+        FOREIGN KEY(stop_id) REFERENCES stops(id) ON DELETE CASCADE
       )
     ''');
   }

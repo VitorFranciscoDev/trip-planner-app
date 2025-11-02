@@ -31,22 +31,24 @@ class StopRepository implements IStopRepository {
     }
   }
 
+  // Get the Map Routes from API
   @override
   Future<List<LatLng>> getRoute(List<LatLng> points) async {
     if (points.length < 2) return points;
 
     final coords = points.map((p) => "${p.longitude},${p.latitude}").join(";");
-    final url = Uri.parse(
-      "https://router.project-osrm.org/route/v1/driving/$coords?overview=full&geometries=geojson",
-    );
 
-    final response = await http.get(url);
-    if (response.statusCode != 200) return points;
+    final url = Uri.parse("https://router.project-osrm.org/route/v1/driving/$coords?overview=full&geometries=geojson");
 
-    final data = json.decode(response.body);
-    final route = data['routes'][0]['geometry']['coordinates'] as List;
-    return route
-        .map((coord) => LatLng(coord[1].toDouble(), coord[0].toDouble()))
-        .toList();
+    try {
+      final response = await http.get(url);
+      if (response.statusCode != 200) return points;
+
+      final data = json.decode(response.body);
+      final route = data['routes'][0]['geometry']['coordinates'] as List;
+      return route.map((coord) => LatLng(coord[1].toDouble(), coord[0].toDouble())).toList();
+    } catch(e) {
+      throw Exception("Error in Get Route Repository: $e");
+    }
   }
 }

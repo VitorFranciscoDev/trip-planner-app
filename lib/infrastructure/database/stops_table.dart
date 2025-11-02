@@ -13,7 +13,7 @@ class StopsTable {
         end_date TEXT NOT NULL,
         latitude REAL NOT NULL,
         longitude REAL NOT NULL,
-        FOREIGN KEY(trip_id) REFERENCES trips(id)
+        FOREIGN KEY(trip_id) REFERENCES trips(id) ON DELETE CASCADE
       )
     ''');
   }

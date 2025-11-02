@@ -1,6 +1,7 @@
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/stop.dart';
 
+// Model of Trip
 class Trip {
   final int? id;
   final int? user_id; // User's ID

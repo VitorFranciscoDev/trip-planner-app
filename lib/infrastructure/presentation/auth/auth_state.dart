@@ -2,21 +2,23 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trip_planner/entities/user.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizations.dart';
 import 'package:trip_planner/modules/user/user_usecase.dart';
 
 class AuthProvider with ChangeNotifier {
+  AuthProvider({required this.userUseCase}) { loadUser(); }
 
-  final UserUseCase userUseCase; // User's Use Cases
+  final UserUseCase userUseCase;
 
-  // Actual User
   User? _user;
   User? get user => _user;
 
-  // Loading boolean
+  bool _isInitialized = false;
+  bool get isInitialized => _isInitialized;
+
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
-  // Errors
   String? _errorName;
   String? _errorEmail;
   String? _errorPassword;
@@ -25,27 +27,6 @@ class AuthProvider with ChangeNotifier {
   String? get errorEmail => _errorEmail;
   String? get errorPassword => _errorPassword;
 
-  // Constructor (Load User if it already has one)
-  AuthProvider({required this.userUseCase}) {
-    loadUser();
-  }
-
-  // Get User's Data from SharedPreferences
-  Future<void> loadUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    final userData = prefs.getString('user_data');
-
-    if (userData != null) {
-      final map = jsonDecode(userData);
-      _user = User.fromMap(map);
-      notifyListeners();
-    }
-
-    _isLoading = false;
-    notifyListeners();
-  }
-
-  // Validate the Register fields
   bool validateRegisterFields(String name, String email, String password, BuildContext context) {
     _errorName = userUseCase.validateName(name, context);
     _errorEmail = userUseCase.validateEmail(email, context);
@@ -56,7 +37,6 @@ class AuthProvider with ChangeNotifier {
     return _errorName == null && _errorEmail == null && _errorPassword == null;
   }
 
-  // Validate the Login fields
   bool validateLoginFields(String email, String password, BuildContext context) {
     _errorEmail = userUseCase.validateEmail(email, context);
     _errorPassword = userUseCase.validatePassword(password, context);
@@ -70,19 +50,33 @@ class AuthProvider with ChangeNotifier {
     _errorName = null;
     _errorEmail = null;
     _errorPassword = null;
+
+    notifyListeners();
   }
 
-  // Log Out of App [Removes the User from SharedPreferences]
-  Future<void> logout() async {
-    _user = null;
+  Future<void> loadUser() async {
+    _isInitialized = false;
     notifyListeners();
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('user_data');
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final userData = prefs.getString('user_data');
+
+      if (userData != null) {
+        final map = jsonDecode(userData);
+        _user = User.fromMap(map);
+        notifyListeners();
+      }
+    } catch(e) {
+      throw Exception("Error in Load User Provider: $e");
+    } finally {
+      _isInitialized = true;
+      notifyListeners();
+    }
   }
 
-  // Register User in the DB and SharedPreferences
-  Future<String?> registerUser(User user, BuildContext context) async {
+  Future<String?> addUser(User user, BuildContext context) async {
+    final intl = AppLocalizations.of(context);
     _isLoading = true;
     notifyListeners();
 
@@ -90,29 +84,77 @@ class AuthProvider with ChangeNotifier {
       // Verifies if User with same Email already exists
       final existingUser = await userUseCase.getUserByEmail(user.email);
 
-      if(existingUser!=null) {
-        return "Email already exists";
+      if(existingUser != null) {
+        return intl.emailAlreadyRegistered;
       }
 
       // Receives the ID of new User
-      final result = await userUseCase.registerUser(user);
+      final result = await userUseCase.addUser(user);
 
       if(result > 0) return null;
-      return "Error in Register. Try Again.";
+      return intl.registerError;
     } catch (e) {
-      return "Unexpected error. Try Again.";
+      return intl.unexpectedError;
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  // Login in App [if User exists, he's saved on SharedPreferences]
-  Future<String?> doLogin(String email, String password) async {
+  Future<String?> deleteUser(BuildContext context) async {
+    final intl = AppLocalizations.of(context);
     _isLoading = true;
     notifyListeners();
 
     try {
+      // Receives the number of rows affected
+      final result = await userUseCase.deleteUser(user?.id);
+
+      if(result > 0) return null;
+      return intl.deleteUserError;
+    } catch (e) {
+      return intl.unexpectedError;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<String?> updateUser(User? user, BuildContext context) async {
+    final intl = AppLocalizations.of(context);
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      // Receives the number of rows affected
+      final result = await userUseCase.updateUser(user!);
+      
+      if(result > 0) {
+        _user = user;
+        notifyListeners();
+
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('user_data', jsonEncode(user.toMap()));
+
+        return null;
+      }
+
+      return intl.updateInfo;
+    } catch (e) {
+      return intl.unexpectedError;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<String?> doLogin(String email, String password, BuildContext context) async {
+    final intl = AppLocalizations.of(context);
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      // Receives the User
       final user = await userUseCase.doLogin(email, password);
 
       if(user!=null) {
@@ -126,54 +168,25 @@ class AuthProvider with ChangeNotifier {
         return null;
       }
       
-      return "No User Found.";
+      return intl.noAccount;
     } catch (e) {
-      return "Unexpected Error. Try Again.";
+      return intl.unexpectedError;
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  // Update User
-  Future<String?> updateUser(User? user) async {
+  Future<void> logout() async {
+    _user = null;
     _isLoading = true;
     notifyListeners();
 
     try {
-      final result = await userUseCase.updateUser(user!);
-      
-      if(result > 0) {
-        _user = user;
-        notifyListeners();
-
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('user_data', jsonEncode(user.toMap()));
-
-        return null;
-      }
-
-      return "Error in Updating User. Try Again.";
-    } catch (e) {
-      return "Unexpected Error. Try Again.";
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
-  }
-
-  // Delete User
-  Future<String?> deleteUser(BuildContext context) async {
-    _isLoading = true;
-    notifyListeners();
-
-    try {
-      final result = await userUseCase.deleteUser(user?.id);
-
-      if(result > 0) return null;
-      return "Error deleting the User. Try Again.";
-    } catch (e) {
-      return "Unexpected error. Try Again";
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove('user_data');
+    } catch(e) {
+      throw Exception("Error in Log Out Provider: $e");
     } finally {
       _isLoading = false;
       notifyListeners();

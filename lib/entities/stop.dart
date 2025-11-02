@@ -1,5 +1,6 @@
 import 'package:trip_planner/entities/stop_experience.dart';
 
+// Model of Stop
 class Stop {
   final int? id;
   final int? trip_id; // Trip's ID

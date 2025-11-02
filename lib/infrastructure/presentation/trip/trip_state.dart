@@ -82,12 +82,12 @@ class TripProvider extends ChangeNotifier {
     return _errorName == null && _errorAge == null;
   }
 
-  bool validateStopDates(String startDate, String endDate) {
-    _errorStartDate = stopUseCase.validateStartDate(startDate);
-    _errorEndDate = stopUseCase.validateEndDate(endDate);
+  bool validateStopDates(String startDate, String endDate, BuildContext context) {
+    _errorStartDate = stopUseCase.validateStartDate(startDate, context);
+    _errorEndDate = stopUseCase.validateEndDate(endDate, context);
     if(_errorStartDate == null && _errorEndDate == null) {
-      _errorStartDate = stopUseCase.validateDates(startDate, endDate);
-      _errorEndDate = stopUseCase.validateDates(startDate, endDate);
+      _errorStartDate = stopUseCase.validateDates(startDate, endDate, context);
+      _errorEndDate = stopUseCase.validateDates(startDate, endDate, context);
     }
     notifyListeners();
 

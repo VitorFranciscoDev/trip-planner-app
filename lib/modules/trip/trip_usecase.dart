@@ -13,20 +13,23 @@ class TripUseCase {
 
   // Validation of Trip Title
   String? validateTripTitle(String tripTitle, BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return tripTitle.isEmpty ? l10n.tripTitleRequired : null;
+    final intl = AppLocalizations.of(context);
+
+    return tripTitle.isEmpty ? intl.tripTitleRequired : null;
   }
 
   // Validation of Group
   String? validateGroup(List<Person> group, BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return group.isEmpty ? l10n.groupEmpty : null;
+    final intl = AppLocalizations.of(context);
+
+    return group.isEmpty ? intl.groupEmpty : null;
   }
 
   // Validation of Stops
   String? validateStops(List<Stop> stops, BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return stops.isEmpty ? l10n.stopsEmpty : null;
+    final intl = AppLocalizations.of(context);
+
+    return stops.isEmpty ? intl.stopsEmpty : null;
   }
 
   // Add Trip

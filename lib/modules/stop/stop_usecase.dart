@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizations.dart';
 import 'package:trip_planner/modules/stop/stop_spec.dart';
 
 // Stop's Use Cases
@@ -8,13 +10,17 @@ class StopUseCase {
   final IStopRepository stopRepository;
 
   // Validation of Start Date
-  String? validateStartDate(String startDate) {
-    return startDate.isEmpty ? "Start Date cannot be blank" : null;
+  String? validateStartDate(String startDate, BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
+    return startDate.isEmpty ? intl.startDateRequired : null;
   }
 
   // Validation of End Date
-  String? validateEndDate(String endDate) {
-    return endDate.isEmpty ? "End Date cannot be blank" : null;
+  String? validateEndDate(String endDate, BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
+    return endDate.isEmpty ? intl.endDateRequired : null;
   }
 
   // Date(String) => Date(DateTime)
@@ -27,13 +33,14 @@ class StopUseCase {
   }
 
   // Validate both dates
-  String? validateDates(String startDate, String endDate) {
+  String? validateDates(String startDate, String endDate, BuildContext context) {
+    final intl = AppLocalizations.of(context);
     DateTime? start = parseDate(startDate);
     DateTime? end = parseDate(endDate);
 
     if (start != null && end != null) {
       if (start.isAfter(end)) {
-        return "Start cannot be after End";
+        return intl.endDate;
       }
     }
 
@@ -49,6 +56,7 @@ class StopUseCase {
     }
   }
 
+  // Get Map Routes from Repository
   Future<List<LatLng>> getRoute(List<LatLng> points) async {
     try {
       return await stopRepository.getRoute(points);

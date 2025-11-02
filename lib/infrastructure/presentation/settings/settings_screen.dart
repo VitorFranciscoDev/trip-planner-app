@@ -324,7 +324,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               email: _controllerEmail.text,
                               password: provider.user!.password,
                             );
-                            final result = await provider.updateUser(updatedUser);
+                            final result = await provider.updateUser(updatedUser, context);
                             
                             if (mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(

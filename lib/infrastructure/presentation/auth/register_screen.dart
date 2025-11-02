@@ -39,7 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _controllerName.text,
       _controllerEmail.text,
       _controllerPassword.text,
-      context,
+      currentContext,
     );
 
     if (!isValid) return;
@@ -50,7 +50,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       password: _controllerPassword.text,
     );
 
-    final result = await provider.registerUser(user, context);
+    final result = await provider.addUser(user, currentContext);
 
     if (result == null) {
       // Successful Feedback Alert
