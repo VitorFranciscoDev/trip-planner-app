@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:trip_planner/entities/search_result.dart';
 import 'package:trip_planner/modules/search-result/search_result_spec.dart';
 
+// Implementation of Search Results Contracts
 class SearchResultRepository implements ISearchResultRepository {
   static const String _baseUrl = 'nominatim.openstreetmap.org';
   
@@ -10,7 +11,6 @@ class SearchResultRepository implements ISearchResultRepository {
     'User-Agent': 'TripPlannerApp/1.0 (tripplanner@gmail.com)',
   };
 
-  // Search Location based on Query
   @override
   Future<List<SearchResult>> searchLocation(String query) async {
     if (query.isEmpty) return [];
@@ -31,6 +31,8 @@ class SearchResultRepository implements ISearchResultRepository {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
+        
+        // Returns locations
         return data.map((e) => SearchResult.fromJson(e)).toList();
       }
 

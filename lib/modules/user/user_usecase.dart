@@ -5,18 +5,16 @@ import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizati
 
 // User's Use Cases
 class UserUseCase {
-  UserUseCase({ required this.userRepository }); // Constructor
+  UserUseCase({ required this.userRepository });
 
-  final IUserRepository userRepository; // User's Contracts
+  final IUserRepository userRepository;
 
-  // Validate the User's name
   String? validateName(String name, BuildContext context) {
     final intl = AppLocalizations.of(context);
 
     return name.isEmpty ? intl.nameRequired : null;
   }
 
-  // Validate the User's Email
   String? validateEmail(String email, BuildContext context) {
     final intl = AppLocalizations.of(context);
     
@@ -29,7 +27,6 @@ class UserUseCase {
     return null;
   }
 
-  // Validate the User's Password
   String? validatePassword(String password, BuildContext context) {
     final intl = AppLocalizations.of(context);
     
@@ -42,47 +39,45 @@ class UserUseCase {
     return null;
   }
 
-  // Register the User
   Future<int> addUser(User user) async {
     try {
+      // Returns the index of new User
       return await userRepository.addUser(user);
     } catch (e) {
       throw Exception("Error in Add User Use Case: $e");
     }
   }
 
-  // Delete the User
   Future<int> deleteUser(int? id) async {
     try {
+      // Returns the number of rows affected
       return await userRepository.deleteUser(id);
     } catch(e) {
       throw Exception("Error in Delete User Use Case: $e");
     }
   }
 
-  // Update the User
   Future<int> updateUser(User user) async {
     try {
+      // Returns the number of rows affected
       return await userRepository.updateUser(user);
     } catch(e) {
       throw Exception("Error in Update User Use Case: $e");
     }
   }
 
-  // Login in App
   Future<User?> doLogin(String email, String password) async {
     try {
-      // Returns the User from Repository if it exists
+      // Returns User
       return await userRepository.doLogin(email, password);
     } catch(e) {
       throw Exception("Error in Do Login Use Case: $e");
     }
   }
 
-  // Get User By Email
   Future<User?> getUserByEmail(String email) async {
     try {
-      // Returns User from Repository if it exists
+      // Returns User
       return await userRepository.getUserByEmail(email);
     } catch(e) {
       throw Exception("Error in Get User By Email Use Case: $e");

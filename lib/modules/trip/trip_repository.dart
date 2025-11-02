@@ -8,18 +8,15 @@ import 'package:trip_planner/modules/trip/trip_spec.dart';
 class TripRepository implements ITripRepository {
   final database = TripPlannerDatabase();
 
-  // Add Trip in DB
   @override
   Future<int> addTrip(Trip trip) async {
     final db = await database.database;
 
     try {
-      // Transaction to add the whole Trip data in DB
       return await db.transaction((txn) async {
         // Receives the Trip ID
         final trip_id = await txn.insert('trips', trip.toMap());
 
-        // Add the Group in DB
         for(var person in trip.group!) {
           await txn.insert('persons', {
             ...person.toMap(),
@@ -27,15 +24,13 @@ class TripRepository implements ITripRepository {
           }); 
         }
 
-        // Add the Stops in DB
         for(var stop in trip.stops!) {
-          // Receiver the Stop ID
+          // Receives the Stop ID
           final stop_id = await txn.insert('stops', {
             ...stop.toMap(),
             'trip_id': trip_id,
           }); 
 
-          // Add the User Experiences in DB
           for(var userExperience in stop.stopExperiences!) {
             await txn.insert('user_experiences', {
               ...userExperience.toMap(),
@@ -44,7 +39,7 @@ class TripRepository implements ITripRepository {
           }
         }
         
-        // Returns Trip's ID
+        // Return Trip ID
         return trip_id;
       });
     } catch (e) {
@@ -52,13 +47,12 @@ class TripRepository implements ITripRepository {
     }
   }
 
-  // Delete Trip in DB
   @override
   Future<int> deleteTrip(int id) async {
     final db = await database.database;
 
     try {
-      // Return the number of rows affected
+      // Returns the number of rows affected
       return await db.delete(
         'trips',
         where: 'id = ?',
@@ -69,13 +63,12 @@ class TripRepository implements ITripRepository {
     }
   }
 
-  // Update Trip in DB
   @override
   Future<int> updateTrip(Trip trip) async {
     final db = await database.database;
 
     try {
-      // Return the number of rows affected
+      // Returns the number of rows affected
       return await db.update(
         'trips',
         trip.toMap(),
@@ -87,48 +80,49 @@ class TripRepository implements ITripRepository {
     }
   }
 
-  // Get all the User's Trips
   @override
   Future<List<Trip>?> getAllTrips(int user_id) async {
     final db = await database.database;
 
     try {
+      // Receives the Trips
       final result = await db.query(
         'trips', 
         where: 'user_id = ?',
-        whereArgs: [user_id], 
-        orderBy: 'id DESC',
+        whereArgs: [user_id],
       );
 
       List<Trip> trips = [];
       
       for (var map in result) {
+        final groupResult = await db.query(
+          'persons',
+          where: 'trip_id = ?',
+          whereArgs: [map['id']],
+        );
+
         final stopsResult = await db.query(
           'stops',
           where: 'trip_id = ?',
           whereArgs: [map['id']],
         );
         
-        final groupResult = await db.query(
-          'persons',
-          where: 'trip_id = ?',
-          whereArgs: [map['id']],
-        );
-        
-        final stops = stopsResult.map((s) => Stop.fromMap(s)).toList();
         final group = groupResult.map((p) => Person.fromMap(p)).toList();
+        final stops = stopsResult.map((s) => Stop.fromMap(s)).toList();
         
-        trips.add(Trip(
-          id: map['id'] as int?,
-          user_id: map['user_id'] as int?,
-          title: map['title'] as String,
-          transport: map['transport'] as String,
-          start_date: map['start_date'] as String,
-          end_date: map['end_date'] as String,
-          concluded: map['concluded'] == 1,
-          stops: stops,
-          group: group,
-        ));
+        trips.add(
+            Trip(
+            id: map['id'] as int?,
+            user_id: map['user_id'] as int?,
+            title: map['title'] as String,
+            transport: map['transport'] as String,
+            start_date: map['start_date'] as String,
+            end_date: map['end_date'] as String,
+            concluded: map['concluded'] == 1,
+            group: group,
+            stops: stops,
+          )
+        );
       }
 
       return trips;

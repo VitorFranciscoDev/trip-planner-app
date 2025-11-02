@@ -11,7 +11,6 @@ class StopRepository implements IStopRepository {
     'User-Agent': 'TripPlanner/1.0 (trip_planner_app)',
   };
 
-  // Get Address based on Coordinates(lat, lng) from an API[Web Nominatin]
   @override
   Future<String?> getAddressFromCoordinates(LatLng position) async {
     try {
@@ -31,7 +30,6 @@ class StopRepository implements IStopRepository {
     }
   }
 
-  // Get the Map Routes from API
   @override
   Future<List<LatLng>> getRoute(List<LatLng> points) async {
     if (points.length < 2) return points;

@@ -7,9 +7,9 @@ class SearchResultUseCase {
 
   final ISearchResultRepository searchResultRepository;
 
-  // Return places with coordinates based on the query
   Future<List<SearchResult>> searchLocation(String query) async {
     try {
+      // Returns location
       return await searchResultRepository.searchLocation(query);
     } catch(e) {
       throw Exception("Error in Search Location Use Case: $e");

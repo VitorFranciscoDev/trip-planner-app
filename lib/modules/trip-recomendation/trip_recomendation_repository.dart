@@ -2,7 +2,7 @@ import 'package:trip_planner/entities/trip.dart';
 import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/modules/trip-recomendation/trip_recomendation_spec.dart';
 
-// Trip Recomendation Repository [Mocked Data]
+// Implementation of Trip Recomendation Repository [Mocked Data]
 class TripRecomendationRepository implements ITripRecomendationRepository {
   String _formatDate(DateTime date) {
     return "${date.day}/${date.month}/${date.year}";

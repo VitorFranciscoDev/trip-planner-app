@@ -3,14 +3,12 @@ import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizati
 
 // Person's Use Cases
 class PersonUseCase {
-  // Validation of Name
   String? validateName(String name, BuildContext context) {
     final intl = AppLocalizations.of(context);
 
     return name.isEmpty ? intl.nameRequired : null;
   }
 
-  // Validation of Age
   String? validateAge(String age, BuildContext context) {
     final intl = AppLocalizations.of(context);
     
