@@ -14,14 +14,12 @@ class TripPlannerDatabase {
   TripPlannerDatabase._internal();
   static Database? db;
 
-  // Getter for DB
   Future<Database> get database async {
     if(db != null) return db!;
     db = await _initDatabase();
     return db!;
   }
 
-  // Function to init DB and Tables
   Future<Database> _initDatabase() async {
     final databaseDirPath = await getDatabasesPath();
     final databasePath = join(databaseDirPath, 'trip_planner.db');

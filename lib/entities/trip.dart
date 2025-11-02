@@ -1,19 +1,17 @@
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/stop.dart';
 
-// Model of Trip
 class Trip {
   final int? id;
-  final int? user_id; // User's ID
+  final int? user_id;
   final String title;
   final String transport;
   final String start_date;
   final String end_date;
-  final bool concluded; // Trip is concluded or active
-  final List<Person>? group; // Group of the Trip
-  final List<Stop>? stops; // Stops of the Trip
+  final bool concluded;
+  final List<Person>? group;
+  final List<Stop>? stops;
 
-  // Constructor
   Trip({ this.id, this.user_id, required this.title, required this.transport, required this.start_date, required this.end_date, required this.concluded, this.group, this.stops });
 
   // Transforms Trip in Map<String, dynamic>

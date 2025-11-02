@@ -1,11 +1,9 @@
-// Model of Person
 class Person {
   final int? id;
-  final int? trip_id; // Trip's ID
+  final int? trip_id;
   final String name;
   final int age;
 
-  // Constructor
   Person({ this.id, this.trip_id, required this.name, required this.age });
 
   // Transforms Person in Map<String, dynamic>

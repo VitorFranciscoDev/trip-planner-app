@@ -1,7 +1,5 @@
 import 'package:sqflite/sqflite.dart';
 
-// Stop's Table [DB]
-// [trip_id] references the trip's ID
 class StopsTable {
   static createTable(Database db) async {
     await db.execute('''

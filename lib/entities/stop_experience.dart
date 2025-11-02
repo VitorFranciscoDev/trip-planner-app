@@ -1,7 +1,6 @@
-// Model of Stop Experience
 class StopExperience {
   final int? id;
-  final int? stop_id; // Stop's ID
+  final int? stop_id;
   final String experience;
 
   StopExperience({ this.id, this.stop_id, required this.experience });
