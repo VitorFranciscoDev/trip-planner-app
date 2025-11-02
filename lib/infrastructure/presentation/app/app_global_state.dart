@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     final themeProvider = context.watch<ThemeProvider>();
     final userProvider = context.watch<AuthProvider>();
 
-    if (intlProvider.isLoading || themeProvider.isLoading || userProvider.isLoading) {
+    if (intlProvider.isInitialized == false || themeProvider.isInitialized == false || userProvider.isInitialized == false) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
