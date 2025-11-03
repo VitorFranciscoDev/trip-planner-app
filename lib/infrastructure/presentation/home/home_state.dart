@@ -5,9 +5,7 @@ import 'package:trip_planner/modules/search-result/search_result_usecase.dart';
 import 'package:trip_planner/modules/trip-recomendation/trip_recomendation_usecase.dart';
 
 class HomeProvider with ChangeNotifier {
-  HomeProvider({ required this.tripRecomendationUseCase, required this.searchResultUseCase }) {
-    loadRecomendations();
-  }
+  HomeProvider({ required this.tripRecomendationUseCase, required this.searchResultUseCase });
 
   final TripRecomendationUseCase tripRecomendationUseCase;
   final SearchResultUseCase searchResultUseCase;
@@ -24,8 +22,8 @@ class HomeProvider with ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  void loadRecomendations() {
-    List<Trip> temp = tripRecomendationUseCase.getTwoRecomendations();
+  void loadRecomendations(BuildContext context) {
+    List<Trip> temp = tripRecomendationUseCase.getTwoRecomendations(context);
     recomendation1 = temp[0];
     recomendation2 = temp[1];
   }

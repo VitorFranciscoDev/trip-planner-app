@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:trip_planner/entities/trip.dart';
 import 'package:trip_planner/entities/stop.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizations.dart';
 import 'package:trip_planner/modules/trip-recomendation/trip_recomendation_spec.dart';
 
 // Implementation of Trip Recomendation Repository [Mocked Data]
@@ -9,7 +11,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getBrazilNortheastBeaches() {
+  Trip getBrazilNortheastBeaches(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
     final now = DateTime.now();
     DateTime currentDate = now.add(Duration(days: 7));
     
@@ -69,7 +73,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'Praias do Nordeste Brasileiro',
-      transport: "Airplane",
+      transport: intl.airplane,
       start_date: stop1.start_date,
       end_date: stop5.end_date,
       concluded: false,
@@ -79,7 +83,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getBrazilSouth() {
+  Trip getBrazilSouth(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
     
@@ -128,7 +134,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'Sul do Brasil',
-      transport: "Car",
+      transport: intl.car,
       start_date: stop1.start_date,
       end_date: stop4.end_date,
       concluded: false,
@@ -138,7 +144,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getBrazilSoutheast() {
+  Trip getBrazilSoutheast(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
     
@@ -198,7 +206,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'Litoral Sudeste',
-      transport: 'Airplane',
+      transport: intl.airplane,
       start_date: stop1.start_date,
       end_date: stop5.end_date,
       concluded: false,
@@ -208,7 +216,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getWesternEurope() {
+  Trip getWesternEurope(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
     
@@ -268,7 +278,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'Europa Ocidental',
-      transport: 'Motorcycle',
+      transport: intl.motorcycle,
       start_date: stop1.start_date,
       end_date: stop5.end_date,
       concluded: false,
@@ -278,7 +288,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getCentralEurope() {
+  Trip getCentralEurope(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
     
@@ -338,7 +350,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'Europa Central',
-      transport: 'Car',
+      transport: intl.car,
       start_date: stop1.start_date,
       end_date: stop5.end_date,
       concluded: false,
@@ -348,7 +360,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getItaly() {
+  Trip getItaly(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
     
@@ -408,7 +422,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'Itália Clássica',
-      transport: 'Car',
+      transport: intl.car,
       start_date: stop1.start_date,
       end_date: stop5.end_date,
       concluded: false,
@@ -418,7 +432,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getUSWestCoast() {
+  Trip getUSWestCoast(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
     
@@ -478,7 +494,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'Costa Oeste Americana',
-      transport: 'Airplane',
+      transport: intl.airplane,
       start_date: stop1.start_date,
       end_date: stop5.end_date,
       concluded: false,
@@ -488,7 +504,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getUSEastCoast() {
+  Trip getUSEastCoast(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
     
@@ -548,7 +566,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'Costa Leste Americana',
-      transport: 'Airplane',
+      transport: intl.airplane,
       start_date: stop1.start_date,
       end_date: stop5.end_date,
       concluded: false,
@@ -558,7 +576,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getCanada() {
+  Trip getCanada(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
     
@@ -618,7 +638,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'Tour pelo Canadá',
-      transport: 'Airplane',
+      transport: intl.airplane,
       start_date: stop1.start_date,
       end_date: stop5.end_date,
       concluded: false,
@@ -628,7 +648,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getNorthAfrica() {
+  Trip getNorthAfrica(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
     
@@ -688,7 +710,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'Norte da África',
-      transport: 'Airplane',
+      transport: intl.airplane,
       start_date: stop1.start_date,
       end_date: stop5.end_date,
       concluded: false,
@@ -698,7 +720,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getSouthAfrica() {
+  Trip getSouthAfrica(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
     
@@ -758,7 +782,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'África do Sul',
-      transport: 'Airplane',
+      transport: intl.airplane,
       start_date: stop1.start_date,
       end_date: stop5.end_date,
       concluded: false,
@@ -768,7 +792,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getSoutheastAsia() {
+  Trip getSoutheastAsia(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
     
@@ -828,7 +854,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'Sudeste Asiático',
-      transport: 'Airplane',
+      transport: intl.airplane,
       start_date: stop1.start_date,
       end_date: stop5.end_date,
       concluded: false,
@@ -838,7 +864,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getEastAsia() {
+  Trip getEastAsia(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
     
@@ -898,7 +926,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'Leste Asiático',
-      transport: 'Airplane',
+      transport: intl.airplane,
       start_date: stop1.start_date,
       end_date: stop5.end_date,
       concluded: false,
@@ -908,7 +936,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getOceania() {
+  Trip getOceania(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
     
@@ -968,7 +998,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'Oceania',
-      transport: 'Airplane',
+      transport: intl.airplane,
       start_date: stop1.start_date,
       end_date: stop5.end_date,
       concluded: false,
@@ -978,7 +1008,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getAndes() {
+  Trip getAndes(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+    
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
     
@@ -1038,7 +1070,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'Cordilheira dos Andes',
-      transport: 'Car',
+      transport: intl.car,
       start_date: stop1.start_date,
       end_date: stop5.end_date,
       concluded: false,
@@ -1048,7 +1080,9 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  Trip getMexicoCaribbean() {
+  Trip getMexicoCaribbean(BuildContext context) {
+    final intl = AppLocalizations.of(context);
+
     final now = DateTime.now();
     var currentDate = now.add(Duration(days: 7));
     
@@ -1108,7 +1142,7 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
     
     return Trip(
       title: 'México e Caribe',
-      transport: 'Ship',
+      transport: intl.ship,
       start_date: stop1.start_date,
       end_date: stop5.end_date,
       concluded: false,
@@ -1118,24 +1152,24 @@ class TripRecomendationRepository implements ITripRecomendationRepository {
   }
 
   @override
-  List<Trip> getAllRecommendations() {
+  List<Trip> getAllRecommendations(BuildContext context) {
     return [
-      getBrazilNortheastBeaches(),
-      getBrazilSouth(),
-      getBrazilSoutheast(),
-      getWesternEurope(),
-      getCentralEurope(),
-      getItaly(),
-      getUSWestCoast(),
-      getUSEastCoast(),
-      getCanada(),
-      getNorthAfrica(),
-      getSouthAfrica(),
-      getSoutheastAsia(),
-      getEastAsia(),
-      getOceania(),
-      getAndes(),
-      getMexicoCaribbean(),
+      getBrazilNortheastBeaches(context),
+      getBrazilSouth(context),
+      getBrazilSoutheast(context),
+      getWesternEurope(context),
+      getCentralEurope(context),
+      getItaly(context),
+      getUSWestCoast(context),
+      getUSEastCoast(context),
+      getCanada(context),
+      getNorthAfrica(context),
+      getSouthAfrica(context),
+      getSoutheastAsia(context),
+      getEastAsia(context),
+      getOceania(context),
+      getAndes(context),
+      getMexicoCaribbean(context),
     ];
   }
 }

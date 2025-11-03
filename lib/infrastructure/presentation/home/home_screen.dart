@@ -24,6 +24,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    context.read<HomeProvider>().loadRecomendations(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final intl = AppLocalizations.of(context);

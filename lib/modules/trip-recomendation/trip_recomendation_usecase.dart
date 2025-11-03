@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
 import 'package:trip_planner/entities/trip.dart';
 import 'package:trip_planner/modules/trip-recomendation/trip_recomendation_spec.dart';
 
@@ -9,8 +10,8 @@ class TripRecomendationUseCase {
   final ITripRecomendationRepository tripRecomendationRepository;
 
   // Get Two Random Recomendations
-  List<Trip> getTwoRecomendations() {
-    final allTripRecomendations = tripRecomendationRepository.getAllRecommendations();
+  List<Trip> getTwoRecomendations(BuildContext context) {
+    final allTripRecomendations = tripRecomendationRepository.getAllRecommendations(context);
 
     final index1 = Random().nextInt(allTripRecomendations.length);
     int index2 = Random().nextInt(allTripRecomendations.length);
