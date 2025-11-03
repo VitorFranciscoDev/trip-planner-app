@@ -24,6 +24,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
   String _dropdownValue = "Car";
 
   Future<void> addTrip() async {
+    final intl = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final provider = context.read<TripProvider>();
     final userProvider = context.read<AuthProvider>();
@@ -77,7 +78,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  "Success!",
+                  intl.success,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
@@ -88,7 +89,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
             ],
           ),
           content: Text(
-            "Trip created successfully!",
+            intl.tripCreatedSuccessfully,
             style: TextStyle(fontSize: 14),
           ),
           actions: [
@@ -110,7 +111,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                 ),
               ),
               child: Text(
-                "Ok",
+                intl.ok,
                 style: TextStyle(fontWeight: FontWeight.w700),
               ),
             ),
@@ -138,7 +139,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  "Error",
+                  intl.error,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
@@ -164,7 +165,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                 ),
               ),
               child: Text(
-                "Ok",
+                intl.ok,
                 style: TextStyle(fontWeight: FontWeight.w700),
               ),
             ),
@@ -246,13 +247,13 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                 children: [
                   TextFieldComponent(
                     controller: _controllerTripTitle,
-                    label: "Trip Title",
+                    label:  intl.tripTitle,
                     error: provider.errorTripTitle,
                   ),
                   const SizedBox(height: 20),
                   DropdownButtonFormField<String>(
                     decoration: InputDecoration(
-                      labelText: "Transport",
+                      labelText: intl.transport,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
@@ -369,13 +370,13 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                 children: [
                   TextFieldComponent(
                     controller: _controllerName,
-                    label: "Name",
+                    label: intl.name,
                     error: provider.errorName,
                   ),
                   const SizedBox(height: 15),
                   TextFieldComponent(
                     controller: _controllerAge,
-                    label: "Age",
+                    label: intl.age,
                     error: provider.errorAge,
                   ),
                   const SizedBox(height: 20),
@@ -408,7 +409,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                     Divider(color: Colors.grey[300]),
                     const SizedBox(height: 5),
                     Text(
-                      "Group Members (${provider.group.length})",
+                      intl.groupMembers(provider.group.length.toString()),
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
@@ -544,7 +545,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                                     context,
                                     MaterialPageRoute(builder: (context) => MapScreen()),
                                   ),
-                                  tooltip: "Fullscreen Map",
+                                  tooltip: intl.fullscreenMap,
                                 ),
                               ),
                             ),

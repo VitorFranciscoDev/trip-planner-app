@@ -60,6 +60,17 @@ class AppLocalizations {
       'delete_user_error': 'Error deleting user',
       
       // Home Screen
+      'plan_your_next_adventure': 'Plan your next adventure',
+      'searching': 'Searching...',
+      'search_results': 'Search Results',
+      'found': '{0} found',
+      'location_selected': 'Location Selected',
+      'select_trip': 'Select Trip?',
+      'use_trip_template': 'Would you like to use this trip as a template?',
+      'cancel': 'Cancel',
+      'select': 'Select',
+      'try_different_words': 'Try searching with different words',
+      'recommended_trips': 'Recommended Trips',
       'welcome': 'Welcome, {0}',
       'search_destinations': 'Search destinations...',
       'no_results_found': 'No results found',
@@ -70,7 +81,7 @@ class AppLocalizations {
       
       // Trip Register Screen
       'new_trip': 'New Trip',
-      'trip_data': '1. Trip Data',
+      'trip_data': 'Trip Data',
       'trip_title': 'Trip Title',
       'transport': 'Transport',
       'car': 'Car',
@@ -78,30 +89,27 @@ class AppLocalizations {
       'bus': 'Bus',
       'airplane': 'Airplane',
       'ship': 'Ship',
-      'start_date': 'Start Date',
-      'end_date': 'End Date',
-      'group_data': '2. Group Data',
+      'group_data': 'Group Data',
       'age': 'Age',
       'add_person': 'Add Person',
-      'map': '3. Map',
-      'register_trip': 'Register The Trip',
+      'group_members': 'Group Members ({0})',
+      'map': 'Map',
+      'fullscreen_map': 'Fullscreen Map',
+      'register_trip': 'Register Trip',
       'success': 'Success!',
-      'trip_created': 'Trip created successfully',
-      'ok': 'OK',
+      'trip_created_successfully': 'Trip created successfully!',
       'error': 'Error',
+      'ok': 'Ok',
       
-      // Trip Validation Errors
-      'trip_title_required': 'Trip Title cannot be blank',
-      'start_date_required': 'Start Date cannot be blank',
-      'end_date_required': 'End Date cannot be blank',
-      'start_after_end': 'Start Date cannot be after End Date',
-      'group_empty': 'Group cannot be empty',
-      'stops_empty': 'Stops cannot be empty',
-      'age_required': 'Age cannot be blank',
-      'age_invalid': 'Age must be a valid number',
-      'trip_create_failed': 'Failed to create trip',
-      'trip_create_error': 'Error creating trip',
-      'unexpected_error': 'Unexpected error',
+      // Trip Validations
+      'trip_title_required': 'Trip title is required.',
+      'group_empty': 'Please add at least one person to the group.',
+      'stops_empty': 'Please add at least one stop to the trip.',
+      'age_required': 'Age is required.',
+      'age_invalid': 'Age must be a valid number.',
+      'start_date_required': 'Start date is required.',
+      'end_date_required': 'End date is required.',
+      'end_date': 'End date cannot be before start date.',
       
       // List Trips Screen
       'your_trips': 'Your Trips',
@@ -120,7 +128,6 @@ class AppLocalizations {
       'update_info': 'Update Info',
       'delete_account': 'Delete Account',
       'delete_account_confirm': 'Delete Account?',
-      'cancel': 'Cancel',
       'delete': 'Delete',
       'log_out': 'Log Out',
       'log_out_confirm': 'Log Out?',
@@ -167,6 +174,17 @@ class AppLocalizations {
       'delete_user_error': 'Erro ao deletar usuário',
       
       // Home Screen
+      'plan_your_next_adventure': 'Planeje sua próxima aventura',
+      'searching': 'Buscando...',
+      'search_results': 'Resultados da Busca',
+      'found': '{0} encontrados',
+      'location_selected': 'Local Selecionado',
+      'select_trip': 'Selecionar Viagem?',
+      'use_trip_template': 'Deseja usar esta viagem como modelo?',
+      'cancel': 'Cancelar',
+      'select': 'Selecionar',
+      'try_different_words': 'Tente buscar com outras palavras',
+      'recommended_trips': 'Viagens Recomendadas',
       'welcome': 'Bem-vindo, {0}',
       'search_destinations': 'Buscar destinos...',
       'no_results_found': 'Nenhum resultado encontrado',
@@ -175,40 +193,36 @@ class AppLocalizations {
       'brazilian_northeast': 'Nordeste Brasileiro',
       'southern_brazil': 'Sul do Brasil',
       
-      // Trip Register Screen
       'new_trip': 'Nova Viagem',
-      'trip_data': '1. Dados da Viagem',
+      'trip_data': 'Dados da Viagem',
       'trip_title': 'Título da Viagem',
       'transport': 'Transporte',
       'car': 'Carro',
-      'motorcycle': 'Motocicleta',
+      'motorcycle': 'Moto',
       'bus': 'Ônibus',
       'airplane': 'Avião',
       'ship': 'Navio',
-      'start_date': 'Data de Início',
-      'end_date': 'Data de Término',
-      'group_data': '2. Dados do Grupo',
+      'group_data': 'Dados do Grupo',
       'age': 'Idade',
       'add_person': 'Adicionar Pessoa',
-      'map': '3. Mapa',
-      'register_trip': 'Registrar a Viagem',
+      'group_members': 'Integrantes do Grupo ({0})',
+      'map': 'Mapa',
+      'fullscreen_map': 'Mapa em Tela Cheia',
+      'register_trip': 'Cadastrar Viagem',
       'success': 'Sucesso!',
-      'trip_created': 'Viagem criada com sucesso',
-      'ok': 'OK',
+      'trip_created_successfully': 'Viagem criada com sucesso!',
       'error': 'Erro',
+      'ok': 'Ok',
       
-      // Trip Validation Errors
-      'trip_title_required': 'Título da viagem não pode estar em branco',
-      'start_date_required': 'Data de início não pode estar em branco',
-      'end_date_required': 'Data de término não pode estar em branco',
-      'start_after_end': 'Data de início não pode ser após a data de término',
-      'group_empty': 'Grupo não pode estar vazio',
-      'stops_empty': 'Paradas não podem estar vazias',
-      'age_required': 'Idade não pode estar em branco',
-      'age_invalid': 'Idade deve ser um número válido',
-      'trip_create_failed': 'Falha ao criar viagem',
-      'trip_create_error': 'Erro ao criar viagem',
-      'unexpected_error': 'Erro inesperado',
+      // Trip Validations
+      'trip_title_required': 'O título da viagem é obrigatório.',
+      'group_empty': 'Adicione pelo menos uma pessoa ao grupo.',
+      'stops_empty': 'Adicione pelo menos uma parada à viagem.',
+      'age_required': 'A idade é obrigatória.',
+      'age_invalid': 'A idade deve ser um número válido.',
+      'start_date_required': 'A data de início é obrigatória.',
+      'end_date_required': 'A data de término é obrigatória.',
+      'end_date': 'A data de término não pode ser anterior à data de início.',
       
       // List Trips Screen
       'your_trips': 'Suas Viagens',
@@ -227,7 +241,6 @@ class AppLocalizations {
       'update_info': 'Atualizar Info',
       'delete_account': 'Deletar Conta',
       'delete_account_confirm': 'Deletar Conta?',
-      'cancel': 'Cancelar',
       'delete': 'Deletar',
       'log_out': 'Sair',
       'log_out_confirm': 'Sair?',
@@ -274,6 +287,17 @@ class AppLocalizations {
       'delete_user_error': 'Error al eliminar usuario',
       
       // Home Screen
+      'plan_your_next_adventure': 'Planifica tu próxima aventura',
+      'searching': 'Buscando...',
+      'search_results': 'Resultados de la Búsqueda',
+      'found': '{0} encontrados',
+      'location_selected': 'Ubicación Seleccionada',
+      'select_trip': '¿Seleccionar Viaje?',
+      'use_trip_template': '¿Quieres usar este viaje como plantilla?',
+      'cancel': 'Cancelar',
+      'select': 'Seleccionar',
+      'try_different_words': 'Intenta buscar con otras palabras',
+      'recommended_trips': 'Viajes Recomendados',
       'welcome': 'Bienvenido, {0}',
       'search_destinations': 'Buscar destinos...',
       'no_results_found': 'No se encontraron resultados',
@@ -284,7 +308,7 @@ class AppLocalizations {
       
       // Trip Register Screen
       'new_trip': 'Nuevo Viaje',
-      'trip_data': '1. Datos del Viaje',
+      'trip_data': 'Datos del Viaje',
       'trip_title': 'Título del Viaje',
       'transport': 'Transporte',
       'car': 'Coche',
@@ -292,30 +316,27 @@ class AppLocalizations {
       'bus': 'Autobús',
       'airplane': 'Avión',
       'ship': 'Barco',
-      'start_date': 'Fecha de Inicio',
-      'end_date': 'Fecha de Fin',
-      'group_data': '2. Datos del Grupo',
+      'group_data': 'Datos del Grupo',
       'age': 'Edad',
-      'add_person': 'Añadir Persona',
-      'map': '3. Mapa',
-      'register_trip': 'Registrar el Viaje',
+      'add_person': 'Agregar Persona',
+      'group_members': 'Miembros del Grupo ({0})',
+      'map': 'Mapa',
+      'fullscreen_map': 'Mapa en Pantalla Completa',
+      'register_trip': 'Registrar Viaje',
       'success': '¡Éxito!',
-      'trip_created': 'Viaje creado exitosamente',
-      'ok': 'OK',
+      'trip_created_successfully': '¡Viaje creado con éxito!',
       'error': 'Error',
+      'ok': 'Ok',
       
-      // Trip Validation Errors
-      'trip_title_required': 'El título del viaje no puede estar en blanco',
-      'start_date_required': 'La fecha de inicio no puede estar en blanco',
-      'end_date_required': 'La fecha de fin no puede estar en blanco',
-      'start_after_end': 'La fecha de inicio no puede ser posterior a la fecha de fin',
-      'group_empty': 'El grupo no puede estar vacío',
-      'stops_empty': 'Las paradas no pueden estar vacías',
-      'age_required': 'La edad no puede estar en blanco',
-      'age_invalid': 'La edad debe ser un número válido',
-      'trip_create_failed': 'Error al crear el viaje',
-      'trip_create_error': 'Error al crear el viaje',
-      'unexpected_error': 'Error inesperado',
+      // Trip Validations
+      'trip_title_required': 'El título del viaje es obligatorio.',
+      'group_empty': 'Agrega al menos una persona al grupo.',
+      'stops_empty': 'Agrega al menos una parada al viaje.',
+      'age_required': 'La edad es obligatoria.',
+      'age_invalid': 'La edad debe ser un número válido.',
+      'start_date_required': 'La fecha de inicio es obligatoria.',
+      'end_date_required': 'La fecha de finalización es obligatoria.',
+      'end_date': 'La fecha de finalización no puede ser anterior a la fecha de inicio.',
       
       // List Trips Screen
       'your_trips': 'Tus Viajes',
@@ -334,7 +355,6 @@ class AppLocalizations {
       'update_info': 'Actualizar Info',
       'delete_account': 'Eliminar Cuenta',
       'delete_account_confirm': '¿Eliminar Cuenta?',
-      'cancel': 'Cancelar',
       'delete': 'Eliminar',
       'log_out': 'Cerrar Sesión',
       'log_out_confirm': '¿Cerrar Sesión?',
@@ -393,12 +413,23 @@ class AppLocalizations {
   String get registerError => translate('register_error');
   String get deleteUserError => translate('delete_user_error');
   
-  // Getters for Home Screen
+  // Home Screen
   String welcome(String name) => translate('welcome', [name]);
+  String get planYourNextAdventure => translate('plan_your_next_adventure');
   String get searchDestinations => translate('search_destinations');
+  String get searching => translate('searching');
+  String get searchResults => translate('search_results');
+  String found(String count) => translate('found', [count]);
+  String get locationSelected => translate('location_selected');
+  String get selectTrip => translate('select_trip');
+  String get useTripTemplate => translate('use_trip_template');
+  String get cancel => translate('cancel');
+  String get select => translate('select');
   String get noResultsFound => translate('no_results_found');
-  String selected(String location) => translate('selected', [location]);
-  String days(int count) => translate('days', [count.toString()]);
+  String get tryDifferentWords => translate('try_different_words');
+  String get recommendedTrips => translate('recommended_trips');
+  String selected(String name) => translate('selected', [name]);
+  String days(String count) => translate('days', [count]);
   String get brazilianNortheast => translate('brazilian_northeast');
   String get southernBrazil => translate('southern_brazil');
   
@@ -412,29 +443,26 @@ class AppLocalizations {
   String get bus => translate('bus');
   String get airplane => translate('airplane');
   String get ship => translate('ship');
-  String get startDate => translate('start_date');
-  String get endDate => translate('end_date');
   String get groupData => translate('group_data');
   String get age => translate('age');
   String get addPerson => translate('add_person');
+  String groupMembers(String count) => translate('group_members', [count]);
   String get map => translate('map');
+  String get fullscreenMap => translate('fullscreen_map');
   String get registerTrip => translate('register_trip');
   String get success => translate('success');
-  String get tripCreated => translate('trip_created');
-  String get ok => translate('ok');
+  String get tripCreatedSuccessfully => translate('trip_created_successfully');
   String get error => translate('error');
+  String get ok => translate('ok');
   
-  // Getters for Trip Validation
   String get tripTitleRequired => translate('trip_title_required');
-  String get startDateRequired => translate('start_date_required');
-  String get endDateRequired => translate('end_date_required');
-  String get startAfterEnd => translate('start_after_end');
   String get groupEmpty => translate('group_empty');
   String get stopsEmpty => translate('stops_empty');
   String get ageRequired => translate('age_required');
   String get ageInvalid => translate('age_invalid');
-  String get tripCreateFailed => translate('trip_create_failed');
-  String get tripCreateError => translate('trip_create_error');
+  String get startDateRequired => translate('start_date_required');
+  String get endDateRequired => translate('end_date_required');
+  String get endDate => translate('end_date');
   String get unexpectedError => translate('unexpected_error');
   
   // Getters for List Trips Screen
@@ -454,7 +482,6 @@ class AppLocalizations {
   String get updateInfo => translate('update_info');
   String get deleteAccount => translate('delete_account');
   String get deleteAccountConfirm => translate('delete_account_confirm');
-  String get cancel => translate('cancel');
   String get deleteText => translate('delete');
   String get logOut => translate('log_out');
   String get logOutConfirm => translate('log_out_confirm');

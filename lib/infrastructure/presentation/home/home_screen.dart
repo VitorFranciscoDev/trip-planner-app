@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        "Plan your next adventure",
+                        intl.planYourNextAdventure,
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey[600],
@@ -181,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        "Searching...",
+                        intl.searching,
                         style: TextStyle(
                           color: Colors.grey[600],
                           fontSize: 14,
@@ -223,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            "Search Results",
+                            intl.searchResults,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
@@ -232,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const Spacer(),
                           Text(
-                            "${provider.searchResults.length} found",
+                            intl.found(provider.searchResults.length.toString()),
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
@@ -275,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       const SizedBox(width: 8),
                                       Expanded(
                                         child: Text(
-                                          "Location Selected",
+                                          intl.locationSelected,
                                           style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w700,
@@ -331,7 +331,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     TextButton(
                                       onPressed: () => Navigator.of(dialogContext).pop(),
                                       child: Text(
-                                        "OK",
+                                        intl.ok,
                                         style: TextStyle(
                                           fontWeight: FontWeight.w700,
                                           color: theme.colorScheme.primary,
@@ -450,7 +450,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'No results found',
+                      intl.noResultsFound,
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 16,
@@ -459,7 +459,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Try searching with different words',
+                      intl.tryDifferentWords,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey[400],
@@ -485,7 +485,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  "Recommended Trips",
+                  intl.recommendedTrips,
                   style: TextStyle(
                     fontFamily: "Times New Roman",
                     fontSize: 18,
@@ -513,7 +513,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Icon(Icons.flight_takeoff, color: theme.colorScheme.primary),
                         const SizedBox(width: 8),
                         Text(
-                          "Select Trip?",
+                          intl.selectTrip,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
@@ -523,14 +523,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     content: Text(
-                      "Would you like to use this trip as a template?",
+                      intl.useTripTemplate,
                       style: TextStyle(fontSize: 14),
                     ),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.of(dialogContext).pop(),
                         child: Text(
-                          "Cancel",
+                          intl.cancel,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             color: Colors.grey[600],
@@ -551,7 +551,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         child: Text(
-                          "Select",
+                          intl.select,
                           style: TextStyle(fontWeight: FontWeight.w700),
                         ),
                       ),
@@ -578,7 +578,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Icon(Icons.flight_takeoff, color: theme.colorScheme.primary),
                         const SizedBox(width: 8),
                         Text(
-                          "Select Trip?",
+                          intl.selectTrip,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
@@ -588,14 +588,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     content: Text(
-                      "Would you like to use this trip as a template?",
+                      intl.useTripTemplate,
                       style: TextStyle(fontSize: 14),
                     ),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.of(dialogContext).pop(),
                         child: Text(
-                          "Cancel",
+                          intl.cancel,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             color: Colors.grey[600],
@@ -616,7 +616,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         child: Text(
-                          "Select",
+                          intl.select,
                           style: TextStyle(fontWeight: FontWeight.w700),
                         ),
                       ),
