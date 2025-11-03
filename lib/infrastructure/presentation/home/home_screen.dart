@@ -26,7 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeProvider>().loadRecomendations(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<HomeProvider>().loadRecomendations(context);
+    });
   }
 
   @override
