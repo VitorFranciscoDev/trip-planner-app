@@ -139,7 +139,7 @@ class AuthProvider with ChangeNotifier {
         return null;
       }
 
-      return intl.updateInfo;
+      return intl.unexpectedError;
     } catch (e) {
       return intl.unexpectedError;
     } finally {

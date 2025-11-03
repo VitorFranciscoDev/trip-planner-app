@@ -19,7 +19,7 @@ class UserUseCase {
     final intl = AppLocalizations.of(context);
     
     if(email.isEmpty) {
-      return intl.invalidEmail;
+      return intl.emailRequired;
     } else if(!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email)) {
       return intl.invalidEmail;
     }
@@ -31,7 +31,7 @@ class UserUseCase {
     final intl = AppLocalizations.of(context);
     
     if(password.isEmpty) {
-      return intl.passwordTooShort;
+      return intl.passwordRequired;
     } else if(password.length < 8) {
       return intl.passwordTooShort;
     }

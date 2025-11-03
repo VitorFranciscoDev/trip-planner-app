@@ -1,16 +1,62 @@
-# trip_planner
+# 🧭 Trip Planner
 
-A new Flutter project.
+A Flutter application for managing and organizing trips — plan routes, register stops, add participants, and generate a digital travel booklet.  
+The project was developed to demonstrate clean architecture, code organization, and the use of modern Flutter libraries for data persistence, localization, and UI design.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Features
 
-A few resources to get you started if this is your first Flutter project:
+- ✈️ Create, view, edit, and delete trips  
+- 👥 Register participants with names and photos  
+- 🗺️ View trip routes and stops on Google Maps  
+- 📍 Manage city stops, arrival/departure dates, and activities  
+- 📷 Add photos and notes for each stop  
+- 📄 Generate a travel memory booklet in PDF format  
+- 🌍 Multi-language support (English, Portuguese, Spanish)  
+- 🌓 Dark and light themes  
+- 💾 Local data storage using SQLite  
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🧩 Project Structure
+
+```
+lib/
+├── entities/             # Core domain entities
+├── infrastructure/
+│ ├── database/           # Local database management
+│ └── presentation/       # UI layer
+│ ├── app/                # Global state, themes, localization, components
+│ └── screens/            # Application screens and views
+└── modules/              # Feature modules
+├── user/                 # User feature (use case, repository, spec)
+├── trip/                 # Trip feature (use case, repository, spec)
+├── stop/                 # Stop feature (use case, repository, spec)
+└── ...                   # Other modules as needed
+```
+
+---
+
+## ⚙️ Requirements
+
+- Flutter SDK  
+- Android Studio or VS Code with Flutter extension  
+
+---
+
+## ▶️ Running the App
+
+```
+# Install dependencies
+flutter pub get
+
+# Run the application
+flutter run
+```
+
+---
+
+# 💬 About
+Trip Planner is a cross-platform Flutter app designed for efficient trip management and record keeping.
+It provides an intuitive interface, offline data handling, and multi-language support for global users.
