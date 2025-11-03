@@ -111,10 +111,23 @@ class AppLocalizations {
       'end_date_required': 'End date is required.',
       'end_date': 'End date cannot be before start date.',
       
-      // List Trips Screen
-      'your_trips': 'Your Trips',
-      'active_trips': '- Active Trips',
-      'concluded_trips': '- Concluded Trips',
+      // List Trips
+      'yourTrips': 'Your Trips',
+      'activeTrips': 'Active Trips',
+      'concludedTrips': 'Concluded Trips',
+      'noActiveTrips': 'No active trips',
+      'startPlanning': 'Start planning your next adventure!',
+      'noConcludedTrips': 'No concluded trips',
+      'completeTrips': 'Complete your trips to see them here',
+      'ended': 'Ended',
+      'markAsConcluded': 'Mark as Concluded',
+      'concludeTrip': 'Conclude Trip',
+      'tripEndedOn': 'The trip "{title}" has ended on {date}.',
+      'confirmConclude': 'Would you like to mark it as concluded?',
+      'notNow': 'Not Now',
+      'tripConcludedSuccess': 'Trip marked as concluded!',
+      'tripConcludedError': 'Error concluding trip',
+      'fieldRequired': 'Field required.',
       
       // Config Screen
       'preferences': 'Preferences',
@@ -224,10 +237,23 @@ class AppLocalizations {
       'end_date_required': 'A data de término é obrigatória.',
       'end_date': 'A data de término não pode ser anterior à data de início.',
       
-      // List Trips Screen
-      'your_trips': 'Suas Viagens',
-      'active_trips': '- Viagens Ativas',
-      'concluded_trips': '- Viagens Concluídas',
+      // List Trips
+      'yourTrips': 'Suas Viagens',
+      'activeTrips': 'Viagens Ativas',
+      'concludedTrips': 'Viagens Concluídas',
+      'noActiveTrips': 'Nenhuma viagem ativa',
+      'startPlanning': 'Comece a planejar sua próxima aventura!',
+      'noConcludedTrips': 'Nenhuma viagem concluída',
+      'completeTrips': 'Conclua suas viagens para vê-las aqui',
+      'ended': 'Encerrada',
+      'markAsConcluded': 'Marcar como Concluída',
+      'concludeTrip': 'Concluir Viagem',
+      'tripEndedOn': 'A viagem "{title}" terminou em {date}.',
+      'confirmConclude': 'Deseja marcá-la como concluída?',
+      'notNow': 'Agora não',
+      'tripConcludedSuccess': 'Viagem marcada como concluída!',
+      'tripConcludedError': 'Erro ao concluir viagem',
+      'fieldRequired': 'Campo obrigatório.',
       
       // Config Screen
       'preferences': 'Preferências',
@@ -338,10 +364,23 @@ class AppLocalizations {
       'end_date_required': 'La fecha de finalización es obligatoria.',
       'end_date': 'La fecha de finalización no puede ser anterior a la fecha de inicio.',
       
-      // List Trips Screen
-      'your_trips': 'Tus Viajes',
-      'active_trips': '- Viajes Activos',
-      'concluded_trips': '- Viajes Concluidos',
+      // List Trips
+      'yourTrips': 'Tus Viajes',
+      'activeTrips': 'Viajes Activos',
+      'concludedTrips': 'Viajes Concluidos',
+      'noActiveTrips': 'No hay viajes activos',
+      'startPlanning': '¡Comienza a planear tu próxima aventura!',
+      'noConcludedTrips': 'No hay viajes concluidos',
+      'completeTrips': 'Completa tus viajes para verlos aquí',
+      'ended': 'Finalizado',
+      'markAsConcluded': 'Marcar como Concluido',
+      'concludeTrip': 'Concluir Viaje',
+      'tripEndedOn': 'El viaje "{title}" terminó el {date}.',
+      'confirmConclude': '¿Deseas marcarlo como concluido?',
+      'notNow': 'Ahora no',
+      'tripConcludedSuccess': '¡Viaje marcado como concluido!',
+      'tripConcludedError': 'Error al concluir el viaje',
+      'fieldRequired': 'Campo obligatorio.',
       
       // Config Screen
       'preferences': 'Preferencias',
@@ -466,9 +505,23 @@ class AppLocalizations {
   String get unexpectedError => translate('unexpected_error');
   
   // Getters for List Trips Screen
-  String get yourTrips => translate('your_trips');
-  String get activeTrips => translate('active_trips');
-  String get concludedTrips => translate('concluded_trips');
+  // Getters usados na tela de viagens
+  String get yourTrips => translate('yourTrips');
+  String get activeTrips => translate('activeTrips');
+  String get concludedTrips => translate('concludedTrips');
+  String get noActiveTrips => translate('noActiveTrips');
+  String get startPlanning => translate('startPlanning');
+  String get noConcludedTrips => translate('noConcludedTrips');
+  String get completeTrips => translate('completeTrips');
+  String get ended => translate('ended');
+  String get markAsConcluded => translate('markAsConcluded');
+  String get concludeTrip => translate('concludeTrip');
+  String tripEndedOn(String title, String date) =>
+      translate('tripEndedOn').replaceAll('{title}', title).replaceAll('{date}', date);
+  String get confirmConclude => translate('confirmConclude');
+  String get notNow => translate('notNow');
+  String get tripConcludedSuccess => translate('tripConcludedSuccess');
+  String get tripConcludedError => translate('tripConcludedError');
   
   // Getters for Config Screen
   String get preferences => translate('preferences');

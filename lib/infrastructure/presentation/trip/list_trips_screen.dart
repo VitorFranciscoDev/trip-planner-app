@@ -49,6 +49,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
 
   Future<void> _showConcludeDialog(Trip trip) async {
     final theme = Theme.of(context);
+    final intl = AppLocalizations.of(context);
 
     showDialog(
       context: context,
@@ -73,7 +74,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
             const SizedBox(width: 12),
             Expanded(
               child: Text(
-                "Conclude Trip",
+                intl.concludeTrip,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
@@ -88,12 +89,12 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "The trip \"${trip.title}\" has ended on ${trip.end_date}.",
+              intl.tripEndedOn(trip.title, trip.end_date),
               style: TextStyle(fontSize: 14),
             ),
             const SizedBox(height: 12),
             Text(
-              "Would you like to mark it as concluded?",
+              intl.markAsConcluded,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -106,7 +107,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
             child: Text(
-              "Not Now",
+              intl.notNow,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: Colors.grey[600],
@@ -146,7 +147,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                         children: [
                           Icon(Icons.check_circle, color: Colors.white),
                           const SizedBox(width: 8),
-                          Text("Trip marked as concluded!"),
+                          Text(intl.tripConcludedSuccess),
                         ],
                       ),
                       backgroundColor: Colors.green,
@@ -188,8 +189,8 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: const Text(
-              "Mark as Concluded",
+            child: Text(
+              intl.markAsConcluded,
               style: TextStyle(fontWeight: FontWeight.w700),
             ),
           ),
@@ -300,7 +301,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      "No active trips",
+                      intl.noActiveTrips,
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 16,
@@ -309,7 +310,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      "Start planning your next adventure!",
+                      intl.startPlanning,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey[400],
@@ -415,7 +416,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                                             borderRadius: BorderRadius.circular(8),
                                           ),
                                           child: Text(
-                                            "Ended",
+                                            intl.ended,
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 10,
@@ -445,7 +446,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                                   size: 28,
                                 ),
                                 onPressed: () => _showConcludeDialog(activeTrip),
-                                tooltip: "Mark as concluded",
+                                tooltip: intl.markAsConcluded,
                               )
                             else
                               Icon(
@@ -526,7 +527,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      "No concluded trips",
+                      intl.noConcludedTrips,
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 16,
@@ -535,7 +536,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      "Complete your trips to see them here",
+                      intl.completeTrips,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey[400],
