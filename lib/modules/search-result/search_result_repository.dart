@@ -8,7 +8,7 @@ class SearchResultRepository implements ISearchResultRepository {
   static const String _baseUrl = 'nominatim.openstreetmap.org';
   
   static const Map<String, String> _headers = {
-    'User-Agent': 'TripPlannerApp/1.0 (tripplanner@gmail.com)',
+    'User-Agent': 'TripPlannerApp/1.0',
   };
 
   @override

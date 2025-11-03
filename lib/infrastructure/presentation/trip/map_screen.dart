@@ -1,4 +1,8 @@
+import 'dart:typed_data';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geolocator/geolocator.dart';
@@ -15,10 +19,11 @@ class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
 
   @override
-  State<MapScreen> createState() => _MapScreenState();
+  State<MapScreen> createState() => MapScreenState();
 }
 
-class _MapScreenState extends State<MapScreen> {
+class MapScreenState extends State<MapScreen> {
+  final GlobalKey _mapKey = GlobalKey();
   final MapController _mapController = MapController();
   
   final TextEditingController _startDateController = TextEditingController();
@@ -771,6 +776,32 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  Future<Uint8List?> captureMapScreenshot() async {
+    try {
+      await Future.delayed(Duration(milliseconds: 300));
+      
+      RenderRepaintBoundary? boundary = 
+          _mapKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      
+      if (boundary == null) {
+        debugPrint('Error in Capture Image.');
+        return null;
+      }
+
+      final image = await boundary.toImage(pixelRatio: 3.0);
+      final byteData = await image.toByteData(format: ImageByteFormat.png);
+      
+      if (byteData == null) {
+        debugPrint('Error in Capture Image.');
+        return null;
+      }
+      
+      return byteData.buffer.asUint8List();
+    } catch (e) {
+      throw Exception('Error in Capture Image: $e');
+    }
+  }
+
   @override
   void dispose() {
     _startDateController.dispose();
@@ -797,45 +828,48 @@ class _MapScreenState extends State<MapScreen> {
       ),
       body: Stack(
         children: [
-          FlutterMap(
-            mapController: _mapController,
-            options: MapOptions(
-              initialCenter: provider.stops.isNotEmpty ? LatLng(provider.stops[0].latitude, provider.stops[0].longitude) : _currentLocation!,
-              initialZoom: 13,
-              minZoom: 0,
-              maxZoom: 19,
-              onTap: (tapPosition, latlng) => _onMapTap(latlng),
-            ),
-            children: [
-              TileLayer(
-                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.example.trip_planner',
-                tileProvider: NetworkTileProvider(),
+          RepaintBoundary(
+            key: _mapKey,
+            child: FlutterMap(
+              mapController: _mapController,
+              options: MapOptions(
+                initialCenter: provider.stops.isNotEmpty ? LatLng(provider.stops[0].latitude, provider.stops[0].longitude) : _currentLocation!,
+                initialZoom: 13,
+                minZoom: 0,
+                maxZoom: 19,
+                onTap: (tapPosition, latlng) => _onMapTap(latlng),
               ),
-              if (_currentLocation != null)
-                CurrentLocationLayer(
-                  style: LocationMarkerStyle(
-                    marker: DefaultLocationMarker(
-                      color: const Color.fromARGB(255, 0, 99, 181),
-                      child: const SizedBox(),
-                    ),
-                    markerSize: const Size(15, 15),
-                    accuracyCircleColor: Colors.blue.withOpacity(0.1),
-                    showAccuracyCircle: true,
-                  ),
+              children: [
+                TileLayer(
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  userAgentPackageName: 'com.example.trip_planner',
+                  tileProvider: NetworkTileProvider(),
                 ),
-              MarkerLayer(markers: _markers),
-              PolylineLayer(
-                polylines: [
-                  if (_points.isNotEmpty)
-                    Polyline(
-                      points: _points,
-                      strokeWidth: 6,
-                      color: theme.colorScheme.primary,
+                if (_currentLocation != null)
+                  CurrentLocationLayer(
+                    style: LocationMarkerStyle(
+                      marker: DefaultLocationMarker(
+                        color: const Color.fromARGB(255, 0, 99, 181),
+                        child: const SizedBox(),
+                      ),
+                      markerSize: const Size(15, 15),
+                      accuracyCircleColor: Colors.blue.withOpacity(0.1),
+                      showAccuracyCircle: true,
                     ),
-                ],
-              ),
-            ],
+                  ),
+                MarkerLayer(markers: _markers),
+                PolylineLayer(
+                  polylines: [
+                    if (_points.isNotEmpty)
+                      Polyline(
+                        points: _points,
+                        strokeWidth: 6,
+                        color: theme.colorScheme.primary,
+                      ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),

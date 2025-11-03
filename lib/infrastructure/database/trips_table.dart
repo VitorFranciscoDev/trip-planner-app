@@ -10,6 +10,7 @@ class TripsTable {
         transport TEXT NOT NULL,
         start_date TEXT NOT NULL,
         end_date TEXT NOT NULL,
+        map_image BLOB NOT NULL,
         concluded INT NOT NULL,
         FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
       )

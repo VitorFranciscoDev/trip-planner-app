@@ -16,13 +16,17 @@ class HomeProvider with ChangeNotifier {
   List<SearchResult> _searchResults = [];
   List<SearchResult> get searchResults => _searchResults;
 
-  late Trip recomendation1;
-  late Trip recomendation2;
+  Trip? recomendation1;
+  Trip? recomendation2;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   void loadRecomendations(BuildContext context) {
+    if (recomendation1 != null) {
+      return; 
+    }
+
     List<Trip> temp = tripRecomendationUseCase.getTwoRecomendations(context);
     recomendation1 = temp[0];
     recomendation2 = temp[1];

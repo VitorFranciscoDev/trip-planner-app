@@ -140,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                     : null,
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: theme.colorScheme.tertiary,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 16,
@@ -171,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 padding: const EdgeInsets.all(30),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.colorScheme.tertiary,
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
@@ -206,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.colorScheme.tertiary,
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
@@ -439,7 +439,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(30),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.colorScheme.tertiary,
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
@@ -508,7 +508,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: RecomendationsListComponent(
-              tripRecomendation: provider.recomendation1,
+              tripRecomendation: provider.recomendation1!,
               fn: () {
                 showDialog(
                   context: context,
@@ -553,7 +553,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: theme.colorScheme.primary,
-                          foregroundColor: Colors.white,
+                          foregroundColor: theme.colorScheme.tertiary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -573,7 +573,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: RecomendationsListComponent(
-              tripRecomendation: provider.recomendation2,
+              tripRecomendation: provider.recomendation2!,
               fn: () {
                 showDialog(
                   context: context,
@@ -618,7 +618,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: theme.colorScheme.primary,
-                          foregroundColor: Colors.white,
+                          foregroundColor: theme.colorScheme.tertiary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),

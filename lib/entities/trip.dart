@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/stop.dart';
 
@@ -8,11 +9,12 @@ class Trip {
   final String transport;
   final String start_date;
   final String end_date;
+  final Uint8List? map_image;
   final bool concluded;
   final List<Person>? group;
   final List<Stop>? stops;
 
-  Trip({ this.id, this.user_id, required this.title, required this.transport, required this.start_date, required this.end_date, required this.concluded, this.group, this.stops });
+  Trip({ this.id, this.user_id, required this.title, required this.transport, required this.start_date, required this.end_date, this.map_image, required this.concluded, this.group, this.stops });
 
   // Transforms Trip in Map<String, dynamic>
   Map<String, dynamic> toMap() {
@@ -23,6 +25,7 @@ class Trip {
       'transport': transport,
       'start_date': start_date,
       'end_date': end_date,
+      'map_image': map_image,
       'concluded': concluded ? 1 : 0, // Transforms in Int
     };
   }
@@ -36,6 +39,7 @@ class Trip {
       transport: map['transport'],
       start_date: map['start_date'],
       end_date: map['end_date'],
+      map_image: map['map_image'],
       concluded: map['concluded'] == 1, // Transforms in Bool
     );
   }

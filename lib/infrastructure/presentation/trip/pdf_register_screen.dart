@@ -18,17 +18,13 @@ class PDFRegisterScreen extends StatefulWidget {
 class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
   final ImagePicker _picker = ImagePicker();
   
-  // Fotos das pessoas do grupo
   Map<int, File?> personPhotos = {};
-  
-  // Fotos e descrições das paradas
   Map<int, List<File>> stopPhotos = {};
   Map<int, TextEditingController> stopDescriptions = {};
 
   @override
   void initState() {
     super.initState();
-    // Inicializa controllers para cada parada
     for (int i = 0; i < widget.trip.stops!.length; i++) {
       stopPhotos[i] = [];
       stopDescriptions[i] = TextEditingController();
@@ -42,11 +38,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
   }
 
   Future<void> _pickPersonPhoto(int index) async {
-    final XFile? image = await _picker.pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 1000,
-      maxHeight: 1000,
-    );
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     
     if (image != null) {
       setState(() {
@@ -56,11 +48,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
   }
 
   Future<void> _pickStopPhoto(int stopIndex) async {
-    final XFile? image = await _picker.pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 1500,
-      maxHeight: 1500,
-    );
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     
     if (image != null) {
       setState(() {
@@ -76,7 +64,6 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
   }
 
   Future<void> _generatePDF() async {
-    // Validação
     bool hasAllPersonPhotos = widget.trip.group!.length == personPhotos.length;
     bool hasAllStopData = widget.trip.stops!.every((stop) {
       int index = widget.trip.stops!.indexOf(stop);
@@ -120,7 +107,6 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
       return;
     }
 
-    // Mostra loading
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -152,74 +138,81 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
     try {
       final pdf = pw.Document();
 
-      // Página de Capa
       pdf.addPage(
-        pw.Page(
-          pageFormat: PdfPageFormat.a4,
-          build: (pw.Context context) {
-            return pw.Container(
-              decoration: pw.BoxDecoration(
-                gradient: pw.LinearGradient(
-                  colors: [
-                    PdfColor.fromHex('#1E88E5'),
-                    PdfColor.fromHex('#1565C0'),
-                  ],
-                  begin: pw.Alignment.topLeft,
-                  end: pw.Alignment.bottomRight,
-                ),
-              ),
-              child: pw.Center(
-                child: pw.Column(
-                  mainAxisAlignment: pw.MainAxisAlignment.center,
-                  children: [
-                    pw.Icon(
-                      pw.IconData(0xe539), // flight_takeoff icon
-                      size: 100,
-                      color: PdfColors.white,
+      pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return pw.Container(
+            decoration: pw.BoxDecoration(
+              color: PdfColor.fromHex('#F5EEDC'),
+            ),
+            child: pw.Center(
+              child: pw.Column(
+                mainAxisAlignment: pw.MainAxisAlignment.center,
+                children: [
+                  pw.Text(
+                    widget.trip.title,
+                    style: pw.TextStyle(
+                      fontSize: 40,
+                      fontWeight: pw.FontWeight.bold,
+                      color: PdfColor.fromHex('#8B4513'),
                     ),
-                    pw.SizedBox(height: 30),
-                    pw.Text(
-                      widget.trip.title,
-                      style: pw.TextStyle(
-                        fontSize: 40,
-                        fontWeight: pw.FontWeight.bold,
-                        color: PdfColors.white,
-                      ),
-                      textAlign: pw.TextAlign.center,
+                    textAlign: pw.TextAlign.center,
+                  ),
+                  pw.SizedBox(height: 20),
+                  pw.Text(
+                    "${widget.trip.start_date} - ${widget.trip.end_date} / ${widget.trip.transport}",
+                    style: pw.TextStyle(
+                      fontSize: 18,
+                      fontWeight: pw.FontWeight.bold,
+                      color: PdfColor.fromHex('#8B4513'),
                     ),
-                    pw.SizedBox(height: 15),
-                    pw.Text(
-                      "${widget.trip.start_date} - ${widget.trip.end_date}",
-                      style: pw.TextStyle(
-                        fontSize: 20,
-                        color: PdfColors.white,
-                      ),
-                    ),
-                    pw.SizedBox(height: 50),
-                    pw.Container(
-                      padding: pw.EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                      decoration: pw.BoxDecoration(
-                        color: PdfColors.white,
-                        borderRadius: pw.BorderRadius.circular(30),
-                      ),
-                      child: pw.Text(
-                        "Travel Memories",
-                        style: pw.TextStyle(
-                          fontSize: 18,
-                          fontWeight: pw.FontWeight.bold,
-                          color: PdfColor.fromHex('#1E88E5'),
+                  ),   
+                  pw.SizedBox(height: 30),
+                  pw.Row(
+                    mainAxisSize: pw.MainAxisSize.min,
+                    children: [
+                      pw.Container(
+                        padding: pw.EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        decoration: pw.BoxDecoration(
+                          color: PdfColors.white,
+                          borderRadius: pw.BorderRadius.circular(30),
+                        ),
+                        child: pw.Text(
+                          "Happiness",
+                          style: pw.TextStyle(
+                            fontSize: 18,
+                            fontWeight: pw.FontWeight.bold,
+                            color: PdfColor.fromHex('#8B4513'),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                      pw.SizedBox(width: 20),
+                      pw.Container(
+                        padding: pw.EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        decoration: pw.BoxDecoration(
+                          color: PdfColors.white,
+                          borderRadius: pw.BorderRadius.circular(30),
+                        ),
+                        child: pw.Text(
+                          "Travel Memories",
+                          style: pw.TextStyle(
+                            fontSize: 18,
+                            fontWeight: pw.FontWeight.bold,
+                            color: PdfColor.fromHex('#8B4513'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            );
-          },
-        ),
-      );
+            ),
+          );
+        },
+      ),
+    );
 
-      // Página do Grupo
       pdf.addPage(
         pw.Page(
           pageFormat: PdfPageFormat.a4,
@@ -232,10 +225,10 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                   style: pw.TextStyle(
                     fontSize: 28,
                     fontWeight: pw.FontWeight.bold,
-                    color: PdfColor.fromHex('#1E88E5'),
+                    color: PdfColor.fromHex('#8B4513'),
                   ),
                 ),
-                pw.SizedBox(height: 20),
+                pw.SizedBox(height: 30),
                 pw.Wrap(
                   spacing: 20,
                   runSpacing: 20,
@@ -253,26 +246,18 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                             decoration: pw.BoxDecoration(
                               borderRadius: pw.BorderRadius.circular(15),
                               border: pw.Border.all(
-                                color: PdfColor.fromHex('#1E88E5'),
+                                color: PdfColor.fromHex('#8B4513'),
                                 width: 3,
                               ),
                             ),
-                            child: photo != null
-                                ? pw.ClipRRect(
-                                    horizontalRadius: 12,
-                                    verticalRadius: 12,
-                                    child: pw.Image(
-                                      pw.MemoryImage(photo.readAsBytesSync()),
-                                      fit: pw.BoxFit.cover,
-                                    ),
-                                  )
-                                : pw.Center(
-                                    child: pw.Icon(
-                                      pw.IconData(0xe7fd), // person icon
-                                      size: 50,
-                                      color: PdfColor.fromHex('#1E88E5'),
-                                    ),
-                                  ),
+                            child: pw.ClipRRect(
+                              horizontalRadius: 12,
+                              verticalRadius: 12,
+                              child: pw.Image(
+                                pw.MemoryImage(photo!.readAsBytesSync()),
+                                fit: pw.BoxFit.cover,
+                              ),
+                            ),
                           ),
                           pw.SizedBox(height: 10),
                           pw.Text(
@@ -301,7 +286,181 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
         ),
       );
 
-      // Páginas das Paradas
+      pdf.addPage(
+        pw.Page(
+          pageFormat: PdfPageFormat.a4,
+          build: (pw.Context context) {
+            return pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Container(
+                  padding: pw.EdgeInsets.all(20),
+                  decoration: pw.BoxDecoration(
+                    color: PdfColor.fromHex('#F5EEDC'),
+                    borderRadius: pw.BorderRadius.circular(15),
+                  ),
+                  child: pw.Row(
+                    children: [
+                      pw.Text(
+                        "Trip Route",
+                        style: pw.TextStyle(
+                          fontSize: 28,
+                          fontWeight: pw.FontWeight.bold,
+                          color: PdfColor.fromHex('#8B4513'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                pw.SizedBox(height: 25),
+                
+                pw.Expanded(
+                  child: pw.Container(
+                    decoration: pw.BoxDecoration(
+                      border: pw.Border.all(
+                        color: PdfColor.fromHex('#8B4513'),
+                        width: 3,
+                      ),
+                      borderRadius: pw.BorderRadius.circular(15),
+                      boxShadow: [
+                        pw.BoxShadow(
+                          color: PdfColors.grey400,
+                          blurRadius: 10,
+                          offset: PdfPoint(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: pw.ClipRRect(
+                      horizontalRadius: 12,
+                      verticalRadius: 12,
+                      child: widget.trip.map_image != null
+                          ? pw.Image(
+                              pw.MemoryImage(widget.trip.map_image!),
+                              fit: pw.BoxFit.cover,
+                            )
+                          : pw.Center(
+                              child: pw.Column(
+                                mainAxisAlignment: pw.MainAxisAlignment.center,
+                                children: [
+                                  pw.Icon(
+                                    pw.IconData(0xe55b),
+                                    size: 80,
+                                    color: PdfColors.grey400,
+                                  ),
+                                  pw.SizedBox(height: 15),
+                                  pw.Text(
+                                    "Map not available",
+                                    style: pw.TextStyle(
+                                      fontSize: 16,
+                                      color: PdfColors.grey600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                    ),
+                  ),
+                ),
+                
+                pw.SizedBox(height: 20),
+                
+                pw.Container(
+                  padding: pw.EdgeInsets.all(20),
+                  decoration: pw.BoxDecoration(
+                    color: PdfColor.fromHex('#F5EEDC'),
+                    borderRadius: pw.BorderRadius.circular(15),
+                    border: pw.Border.all(
+                      color: PdfColor.fromHex('#8B4513'),
+                      width: 2,
+                    ),
+                  ),
+                  child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: [
+                      pw.Row(
+                        children: [
+                          pw.Text(
+                            "Cities Visited (${widget.trip.stops!.length})",
+                            style: pw.TextStyle(
+                              fontSize: 16,
+                              fontWeight: pw.FontWeight.bold,
+                              color: PdfColor.fromHex('#8B4513'),
+                            ),
+                          ),
+                        ],
+                      ),
+                      pw.SizedBox(height: 12),
+                      pw.Wrap(
+                        spacing: 10,
+                        runSpacing: 10,
+                        children: List.generate(widget.trip.stops!.length, (index) {
+                          final stop = widget.trip.stops![index];
+                          return pw.Container(
+                            padding: pw.EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                            decoration: pw.BoxDecoration(
+                              color: PdfColors.white,
+                              borderRadius: pw.BorderRadius.circular(20),
+                              border: pw.Border.all(
+                                color: PdfColor.fromHex('#8B4513'),
+                                width: 1.5,
+                              ),
+                            ),
+                            child: pw.Row(
+                              mainAxisSize: pw.MainAxisSize.min,
+                              children: [
+                                pw.Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: pw.BoxDecoration(
+                                    color: PdfColor.fromHex('#8B4513'),
+                                    shape: pw.BoxShape.circle,
+                                  ),
+                                  child: pw.Center(
+                                    child: pw.Text(
+                                      "${index + 1}",
+                                      style: pw.TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: pw.FontWeight.bold,
+                                        color: PdfColors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                pw.SizedBox(width: 10),
+                                pw.Column(
+                                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                  children: [
+                                    pw.Text(
+                                      stop.location,
+                                      style: pw.TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: pw.FontWeight.bold,
+                                        color: PdfColor.fromHex('#8B4513'),
+                                      ),
+                                    ),
+                                    pw.Text(
+                                      "${stop.start_date} - ${stop.end_date}",
+                                      style: pw.TextStyle(
+                                        fontSize: 9,
+                                        color: PdfColors.grey700,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      );
+
       for (int i = 0; i < widget.trip.stops!.length; i++) {
         final stop = widget.trip.stops![i];
         final photos = stopPhotos[i]!;
@@ -312,11 +471,10 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
             pageFormat: PdfPageFormat.a4,
             build: (pw.Context context) {
               return [
-                // Header da Parada
                 pw.Container(
                   padding: pw.EdgeInsets.all(20),
                   decoration: pw.BoxDecoration(
-                    color: PdfColor.fromHex('#1E88E5'),
+                    color: PdfColor.fromHex('#F5EEDC'),
                     borderRadius: pw.BorderRadius.circular(15),
                   ),
                   child: pw.Row(
@@ -334,7 +492,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                             style: pw.TextStyle(
                               fontSize: 20,
                               fontWeight: pw.FontWeight.bold,
-                              color: PdfColor.fromHex('#1E88E5'),
+                              color: PdfColor.fromHex('#8B4513'),
                             ),
                           ),
                         ),
@@ -349,7 +507,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                               style: pw.TextStyle(
                                 fontSize: 20,
                                 fontWeight: pw.FontWeight.bold,
-                                color: PdfColors.white,
+                                color: PdfColor.fromHex('#8B4513'),
                               ),
                             ),
                             pw.SizedBox(height: 3),
@@ -357,7 +515,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                               "${stop.start_date} - ${stop.end_date}",
                               style: pw.TextStyle(
                                 fontSize: 12,
-                                color: PdfColors.white,
+                                color: PdfColor.fromHex('#8B4513'),
                               ),
                             ),
                           ],
@@ -368,44 +526,12 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                 ),
                 pw.SizedBox(height: 20),
 
-                // Experiências
-                if (stop.stopExperiences != null && stop.stopExperiences!.isNotEmpty)
-                  pw.Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: stop.stopExperiences!.map((exp) {
-                      return pw.Container(
-                        padding: pw.EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                        decoration: pw.BoxDecoration(
-                          color: PdfColor.fromHex('#E3F2FD'),
-                          borderRadius: pw.BorderRadius.circular(15),
-                          border: pw.Border.all(
-                            color: PdfColor.fromHex('#1E88E5'),
-                            width: 1,
-                          ),
-                        ),
-                        child: pw.Text(
-                          exp.experience,
-                          style: pw.TextStyle(
-                            fontSize: 10,
-                            fontWeight: pw.FontWeight.bold,
-                            color: PdfColor.fromHex('#1E88E5'),
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                
-                if (stop.stopExperiences != null && stop.stopExperiences!.isNotEmpty)
-                  pw.SizedBox(height: 20),
-
-                // Descrição
                 pw.Text(
                   "Our Experience",
                   style: pw.TextStyle(
                     fontSize: 18,
                     fontWeight: pw.FontWeight.bold,
-                    color: PdfColor.fromHex('#1E88E5'),
+                    color: PdfColor.fromHex('#8B4513'),
                   ),
                 ),
                 pw.SizedBox(height: 10),
@@ -426,18 +552,16 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                 ),
                 pw.SizedBox(height: 20),
 
-                // Fotos
                 pw.Text(
                   "Photo Gallery",
                   style: pw.TextStyle(
                     fontSize: 18,
                     fontWeight: pw.FontWeight.bold,
-                    color: PdfColor.fromHex('#1E88E5'),
+                    color: PdfColor.fromHex('#8B4513'),
                   ),
                 ),
                 pw.SizedBox(height: 15),
                 
-                // Grid de fotos
                 pw.Wrap(
                   spacing: 15,
                   runSpacing: 15,
@@ -448,7 +572,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                       decoration: pw.BoxDecoration(
                         borderRadius: pw.BorderRadius.circular(12),
                         border: pw.Border.all(
-                          color: PdfColor.fromHex('#1E88E5'),
+                          color: PdfColor.fromHex('#8B4513'),
                           width: 2,
                         ),
                       ),
@@ -469,10 +593,123 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
         );
       }
 
-      // Fecha o loading
+      pdf.addPage(
+        pw.Page(
+          pageFormat: PdfPageFormat.a4,
+          build: (pw.Context context) {
+            return pw.Container(
+              child: pw.Column(
+                mainAxisAlignment: pw.MainAxisAlignment.center,
+                children: [
+                  pw.Spacer(flex: 2),
+                
+                  pw.Container(
+                    padding: pw.EdgeInsets.all(30),
+                    decoration: pw.BoxDecoration(
+                      color: PdfColors.white,
+                      shape: pw.BoxShape.circle,
+                      boxShadow: [
+                        pw.BoxShadow(
+                          color: PdfColors.grey400,
+                          blurRadius: 20,
+                          offset: PdfPoint(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: pw.Text(
+                      "Trip Planner",
+                      style: pw.TextStyle(
+                        fontSize: 45,
+                        fontWeight: pw.FontWeight.bold,
+                        color: PdfColor.fromHex('#8B4513'),
+                      ),
+                    ),
+                  ),
+                  
+                  pw.SizedBox(height: 40),
+                  
+                  pw.Container(
+                    width: 60,
+                    height: 3,
+                    decoration: pw.BoxDecoration(
+                      color: PdfColor.fromHex('#8B4513'),
+                      borderRadius: pw.BorderRadius.circular(2),
+                    ),
+                  ),
+                  
+                  pw.SizedBox(height: 30),
+                  
+                  pw.Container(
+                    padding: pw.EdgeInsets.symmetric(horizontal: 60),
+                    child: pw.Column(
+                      children: [
+                        pw.Text(
+                          '"',
+                          style: pw.TextStyle(
+                            fontSize: 60,
+                            fontWeight: pw.FontWeight.bold,
+                            color: PdfColor.fromHex('#8B4513'),
+                          ),
+                        ),
+                        pw.SizedBox(height: 10),
+                        pw.Text(
+                          "Uma viagem não se mede em milhas, mas em momentos. Cada página deste livreto guarda mais do que paisagens: são sorrisos espontâneos, descobertas inesperadas, conversas que ficaram na alma e silêncios que falaram mais que palavras.",
+                          style: pw.TextStyle(
+                            fontSize: 14,
+                            height: 1.8,
+                            color: PdfColors.grey800,
+                          ),
+                          textAlign: pw.TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  
+                  pw.SizedBox(height: 30),
+                  
+                  pw.Container(
+                    width: 60,
+                    height: 3,
+                    decoration: pw.BoxDecoration(
+                      color: PdfColor.fromHex('#8B4513'),
+                      borderRadius: pw.BorderRadius.circular(2),
+                    ),
+                  ),
+                  
+                  pw.Spacer(flex: 2),
+                  
+                  // Rodapé com info da empresa
+                  pw.Container(
+                    padding: pw.EdgeInsets.all(20),
+                    child: pw.Column(
+                      children: [
+                        pw.Text(
+                          "Vitor Francisco - Trip Planner",
+                          style: pw.TextStyle(
+                            fontSize: 10,
+                            color: PdfColors.grey600,
+                          ),
+                        ),
+                        pw.SizedBox(height: 5),
+                        pw.Text(
+                          "${widget.trip.start_date} - ${widget.trip.end_date}",
+                          style: pw.TextStyle(
+                            fontSize: 9,
+                            color: PdfColors.grey500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      );
+
       Navigator.of(context).pop();
 
-      // Abre preview do PDF
       await Printing.layoutPdf(
         onLayout: (PdfPageFormat format) async => pdf.save(),
       );
@@ -492,7 +729,6 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
         ),
       );
     } catch (e) {
-      // Fecha o loading se estiver aberto
       Navigator.of(context).pop();
       
       ScaffoldMessenger.of(context).showSnackBar(
@@ -541,7 +777,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                 width: double.infinity,
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.colorScheme.tertiary,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
@@ -606,7 +842,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
               Container(
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.colorScheme.tertiary,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
@@ -720,7 +956,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                   child: Container(
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: theme.colorScheme.tertiary,
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
@@ -878,7 +1114,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                               color: Colors.grey[400],
                             ),
                             filled: true,
-                            fillColor: Colors.grey[50],
+                            fillColor: theme.colorScheme.tertiary,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(

@@ -23,7 +23,6 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
       backgroundColor: theme.colorScheme.background,
       body: CustomScrollView(
         slivers: [
-          // App Bar com gradiente
           SliverAppBar(
             expandedHeight: 200,
             pinned: true,
@@ -193,18 +192,9 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                     ],
                   ),
                 ),
-                child: Center(
-                  child: Icon(
-                    Icons.airplane_ticket,
-                    size: 80,
-                    color: Colors.white.withOpacity(0.3),
-                  ),
-                ),
               ),
             ),
           ),
-
-          // Conteúdo
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(20),
@@ -237,20 +227,20 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                     ),
                   SizedBox(height: 20),
 
-                  // Seção de Detalhes
-                  _buildSectionTitle("Trip Details", Icons.info_outline),
+                  // Details Section
+                  _buildSectionTitle(theme, "Trip Details", Icons.info_outline),
                   SizedBox(height: 12),
                   _buildDetailsCard(theme),
                   SizedBox(height: 30),
 
-                  // Seção de Grupo
-                  _buildSectionTitle("Travel Group", Icons.group),
+                  // Group Section
+                  _buildSectionTitle(theme, "Travel Group", Icons.group),
                   SizedBox(height: 12),
                   _buildGroupSection(theme),
                   SizedBox(height: 30),
 
-                  // Seção de Paradas
-                  _buildSectionTitle("Trip Stops", Icons.location_on),
+                  // Stop Section
+                  _buildSectionTitle(theme, "Trip Stops", Icons.location_on),
                   SizedBox(height: 12),
                   _buildStopsSection(theme, stops),
                   SizedBox(height: 20),
@@ -263,19 +253,19 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
     );
   }
 
-  Widget _buildSectionTitle(String title, IconData icon) {
+  Widget _buildSectionTitle(ThemeData theme, String title, IconData icon) {
     return Row(
       children: [
         Icon(
           icon,
-          color: Color(0xFF8B4513),
+          color: theme.colorScheme.primary,
           size: 24,
         ),
         SizedBox(width: 8),
         Text(
           title,
           style: TextStyle(
-            color: Color(0xFF8B4513),
+            color: theme.colorScheme.primary,
             fontFamily: "Times New Roman",
             fontSize: 20,
             fontWeight: FontWeight.w900,
@@ -288,7 +278,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
   Widget _buildDetailsCard(ThemeData theme) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.tertiary,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -303,9 +293,9 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
         child: Column(
           children: [
             _buildDetailRow(Icons.calendar_today, "Start Date", widget.trip.start_date, theme),
-            Divider(height: 24),
+            Divider(height: 24, color: Colors.grey[600]),
             _buildDetailRow(Icons.event, "End Date", widget.trip.end_date, theme),
-            Divider(height: 24),
+            Divider(height: 24, color: Colors.grey[600]),
             _buildDetailRow(Icons.directions_car, "Transport", widget.trip.transport, theme),
           ],
         ),
@@ -353,13 +343,9 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
   }
 
   Widget _buildGroupSection(ThemeData theme) {
-    if (widget.trip.group == null || widget.trip.group!.isEmpty) {
-      return _buildEmptyState("No travelers added", Icons.group_off);
-    }
-
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.tertiary,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -374,7 +360,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
         physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.all(16),
         itemCount: widget.trip.group!.length,
-        separatorBuilder: (context, index) => Divider(height: 16),
+        separatorBuilder: (context, index) => Divider(height: 16, color: Colors.grey[600]),
         itemBuilder: (context, index) {
           final person = widget.trip.group![index];
           return Row(
@@ -433,7 +419,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.tertiary,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(

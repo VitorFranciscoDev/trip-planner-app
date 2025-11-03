@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/person.dart';
@@ -21,6 +23,8 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerAge = TextEditingController();
 
+  final GlobalKey<MapScreenState> _mapScreenKey = GlobalKey<MapScreenState>();
+
   String _dropdownValue = "Car";
 
   Future<void> addTrip() async {
@@ -34,12 +38,21 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
 
     if (!isValid) return;
 
+    Uint8List? mapImage;
+
+    try {
+      mapImage = await _mapScreenKey.currentState?.captureMapScreenshot();
+    } catch (e) {
+      throw Exception('Error in Capture Screenshot: $e');
+    }
+
     Trip trip = Trip(
       user_id: userProvider.user!.id,
       title: _controllerTripTitle.text,
       transport: _dropdownValue,
       start_date: provider.stops.first.start_date,
       end_date: provider.stops.last.end_date,
+      map_image: mapImage,
       concluded: false,
       group: provider.group,
       stops: provider.stops,
@@ -528,7 +541,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                               child: Container(
                                 height: 220,
                                 color: Colors.grey[200],
-                                child: MapScreen(),
+                                child: MapScreen(key: _mapScreenKey),
                               ),
                             ),
                             Positioned(
