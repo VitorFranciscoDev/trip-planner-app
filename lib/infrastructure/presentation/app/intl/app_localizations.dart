@@ -110,6 +110,21 @@ class AppLocalizations {
       'start_date_required': 'Start date is required.',
       'end_date_required': 'End date is required.',
       'end_date': 'End date cannot be before start date.',
+
+      'addStop': 'Add Stop',
+      'saveChanges': 'Save Changes',
+      'deleteStop': 'Delete Stop',
+      'selectDates': 'Select Dates',
+      'selectExperiences': 'Select Experiences',
+      'confirm': 'Confirm',
+      'back': 'Back',
+      'stopLocation': 'Stop Location',
+      'stopDetails': 'Stop Details',
+      'errorAddStop': 'Unable to add stop',
+      'needOneExperience': 'Select at least one experience',
+      'stopAdded': 'Stop successfully added',
+      'stopDeleted': 'Stop deleted',
+      'stopsUpdated': 'Stops updated',
       
       // List Trips
       'yourTrips': 'Your Trips',
@@ -128,22 +143,58 @@ class AppLocalizations {
       'tripConcludedSuccess': 'Trip marked as concluded!',
       'tripConcludedError': 'Error concluding trip',
       'fieldRequired': 'Field required.',
+
+      // Trip Details Screen
+      'editTrip': 'Edit Trip',
+      'editTripQuestion': 'Do you want to edit this trip?',
+      'edit': 'Edit',
+      'tripBooklet': 'Trip Booklet',
+      'createBookletQuestion': 'Would you like to create a booklet for this trip?',
+      'create': 'Create',
+      'concluded': 'Concluded',
+      'tripDetails': 'Trip Details',
+      'travelGroup': 'Travel Group',
+      'tripStops': 'Trip Stops',
+      'startDate': 'Start Date',
+      'endDate': 'End Date',
+      'noTravelersAdded': 'No travelers added',
+      'noStopsAdded': 'No stops added',
+      'yearsOld': 'years old',
+      'immersionCulture': 'Immersion in a Different Culture',
+      'alternativeCuisines': 'Explore Alternative Cuisines',
+      'historicalSites': 'Visit Historical Sites',
+      'localEstablishments': 'Visit Local Establishments',
+      'contactNature': 'Contact With Nature',
+
+      'createBooklet': 'Create Trip Booklet',
+      'tripSummary': 'Trip Summary',
+      'groupMembersPhotos': 'Group Members Photos',
+      'addPhoto': 'Add Photo',
+      'writeExperience': 'Write about your experience at',
+      'generateBooklet': 'Generate PDF Booklet',
+      'errorGeneratingPdf': 'Error generating PDF',
+      'addPhotosAllMembers': 'Please add photos for all group members',
+      'missingData': 'Missing data',
+      'successGeneratingPdf': 'PDF booklet successfully generated!',
+      'creatingPdf': 'Creating booklet...',
+      'noPhotos': 'No photos added',
       
-      // Config Screen
       'preferences': 'Preferences',
-      'dark_mode': 'Dark Mode',
+      'darkMode': 'Dark Mode',
       'language': 'Language',
       'english': 'English',
       'portuguese': 'Portuguese',
       'spanish': 'Spanish',
       'account': 'Account',
-      'your_information': 'Your Information',
-      'update_info': 'Update Info',
-      'delete_account': 'Delete Account',
-      'delete_account_confirm': 'Delete Account?',
-      'delete': 'Delete',
-      'log_out': 'Log Out',
-      'log_out_confirm': 'Log Out?',
+      'yourInformation': 'Your Information',
+      'updateInfo': 'Update Information',
+      'informationUpdated': 'Information updated successfully!',
+      'deleteAccount': 'Delete Account',
+      'deleteAccountConfirm': 'Delete',
+      'deleteAccountQuestion': 'Are you sure you want to delete your account? This action cannot be undone.',
+      'logOut': 'Log Out',
+      'logOutConfirm': 'Confirm',
+      'logOutQuestion': 'Are you sure you want to log out?',
     },
     'pt': {
       // Login Screen
@@ -236,6 +287,21 @@ class AppLocalizations {
       'start_date_required': 'A data de início é obrigatória.',
       'end_date_required': 'A data de término é obrigatória.',
       'end_date': 'A data de término não pode ser anterior à data de início.',
+
+      'addStop': 'Adicionar Parada',
+      'saveChanges': 'Salvar Alterações',
+      'deleteStop': 'Excluir Parada',
+      'selectDates': 'Selecionar Datas',
+      'selectExperiences': 'Selecionar Experiências',
+      'confirm': 'Confirmar',
+      'back': 'Voltar',
+      'stopLocation': 'Local da Parada',
+      'stopDetails': 'Detalhes da Parada',
+      'errorAddStop': 'Não foi possível adicionar a parada',
+      'needOneExperience': 'Selecione pelo menos uma experiência',
+      'stopAdded': 'Parada adicionada com sucesso',
+      'stopDeleted': 'Parada excluída',
+      'stopsUpdated': 'Paradas atualizadas',
       
       // List Trips
       'yourTrips': 'Suas Viagens',
@@ -254,22 +320,59 @@ class AppLocalizations {
       'tripConcludedSuccess': 'Viagem marcada como concluída!',
       'tripConcludedError': 'Erro ao concluir viagem',
       'fieldRequired': 'Campo obrigatório.',
+
+      // Trip Details Screen
+      'editTrip': 'Editar Viagem',
+      'editTripQuestion': 'Deseja editar esta viagem?',
+      'edit': 'Editar',
+      'tripBooklet': 'Caderneta da Viagem',
+      'createBookletQuestion': 'Deseja criar uma caderneta para esta viagem?',
+      'create': 'Criar',
+      'concluded': 'Concluída',
+      'tripDetails': 'Detalhes da Viagem',
+      'travelGroup': 'Grupo de Viagem',
+      'tripStops': 'Paradas da Viagem',
+      'startDate': 'Data de Início',
+      'endDate': 'Data de Término',
+      'noTravelersAdded': 'Nenhum viajante adicionado',
+      'noStopsAdded': 'Nenhuma parada adicionada',
+      'yearsOld': 'anos',
+      'immersionCulture': 'Imersão em Outra Cultura',
+      'alternativeCuisines': 'Explorar Culinárias Alternativas',
+      'historicalSites': 'Visitar Locais Históricos',
+      'localEstablishments': 'Visitar Estabelecimentos Locais',
+      'contactNature': 'Contato com a Natureza',
+
+      'createBooklet': 'Criar Caderneta da Viagem',
+      'tripSummary': 'Resumo da Viagem',
+      'groupMembersPhotos': 'Fotos dos Integrantes',
+      'addPhoto': 'Adicionar Foto',
+      'writeExperience': 'Escreva sobre sua experiência em',
+      'generateBooklet': 'Gerar Caderneta em PDF',
+      'errorGeneratingPdf': 'Erro ao gerar o PDF',
+      'addPhotosAllMembers': 'Adicione fotos para todos os integrantes',
+      'missingData': 'Dados faltando',
+      'successGeneratingPdf': 'Caderneta gerada com sucesso!',
+      'creatingPdf': 'Criando caderneta...',
+      'noPhotos': 'Nenhuma foto adicionada',
       
       // Config Screen
       'preferences': 'Preferências',
-      'dark_mode': 'Modo Escuro',
+      'darkMode': 'Modo Escuro',
       'language': 'Idioma',
       'english': 'Inglês',
       'portuguese': 'Português',
       'spanish': 'Espanhol',
       'account': 'Conta',
-      'your_information': 'Suas Informações',
-      'update_info': 'Atualizar Info',
-      'delete_account': 'Deletar Conta',
-      'delete_account_confirm': 'Deletar Conta?',
-      'delete': 'Deletar',
-      'log_out': 'Sair',
-      'log_out_confirm': 'Sair?',
+      'yourInformation': 'Suas Informações',
+      'updateInfo': 'Atualizar Informações',
+      'informationUpdated': 'Informações atualizadas com sucesso!',
+      'deleteAccount': 'Excluir Conta',
+      'deleteAccountConfirm': 'Excluir',
+      'deleteAccountQuestion': 'Tem certeza de que deseja excluir sua conta? Esta ação não pode ser desfeita.',
+      'logOut': 'Sair',
+      'logOutConfirm': 'Confirmar',
+      'logOutQuestion': 'Tem certeza de que deseja sair?',
     },
     'es': {
       // Login Screen
@@ -363,6 +466,21 @@ class AppLocalizations {
       'start_date_required': 'La fecha de inicio es obligatoria.',
       'end_date_required': 'La fecha de finalización es obligatoria.',
       'end_date': 'La fecha de finalización no puede ser anterior a la fecha de inicio.',
+
+      'addStop': 'Agregar Parada',
+      'saveChanges': 'Guardar Cambios',
+      'deleteStop': 'Eliminar Parada',
+      'selectDates': 'Seleccionar Fechas',
+      'selectExperiences': 'Seleccionar Experiencias',
+      'confirm': 'Confirmar',
+      'back': 'Volver',
+      'stopLocation': 'Ubicación de la Parada',
+      'stopDetails': 'Detalles de la Parada',
+      'errorAddStop': 'No se pudo agregar la parada',
+      'needOneExperience': 'Selecciona al menos una experiencia',
+      'stopAdded': 'Parada agregada correctamente',
+      'stopDeleted': 'Parada eliminada',
+      'stopsUpdated': 'Paradas actualizadas',
       
       // List Trips
       'yourTrips': 'Tus Viajes',
@@ -381,22 +499,58 @@ class AppLocalizations {
       'tripConcludedSuccess': '¡Viaje marcado como concluido!',
       'tripConcludedError': 'Error al concluir el viaje',
       'fieldRequired': 'Campo obligatorio.',
+
+      // Trip Details Screen
+      'editTrip': 'Editar Viaje',
+      'editTripQuestion': '¿Deseas editar este viaje?',
+      'edit': 'Editar',
+      'tripBooklet': 'Cuadernillo del Viaje',
+      'createBookletQuestion': '¿Te gustaría crear un cuadernillo para este viaje?',
+      'create': 'Crear',
+      'concluded': 'Concluido',
+      'tripDetails': 'Detalles del Viaje',
+      'travelGroup': 'Grupo de Viaje',
+      'tripStops': 'Paradas del Viaje',
+      'startDate': 'Fecha de Inicio',
+      'endDate': 'Fecha de Finalización',
+      'noTravelersAdded': 'No se agregaron viajeros',
+      'noStopsAdded': 'No se agregaron paradas',
+      'yearsOld': 'años',
+      'immersionCulture': 'Inmersión en Otra Cultura',
+      'alternativeCuisines': 'Explorar Cocinas Alternativas',
+      'historicalSites': 'Visitar Sitios Históricos',
+      'localEstablishments': 'Visitar Establecimientos Locales',
+      'contactNature': 'Contacto con la Naturaleza',
+
+      'createBooklet': 'Crear Libreta del Viaje',
+      'tripSummary': 'Resumen del Viaje',
+      'groupMembersPhotos': 'Fotos de los Integrantes',
+      'addPhoto': 'Agregar Foto',
+      'writeExperience': 'Escribe sobre tu experiencia en',
+      'generateBooklet': 'Generar Libreta en PDF',
+      'errorGeneratingPdf': 'Error al generar el PDF',
+      'addPhotosAllMembers': 'Agrega fotos para todos los integrantes',
+      'missingData': 'Faltan datos',
+      'successGeneratingPdf': '¡Libreta generada con éxito!',
+      'creatingPdf': 'Creando libreta...',
+      'noPhotos': 'No se agregaron fotos',
       
-      // Config Screen
       'preferences': 'Preferencias',
-      'dark_mode': 'Modo Oscuro',
+      'darkMode': 'Modo Oscuro',
       'language': 'Idioma',
       'english': 'Inglés',
       'portuguese': 'Portugués',
       'spanish': 'Español',
       'account': 'Cuenta',
-      'your_information': 'Tu Información',
-      'update_info': 'Actualizar Info',
-      'delete_account': 'Eliminar Cuenta',
-      'delete_account_confirm': '¿Eliminar Cuenta?',
-      'delete': 'Eliminar',
-      'log_out': 'Cerrar Sesión',
-      'log_out_confirm': '¿Cerrar Sesión?',
+      'yourInformation': 'Tu Información',
+      'updateInfo': 'Actualizar Información',
+      'informationUpdated': '¡Información actualizada con éxito!',
+      'deleteAccount': 'Eliminar Cuenta',
+      'deleteAccountConfirm': 'Eliminar',
+      'deleteAccountQuestion': '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.',
+      'logOut': 'Cerrar Sesión',
+      'logOutConfirm': 'Confirmar',
+      'logOutQuestion': '¿Estás seguro de que deseas cerrar sesión?',
     },
   };
 
@@ -505,7 +659,6 @@ class AppLocalizations {
   String get unexpectedError => translate('unexpected_error');
   
   // Getters for List Trips Screen
-  // Getters usados na tela de viagens
   String get yourTrips => translate('yourTrips');
   String get activeTrips => translate('activeTrips');
   String get concludedTrips => translate('concludedTrips');
@@ -523,6 +676,39 @@ class AppLocalizations {
   String get tripConcludedSuccess => translate('tripConcludedSuccess');
   String get tripConcludedError => translate('tripConcludedError');
   
+  String get editTrip => translate('editTrip');
+  String get editTripQuestion => translate('editTripQuestion');
+  String get edit => translate('edit');
+  String get tripBooklet => translate('tripBooklet');
+  String get createBookletQuestion => translate('createBookletQuestion');
+  String get create => translate('create');
+  String get concluded => translate('concluded');
+  String get tripDetails => translate('tripDetails');
+  String get travelGroup => translate('travelGroup');
+  String get tripStops => translate('tripStops');
+  String get startDate => translate('startDate');
+  String get noTravelersAdded => translate('noTravelersAdded');
+  String get noStopsAdded => translate('noStopsAdded');
+  String get yearsOld => translate('yearsOld');
+  String get immersionCulture => translate('immersionCulture');
+  String get alternativeCuisines => translate('alternativeCuisines');
+  String get historicalSites => translate('historicalSites');
+  String get localEstablishments => translate('localEstablishments');
+  String get contactNature => translate('contactNature');
+
+  String get createBooklet => translate('createBooklet');
+  String get tripSummary => translate('tripSummary');
+  String get groupMembersPhotos => translate('groupMembersPhotos');
+  String get addPhoto => translate('addPhoto');
+  String get writeExperience => translate('writeExperience');
+  String get generateBooklet => translate('generateBooklet');
+  String get errorGeneratingPdf => translate('errorGeneratingPdf');
+  String get addPhotosAllMembers => translate('addPhotosAllMembers');
+  String get missingData => translate('missingData');
+  String get successGeneratingPdf => translate('successGeneratingPdf');
+  String get creatingPdf => translate('creatingPdf');
+  String get noPhotos => translate('noPhotos');
+
   // Getters for Config Screen
   String get preferences => translate('preferences');
   String get darkMode => translate('dark_mode');
