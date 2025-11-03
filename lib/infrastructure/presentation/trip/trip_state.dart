@@ -170,8 +170,8 @@ class TripProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deletePerson(int index) {
-    _group.removeAt(index);
+  void deletePerson(Person person) {
+    _group.remove(person);
     notifyListeners();
   }
 

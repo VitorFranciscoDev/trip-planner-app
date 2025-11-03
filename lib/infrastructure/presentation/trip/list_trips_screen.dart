@@ -280,7 +280,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                 width: double.infinity,
                 padding: EdgeInsets.all(40),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.colorScheme.tertiary,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
@@ -506,7 +506,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                 width: double.infinity,
                 padding: EdgeInsets.all(40),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.colorScheme.tertiary,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(

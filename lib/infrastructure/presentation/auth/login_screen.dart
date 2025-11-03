@@ -27,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> doLogin() async {
+    final intl = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final provider = context.read<AuthProvider>();
     final currentContext = context;
@@ -35,8 +36,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (!isValid) return;
 
+    showDialog(
+      context: currentContext,
+      barrierDismissible: false,
+      builder: (_) => Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
     // Error message
     final result = await provider.doLogin(_controllerEmail.text, _controllerPassword.text, currentContext);
+
+    Navigator.of(currentContext).pop();
 
     if (result == null) {
       // Successful Feedback Alert
@@ -59,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  "Login Successful!",
+                  intl.loginSuccessful,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
@@ -70,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
           content: Text(
-            "Welcome back, ${provider.user!.name}!",
+            intl.welcomeUser(context.read<AuthProvider>().user!.name),
             style: TextStyle(fontSize: 14),
           ),
           actions: [
@@ -88,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               child: Text(
-                "Enter",
+                intl.ok,
                 style: TextStyle(fontWeight: FontWeight.w700),
               ),
             ),
@@ -116,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  "Error in Login!",
+                  intl.loginFailed,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
@@ -142,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               child: Text(
-                "Try Again",
+                intl.tryAgain,
                 style: TextStyle(fontWeight: FontWeight.w700),
               ),
             ),
@@ -154,6 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final intl = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
     final provider = context.watch<AuthProvider>();
@@ -174,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Text Fields Container
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: theme.colorScheme.tertiary,
                     borderRadius: BorderRadius.circular(25),
                     boxShadow: [
                       BoxShadow(
@@ -199,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          "Sign in to continue your journey",
+                          intl.signInSubtitle,
                           style: TextStyle(
                             fontSize: 13,
                             color: Colors.grey[600],
@@ -211,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         // Email Field
                         TextFieldComponent(
                           controller: _controllerEmail,
-                          label: "Email",
+                          label: intl.email,
                           error: provider.errorEmail,
                         ),
                         const SizedBox(height: 10),
@@ -219,7 +231,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         // Password Field
                         TextFieldComponent(
                           controller: _controllerPassword,
-                          label: "Password",
+                          label: intl.password,
                           error: provider.errorPassword,
                           isPassword: true,
                         ),
@@ -239,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 16),
                               child: Text(
-                                "or",
+                                intl.or,
                                 style: TextStyle(
                                   color: Colors.grey[500],
                                   fontSize: 12,
@@ -257,7 +269,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Don't have an account? ",
+                              intl.noAccountQuestion,
                               style: TextStyle(
                                 color: Colors.grey[600],
                                 fontSize: 13,
@@ -270,7 +282,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 provider.clearErrors();
                               },
                               child: Text(
-                                "Sign Up",
+                                intl.signUpLink,
                                 style: TextStyle(
                                   color: theme.colorScheme.secondary,
                                   fontSize: 13,

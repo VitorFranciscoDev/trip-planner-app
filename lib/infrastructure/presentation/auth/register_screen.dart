@@ -28,7 +28,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  void addUser() async {
+  Future<void> addUser() async {
+    final intl = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final provider = context.read<AuthProvider>();
     final currentContext = context;
@@ -48,8 +49,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
       password: _controllerPassword.text,
     );
 
+    showDialog(
+      context: currentContext,
+      barrierDismissible: false,
+      builder: (_) => Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
     // Error message
     final result = await provider.addUser(user, currentContext);
+
+    Navigator.of(currentContext).pop();
 
     if (result == null) {
       // Successful Feedback Alert
@@ -72,7 +83,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  "Register Successful!",
+                  intl.registerSuccessful,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
@@ -83,7 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ],
           ),
           content: Text(
-            "You can now login with your credentials.",
+            intl.canLoginNow,
             style: TextStyle(fontSize: 14),
           ),
           actions: [
@@ -104,7 +115,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               child: Text(
-                "Go To Login",
+                intl.goToLogin,
                 style: TextStyle(fontWeight: FontWeight.w700),
               ),
             ),
@@ -132,7 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  "Error in Register",
+                  intl.registerError,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
@@ -158,7 +169,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               child: Text(
-                "Ok",
+                intl.ok,
                 style: TextStyle(fontWeight: FontWeight.w700),
               ),
             ),
@@ -171,7 +182,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+    final intl = AppLocalizations.of(context);
     final provider = context.watch<AuthProvider>();
 
     return Scaffold(
@@ -202,7 +213,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(height: 40),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: theme.colorScheme.tertiary,
                     borderRadius: BorderRadius.circular(25),
                     boxShadow: [
                       BoxShadow(
@@ -217,7 +228,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Column(
                       children: [
                         Text(
-                          l10n.createAccount,
+                          intl.createAccount,
                           style: TextStyle(
                             fontSize: 20,
                             color: theme.colorScheme.primary,
@@ -239,7 +250,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         // Name Field
                         TextFieldComponent(
                           controller: _controllerName,
-                          label: "Name",
+                          label: intl.name,
                           error: provider.errorName,
                         ),
                         const SizedBox(height: 10),
@@ -247,7 +258,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         // Email Field
                         TextFieldComponent(
                           controller: _controllerEmail,
-                          label: "Email",
+                          label: intl.email,
                           error: provider.errorEmail,
                         ),
                         const SizedBox(height: 10),
@@ -255,7 +266,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         // Password Field
                         TextFieldComponent(
                           controller: _controllerPassword,
-                          label: "Password",
+                          label: intl.password,
                           error: provider.errorPassword,
                           isPassword: true,
                         ),
@@ -264,7 +275,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         // Register Button
                         ButtonComponent(
                           function: addUser,
-                          message: l10n.signUp,
+                          message: intl.signUp,
                         ),
                         const SizedBox(height: 20),
 
@@ -275,7 +286,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 16),
                               child: Text(
-                                "or",
+                                intl.or,
                                 style: TextStyle(
                                   color: Colors.grey[500],
                                   fontSize: 12,
@@ -293,7 +304,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Already have an account? ",
+                              intl.haveAccountQuestion,
                               style: TextStyle(
                                 color: Colors.grey[600],
                                 fontSize: 13,
@@ -306,7 +317,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 provider.clearErrors();
                               },
                               child: Text(
-                                "Sign In",
+                                intl.signInLink,
                                 style: TextStyle(
                                   color: theme.colorScheme.secondary,
                                   fontSize: 13,

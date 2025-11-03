@@ -17,15 +17,12 @@ class TripRegisterScreen extends StatefulWidget {
 }
 
 class _TripRegisterScreenState extends State<TripRegisterScreen> {
-  // Controllers
   final TextEditingController _controllerTripTitle = TextEditingController();
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerAge = TextEditingController();
 
-  // DropDown Value
   String _dropdownValue = "Car";
 
-  // Add Trip
   Future<void> addTrip() async {
     final theme = Theme.of(context);
     final provider = context.read<TripProvider>();
@@ -47,7 +44,17 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
       stops: provider.stops,
     );
 
+    showDialog(
+      context: currentContext,
+      barrierDismissible: false,
+      builder: (_) => Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
     final result = await provider.addTrip(trip, currentContext);
+
+    Navigator.of(currentContext).pop();
 
     if (result == null) {
       // Successful Feedback Alert
@@ -225,7 +232,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
             Container(
               padding: const EdgeInsets.all(25),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: theme.colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
@@ -347,7 +354,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
             Container(
               padding: const EdgeInsets.all(25),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: theme.colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
@@ -419,7 +426,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                             child: Text(
                               person.name[0].toUpperCase(),
                               style: TextStyle(
-                                color: Colors.white,
+                                color: theme.colorScheme.tertiary,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w700,
                               ),
@@ -431,7 +438,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
                           ),
                           deleteIcon: Icon(Icons.close, size: 18),
                           onDeleted: () {
-                            provider.deletePerson(person.id!);
+                            provider.deletePerson(person);
                           },
                           backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
                           side: BorderSide(
@@ -497,7 +504,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
             // Map Card
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: theme.colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(

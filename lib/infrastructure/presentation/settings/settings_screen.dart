@@ -82,7 +82,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: theme.colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
@@ -141,7 +141,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 curve: Curves.easeInOut,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.colorScheme.tertiary,
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
@@ -188,8 +188,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ],
                     ),
                     if (showLanguage) ...[
-                      const SizedBox(height: 15),
-                      Divider(color: Colors.grey[200]),
                       const SizedBox(height: 10),
                       _buildLanguageOption("🇺🇸", intl.english, () {
                         setState(() {
@@ -254,7 +252,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 curve: Curves.easeInOut,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.colorScheme.tertiary,
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
@@ -448,7 +446,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.colorScheme.tertiary,
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(color: Colors.red.withOpacity(0.3), width: 2),
                   boxShadow: [
@@ -571,7 +569,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.colorScheme.tertiary,
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
                     color: theme.colorScheme.primary.withOpacity(0.3),

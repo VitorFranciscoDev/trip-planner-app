@@ -19,28 +19,22 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  // Controller of Map
   final MapController _mapController = MapController();
   
-  // Controller for Dates Text Fields
   final TextEditingController _startDateController = TextEditingController();
   final TextEditingController _endDateController = TextEditingController();
 
-  // User's Current Location
   LatLng? _currentLocation;
 
-  // Map's Markers and Points
-  List<Marker> _markers = [];
+  final List<Marker> _markers = [];
   List<LatLng> _points = [];
 
-  // Checkbox boolean variables
   bool _differentCulture = false;
   bool _alternativeCuisine = false;
   bool _historicalSites = false;
   bool _localEstablishments = false;
   bool _contactWithNature = false;
 
-  // Request User's Permission and Get His Current Position
   Future<void> _requestPermissionAndLocate() async {
     final status = await Permission.location.request();
     if (!status.isGranted) return;
@@ -51,7 +45,6 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  // Date Picker
   Future<void> _selectDate(TextEditingController controller) async {
     final provider = context.read<TripProvider>();
     
@@ -316,6 +309,7 @@ class _MapScreenState extends State<MapScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
+                final currentContext = context;
                 final isValid = provider.validateStopDates(_startDateController.text, _endDateController.text, context);
 
                 if (!isValid) return;
@@ -351,7 +345,17 @@ class _MapScreenState extends State<MapScreen> {
                   stopExperiences: _experiences,
                 );
 
+                showDialog(
+                  context: currentContext,
+                  barrierDismissible: false,
+                  builder: (_) => Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+
                 provider.updateStop(index, updatedStop);
+
+                Navigator.of(context).pop();
 
                 Navigator.of(context).pop();
               },
@@ -373,9 +377,10 @@ class _MapScreenState extends State<MapScreen> {
   Future<void> _onDeleteStop(int index) async {
     final provider = context.read<TripProvider>();
     final theme = Theme.of(context);
+    final currentContext = context;
 
     showDialog(
-      context: context,
+      context: currentContext,
       builder: (dialogContext) => AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -415,6 +420,14 @@ class _MapScreenState extends State<MapScreen> {
                 _points.removeAt(index);
               });
 
+              showDialog(
+                context: currentContext,
+                barrierDismissible: false,
+                builder: (_) => Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+
               if (_points.isNotEmpty) {
                 final routedPoints = await provider.getRoute(_points);
                 setState(() {
@@ -423,10 +436,12 @@ class _MapScreenState extends State<MapScreen> {
               }
 
               Navigator.of(context).pop();
+
+              Navigator.of(context).pop();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
+              foregroundColor: theme.colorScheme.tertiary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -441,6 +456,7 @@ class _MapScreenState extends State<MapScreen> {
   Future<void> _onMapTap(LatLng latlng) async {
     final provider = context.read<TripProvider>();
     final theme = Theme.of(context);
+    final currentContext = context;
 
     final address = await provider.getAddressFromCoordinates(latlng);
     final locationName = address ?? "Unknown Place";
@@ -455,7 +471,7 @@ class _MapScreenState extends State<MapScreen> {
     _endDateController.clear();
 
     showDialog(
-      context: context,
+      context: currentContext,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
           shape: RoundedRectangleBorder(
@@ -688,13 +704,23 @@ class _MapScreenState extends State<MapScreen> {
                   _points.add(latlng);
                 });
 
+                showDialog(
+                  context: currentContext,
+                  barrierDismissible: false,
+                  builder: (_) => Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+
                 final routedPoints = await provider.getRoute(_points);
 
                 setState(() {
                   _points = routedPoints;
                 });
 
-                Navigator.of(context).pop();
+                Navigator.of(currentContext).pop();
+
+                Navigator.of(currentContext).pop();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: theme.colorScheme.primary,
@@ -738,11 +764,9 @@ class _MapScreenState extends State<MapScreen> {
       }
 
       provider.getRoute(_points).then((routedPoints) {
-        if (mounted) {
-          setState(() {
-            _points = routedPoints;
-          });
-        }
+        setState(() {
+          _points = routedPoints;
+        });
       });
     }
   }

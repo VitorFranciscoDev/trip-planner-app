@@ -168,7 +168,7 @@ class AuthProvider with ChangeNotifier {
         return null;
       }
       
-      return intl.noAccount;
+      return intl.emailPasswordIncorrect;
     } catch (e) {
       return intl.unexpectedError;
     } finally {

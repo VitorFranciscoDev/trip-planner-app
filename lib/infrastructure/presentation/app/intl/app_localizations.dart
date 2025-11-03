@@ -21,10 +21,14 @@ class AppLocalizations {
     'en': {
       // Login Screen
       'welcome_back': 'Welcome Back!',
+      'sign_in_subtitle': 'Sign in to continue your journey',
       'email': 'Email',
       'password': 'Password',
       'sign_in': 'Sign In',
       'no_account': "Doesn't have an account? Click here to create one!",
+      'no_account_question': "Don't have an account? ",
+      'sign_up_link': 'Sign Up',
+      'or': 'or',
       'login_successful': 'Login Successful',
       'welcome_user': 'Welcome, {0}!',
       'continue': 'Continue',
@@ -34,15 +38,21 @@ class AppLocalizations {
       
       // Register Screen
       'create_account': 'Create Your Account',
+      'sign_up_subtitle': 'Join us and start planning your trips',
       'name': 'Name',
       'sign_up': 'Sign Up',
       'have_account': 'Already have an account? Click here to login!',
+      'have_account_question': 'Already have an account? ',
+      'sign_in_link': 'Sign In',
       'register_successful': 'Register Successful',
       'can_login_now': 'You can now login with your credentials',
       'go_to_login': 'Go to Login',
       
       // Validation Errors
       'field_required': 'This field is required',
+      'name_required': 'Name cannot be blank',
+      'email_required': 'Email cannot be blank',
+      'password_required': 'Password cannot be blank',
       'invalid_email': 'Invalid email format',
       'password_too_short': 'Password must be at least 8 characters',
       'email_already_registered': "There's already a register with this email",
@@ -87,7 +97,6 @@ class AppLocalizations {
       'start_after_end': 'Start Date cannot be after End Date',
       'group_empty': 'Group cannot be empty',
       'stops_empty': 'Stops cannot be empty',
-      'name_required': 'Name cannot be blank',
       'age_required': 'Age cannot be blank',
       'age_invalid': 'Age must be a valid number',
       'trip_create_failed': 'Failed to create trip',
@@ -119,10 +128,14 @@ class AppLocalizations {
     'pt': {
       // Login Screen
       'welcome_back': 'Bem-vindo de Volta!',
+      'sign_in_subtitle': 'Entre para continuar sua jornada',
       'email': 'E-mail',
       'password': 'Senha',
       'sign_in': 'Entrar',
       'no_account': 'Não tem uma conta? Clique aqui para criar uma!',
+      'no_account_question': 'Não tem uma conta? ',
+      'sign_up_link': 'Cadastre-se',
+      'or': 'ou',
       'login_successful': 'Login Realizado',
       'welcome_user': 'Bem-vindo, {0}!',
       'continue': 'Continuar',
@@ -132,15 +145,21 @@ class AppLocalizations {
       
       // Register Screen
       'create_account': 'Crie Sua Conta',
+      'sign_up_subtitle': 'Junte-se a nós e comece a planejar suas viagens',
       'name': 'Nome',
       'sign_up': 'Cadastrar',
       'have_account': 'Já tem uma conta? Clique aqui para entrar!',
+      'have_account_question': 'Já tem uma conta? ',
+      'sign_in_link': 'Entre',
       'register_successful': 'Cadastro Realizado',
       'can_login_now': 'Agora você pode fazer login com suas credenciais',
       'go_to_login': 'Ir para Login',
       
       // Validation Errors
       'field_required': 'Este campo é obrigatório',
+      'name_required': 'Nome não pode estar em branco',
+      'email_required': 'E-mail não pode estar em branco',
+      'password_required': 'Senha não pode estar em branco',
       'invalid_email': 'Formato de e-mail inválido',
       'password_too_short': 'A senha deve ter pelo menos 8 caracteres',
       'email_already_registered': 'Já existe um cadastro com este e-mail',
@@ -185,7 +204,6 @@ class AppLocalizations {
       'start_after_end': 'Data de início não pode ser após a data de término',
       'group_empty': 'Grupo não pode estar vazio',
       'stops_empty': 'Paradas não podem estar vazias',
-      'name_required': 'Nome não pode estar em branco',
       'age_required': 'Idade não pode estar em branco',
       'age_invalid': 'Idade deve ser um número válido',
       'trip_create_failed': 'Falha ao criar viagem',
@@ -217,10 +235,14 @@ class AppLocalizations {
     'es': {
       // Login Screen
       'welcome_back': '¡Bienvenido de Nuevo!',
+      'sign_in_subtitle': 'Inicia sesión para continuar tu viaje',
       'email': 'Correo Electrónico',
       'password': 'Contraseña',
       'sign_in': 'Iniciar Sesión',
       'no_account': '¿No tienes una cuenta? ¡Haz clic aquí para crear una!',
+      'no_account_question': '¿No tienes una cuenta? ',
+      'sign_up_link': 'Regístrate',
+      'or': 'o',
       'login_successful': 'Inicio de Sesión Exitoso',
       'welcome_user': '¡Bienvenido, {0}!',
       'continue': 'Continuar',
@@ -230,15 +252,21 @@ class AppLocalizations {
       
       // Register Screen
       'create_account': 'Crea Tu Cuenta',
+      'sign_up_subtitle': 'Únete a nosotros y comienza a planificar tus viajes',
       'name': 'Nombre',
       'sign_up': 'Registrarse',
       'have_account': '¿Ya tienes una cuenta? ¡Haz clic aquí para iniciar sesión!',
+      'have_account_question': '¿Ya tienes una cuenta? ',
+      'sign_in_link': 'Inicia Sesión',
       'register_successful': 'Registro Exitoso',
       'can_login_now': 'Ahora puedes iniciar sesión con tus credenciales',
       'go_to_login': 'Ir al Inicio de Sesión',
       
       // Validation Errors
       'field_required': 'Este campo es obligatorio',
+      'name_required': 'El nombre no puede estar en blanco',
+      'email_required': 'El correo no puede estar en blanco',
+      'password_required': 'La contraseña no puede estar en blanco',
       'invalid_email': 'Formato de correo inválido',
       'password_too_short': 'La contraseña debe tener al menos 8 caracteres',
       'email_already_registered': 'Ya existe un registro con este correo',
@@ -283,7 +311,6 @@ class AppLocalizations {
       'start_after_end': 'La fecha de inicio no puede ser posterior a la fecha de fin',
       'group_empty': 'El grupo no puede estar vacío',
       'stops_empty': 'Las paradas no pueden estar vacías',
-      'name_required': 'El nombre no puede estar en blanco',
       'age_required': 'La edad no puede estar en blanco',
       'age_invalid': 'La edad debe ser un número válido',
       'trip_create_failed': 'Error al crear el viaje',
@@ -328,10 +355,14 @@ class AppLocalizations {
 
   // Getters for Login Screen
   String get welcomeBack => translate('welcome_back');
+  String get signInSubtitle => translate('sign_in_subtitle');
   String get email => translate('email');
   String get password => translate('password');
   String get signIn => translate('sign_in');
   String get noAccount => translate('no_account');
+  String get noAccountQuestion => translate('no_account_question');
+  String get signUpLink => translate('sign_up_link');
+  String get or => translate('or');
   String get loginSuccessful => translate('login_successful');
   String welcomeUser(String name) => translate('welcome_user', [name]);
   String get continueText => translate('continue');
@@ -341,15 +372,21 @@ class AppLocalizations {
   
   // Getters for Register Screen
   String get createAccount => translate('create_account');
+  String get signUpSubtitle => translate('sign_up_subtitle');
   String get name => translate('name');
   String get signUp => translate('sign_up');
   String get haveAccount => translate('have_account');
+  String get haveAccountQuestion => translate('have_account_question');
+  String get signInLink => translate('sign_in_link');
   String get registerSuccessful => translate('register_successful');
   String get canLoginNow => translate('can_login_now');
   String get goToLogin => translate('go_to_login');
   
   // Getters for Validation Errors
   String get fieldRequired => translate('field_required');
+  String get nameRequired => translate('name_required');
+  String get emailRequired => translate('email_required');
+  String get passwordRequired => translate('password_required');
   String get invalidEmail => translate('invalid_email');
   String get passwordTooShort => translate('password_too_short');
   String get emailAlreadyRegistered => translate('email_already_registered');
@@ -394,7 +431,6 @@ class AppLocalizations {
   String get startAfterEnd => translate('start_after_end');
   String get groupEmpty => translate('group_empty');
   String get stopsEmpty => translate('stops_empty');
-  String get nameRequired => translate('name_required');
   String get ageRequired => translate('age_required');
   String get ageInvalid => translate('age_invalid');
   String get tripCreateFailed => translate('trip_create_failed');
