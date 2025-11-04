@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/trip.dart';
-import 'package:trip_planner/infrastructure/presentation/bottom-navigator/bottom_navigator_state.dart';
-import 'package:trip_planner/infrastructure/presentation/trip/pdf_register_screen.dart';
+import 'package:trip_planner/infrastructure/presentation/trip/trip_edit_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 
 class TripDetailsScreen extends StatefulWidget {
@@ -14,6 +13,100 @@ class TripDetailsScreen extends StatefulWidget {
 }
 
 class _TripDetailsScreenState extends State<TripDetailsScreen> {
+  void _showDeleteConfirmation(BuildContext context, ThemeData theme) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.red.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(Icons.warning, color: Colors.red, size: 24),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                "Delete Trip",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.red,
+                ),
+              ),
+            ),
+          ],
+        ),
+        content: Text(
+          "Are you sure you want to delete \"${widget.trip.title}\"? This action cannot be undone.",
+          style: TextStyle(fontSize: 14),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(
+              "Cancel",
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: theme.colorScheme.onSurface,
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              Navigator.of(dialogContext).pop();
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => Center(child: CircularProgressIndicator()),
+              );
+
+              final provider = context.read<TripProvider>();
+              await provider.deleteTrip(widget.trip.id!, context);
+
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+
+              // Mostra sucesso
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Row(
+                    children: [
+                      Icon(Icons.check_circle, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text("Trip deleted successfully!"),
+                    ],
+                  ),
+                  backgroundColor: Colors.green,
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: Text(
+              "Delete",
+              style: TextStyle(fontWeight: FontWeight.w700),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -34,7 +127,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
             actions: [
               if (!widget.trip.concluded)
                 IconButton(
-                  icon: Icon(Icons.edit, color: Colors.white),
+                  icon: Icon(Icons.more_vert, color: Colors.white),
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -44,10 +137,10 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                         ),
                         title: Row(
                           children: [
-                            Icon(Icons.edit, color: theme.colorScheme.primary),
+                            Icon(Icons.edit_note, color: theme.colorScheme.primary),
                             const SizedBox(width: 8),
                             Text(
-                              "Edit Trip",
+                              "Manage Trip",
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
@@ -57,7 +150,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                           ],
                         ),
                         content: Text(
-                          "Do you want to edit this trip?",
+                          "What would you like to do with this trip?",
                           style: TextStyle(fontSize: 14),
                         ),
                         actions: [
@@ -71,78 +164,29 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                               ),
                             ),
                           ),
-                          ElevatedButton(
+                          
+                          // DELETE
+                          TextButton(
                             onPressed: () {
-                              context.read<TripProvider>().trip = widget.trip;
-                              context.read<TripProvider>().stops = widget.trip.stops ?? [];
-                              context.read<TripProvider>().group = widget.trip.group ?? [];
                               Navigator.of(dialogContext).pop();
-                              Navigator.pop(context);
-                              context.read<BottomNavigatorProvider>().index = 1;
+                              _showDeleteConfirmation(context, theme);
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: theme.colorScheme.primary,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.red,
                             ),
                             child: Text(
-                              "Edit",
+                              "Delete",
                               style: TextStyle(fontWeight: FontWeight.w700),
                             ),
                           ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              if (widget.trip.concluded)
-                IconButton(
-                  icon: Icon(Icons.picture_as_pdf, color: Colors.white),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (dialogContext) => AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        title: Row(
-                          children: [
-                            Icon(Icons.library_books, color: theme.colorScheme.primary),
-                            const SizedBox(width: 8),
-                            Text(
-                              "Trip Booklet",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                                color: theme.colorScheme.primary,
-                              ),
-                            ),
-                          ],
-                        ),
-                        content: Text(
-                          "Would you like to create a booklet for this trip?",
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.of(dialogContext).pop(),
-                            child: Text(
-                              "Cancel",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: theme.colorScheme.onSurface,
-                              ),
-                            ),
-                          ),
+                          
                           ElevatedButton(
                             onPressed: () {
                               Navigator.of(dialogContext).pop();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => PDFRegisterScreen(trip: widget.trip),
+                                  builder: (context) => TripEditScreen(trip: widget.trip),
                                 ),
                               );
                             },
@@ -154,7 +198,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                               ),
                             ),
                             child: Text(
-                              "Create",
+                              "Edit",
                               style: TextStyle(fontWeight: FontWeight.w700),
                             ),
                           ),

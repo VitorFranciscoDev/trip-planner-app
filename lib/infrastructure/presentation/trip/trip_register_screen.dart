@@ -189,6 +189,19 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    final provider = context.watch<TripProvider>();
+    
+    if(provider.trip != null) {
+      _controllerTripTitle.text = provider.trip!.title;
+      _dropdownValue = provider.trip!.transport;
+      provider.stops = provider.trip!.stops!;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final intl = AppLocalizations.of(context);

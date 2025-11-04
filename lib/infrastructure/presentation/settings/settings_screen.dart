@@ -21,7 +21,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerEmail = TextEditingController();
 
-  String languageSelected = "Portuguese";
   bool showLanguage = false;
   bool showInformations = false;
 
@@ -191,7 +190,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const SizedBox(height: 10),
                       _buildLanguageOption("🇺🇸", intl.english, () {
                         setState(() {
-                          languageSelected = "English";
                           showLanguage = false;
                         });
                         context.read<IntlProvider>().setLanguage('en');
@@ -199,7 +197,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const SizedBox(height: 10),
                       _buildLanguageOption("🇧🇷", intl.portuguese, () {
                         setState(() {
-                          languageSelected = "Portuguese";
                           showLanguage = false;
                         });
                         context.read<IntlProvider>().setLanguage('pt');
@@ -207,7 +204,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const SizedBox(height: 10),
                       _buildLanguageOption("🇪🇸", intl.spanish, () {
                         setState(() {
-                          languageSelected = "Spanish";
                           showLanguage = false;
                         });
                         context.read<IntlProvider>().setLanguage('es');
@@ -302,13 +298,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const SizedBox(height: 20),
                       TextFieldComponent(
                         controller: _controllerName,
-                        label: "Name",
+                        label: intl.name,
                         error: provider.errorName,
                       ),
                       const SizedBox(height: 15),
                       TextFieldComponent(
                         controller: _controllerEmail,
-                        label: "Email",
+                        label: intl.email,
                         error: provider.errorEmail,
                       ),
                       const SizedBox(height: 20),
@@ -322,6 +318,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               email: _controllerEmail.text,
                               password: provider.user!.password,
                             );
+
                             final result = await provider.updateUser(updatedUser, context);
                             
                             if (mounted) {
@@ -334,7 +331,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         color: Colors.white,
                                       ),
                                       const SizedBox(width: 8),
-                                      Text(result ?? "Information updated successfully!"),
+                                      Text(result ?? intl.informationUpdated),
                                     ],
                                   ),
                                   backgroundColor: result == null ? Colors.green : Colors.red,
@@ -401,7 +398,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ],
                     ),
                     content: Text(
-                      "Are you sure you want to delete your account? This action cannot be undone.",
+                      intl.deleteAccountQuestion,
                       style: TextStyle(fontSize: 14),
                     ),
                     actions: [
@@ -524,7 +521,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ],
                     ),
                     content: Text(
-                      "Are you sure you want to log out?",
+                      intl.logOutQuestion,
                       style: TextStyle(fontSize: 14),
                     ),
                     actions: [
@@ -600,7 +597,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        "Log Out",
+                        intl.logOut,
                         style: TextStyle(
                           fontFamily: "Times New Roman",
                           fontSize: 15,

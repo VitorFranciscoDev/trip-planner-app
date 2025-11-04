@@ -180,21 +180,22 @@ class AppLocalizations {
       'noPhotos': 'No photos added',
       
       'preferences': 'Preferences',
-      'darkMode': 'Dark Mode',
+      'dark_mode': 'Dark Mode',
       'language': 'Language',
       'english': 'English',
       'portuguese': 'Portuguese',
       'spanish': 'Spanish',
       'account': 'Account',
-      'yourInformation': 'Your Information',
-      'updateInfo': 'Update Information',
-      'informationUpdated': 'Information updated successfully!',
-      'deleteAccount': 'Delete Account',
-      'deleteAccountConfirm': 'Delete',
-      'deleteAccountQuestion': 'Are you sure you want to delete your account? This action cannot be undone.',
-      'logOut': 'Log Out',
-      'logOutConfirm': 'Confirm',
-      'logOutQuestion': 'Are you sure you want to log out?',
+      'your_information': 'Your Information',
+      'update_info': 'Update Information',
+      'information_updated': 'Information updated successfully!',
+      'delete_account': 'Delete Account',
+      'delete_account_confirm': 'Delete',
+      'delete': 'Delete',
+      'delete_account_question': 'Are you sure you want to delete your account? This action cannot be undone.',
+      'log_out': 'Log Out',
+      'log_out_confirm': 'Confirm',
+      'log_out_question': 'Are you sure you want to log out?',
     },
     'pt': {
       // Login Screen
@@ -358,21 +359,22 @@ class AppLocalizations {
       
       // Config Screen
       'preferences': 'Preferências',
-      'darkMode': 'Modo Escuro',
+      'dark_mode': 'Modo Escuro',
       'language': 'Idioma',
       'english': 'Inglês',
       'portuguese': 'Português',
       'spanish': 'Espanhol',
       'account': 'Conta',
-      'yourInformation': 'Suas Informações',
-      'updateInfo': 'Atualizar Informações',
-      'informationUpdated': 'Informações atualizadas com sucesso!',
-      'deleteAccount': 'Excluir Conta',
-      'deleteAccountConfirm': 'Excluir',
-      'deleteAccountQuestion': 'Tem certeza de que deseja excluir sua conta? Esta ação não pode ser desfeita.',
-      'logOut': 'Sair',
-      'logOutConfirm': 'Confirmar',
-      'logOutQuestion': 'Tem certeza de que deseja sair?',
+      'your_information': 'Suas Informações',
+      'update_info': 'Atualizar Informações',
+      'information_updated': 'Informações atualizadas com sucesso!',
+      'delete_account': 'Excluir Conta',
+      'delete_account_confirm': 'Excluir',
+      'delete': 'Excluir',
+      'delete_account_question': 'Tem certeza de que deseja excluir sua conta? Esta ação não pode ser desfeita.',
+      'log_out': 'Sair',
+      'log_out_confirm': 'Confirmar',
+      'log_out_question': 'Tem certeza de que deseja sair?',
     },
     'es': {
       // Login Screen
@@ -536,21 +538,22 @@ class AppLocalizations {
       'noPhotos': 'No se agregaron fotos',
       
       'preferences': 'Preferencias',
-      'darkMode': 'Modo Oscuro',
+      'dark_mode': 'Modo Oscuro',
       'language': 'Idioma',
       'english': 'Inglés',
       'portuguese': 'Portugués',
       'spanish': 'Español',
       'account': 'Cuenta',
-      'yourInformation': 'Tu Información',
-      'updateInfo': 'Actualizar Información',
-      'informationUpdated': '¡Información actualizada con éxito!',
-      'deleteAccount': 'Eliminar Cuenta',
-      'deleteAccountConfirm': 'Eliminar',
-      'deleteAccountQuestion': '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.',
-      'logOut': 'Cerrar Sesión',
-      'logOutConfirm': 'Confirmar',
-      'logOutQuestion': '¿Estás seguro de que deseas cerrar sesión?',
+      'your_information': 'Tu Información',
+      'update_info': 'Actualizar Información',
+      'information_updated': '¡Información actualizada con éxito!',
+      'delete_account': 'Eliminar Cuenta',
+      'delete_account_confirm': 'Eliminar',
+      'delete': 'Eliminar',
+      'delete_account_question': '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.',
+      'log_out': 'Cerrar Sesión',
+      'log_out_confirm': 'Confirmar',
+      'log_out_question': '¿Estás seguro de que deseas cerrar sesión?',
     },
   };
 
@@ -709,7 +712,6 @@ class AppLocalizations {
   String get creatingPdf => translate('creatingPdf');
   String get noPhotos => translate('noPhotos');
 
-  // Getters for Config Screen
   String get preferences => translate('preferences');
   String get darkMode => translate('dark_mode');
   String get language => translate('language');
@@ -719,11 +721,14 @@ class AppLocalizations {
   String get account => translate('account');
   String get yourInformation => translate('your_information');
   String get updateInfo => translate('update_info');
+  String get informationUpdated => translate('information_updated');
   String get deleteAccount => translate('delete_account');
   String get deleteAccountConfirm => translate('delete_account_confirm');
   String get deleteText => translate('delete');
+  String get deleteAccountQuestion => translate('delete_account_question');
   String get logOut => translate('log_out');
   String get logOutConfirm => translate('log_out_confirm');
+  String get logOutQuestion => translate('log_out_question');
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

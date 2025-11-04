@@ -203,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Text(
                           l10n.welcomeBack,
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 20,
                             color: theme.colorScheme.primary,
                             fontWeight: FontWeight.w900,
                             fontFamily: "Times New Roman",
