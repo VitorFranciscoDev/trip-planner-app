@@ -2,9 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/stop.dart';
 
+// Trip's Model
 class Trip {
-  final int? id;
-  final int? user_id;
+  final int? id; // Trip's ID [Auto Increment]
+  final int? user_id; // User's ID [Related to Trip]
   final String title;
   final String transport;
   final String start_date;
