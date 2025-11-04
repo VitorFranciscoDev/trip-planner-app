@@ -6,6 +6,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:flutter/services.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizations.dart';
 
 class PDFRegisterScreen extends StatefulWidget {
   const PDFRegisterScreen({super.key, required this.trip});
@@ -64,6 +65,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
   }
 
   Future<void> _generatePDF() async {
+    final intl = AppLocalizations.of(context);
     bool hasAllPersonPhotos = widget.trip.group!.length == personPhotos.length;
     bool hasAllStopData = widget.trip.stops!.every((stop) {
       int index = widget.trip.stops!.indexOf(stop);
@@ -78,7 +80,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
             children: [
               Icon(Icons.error, color: Colors.white),
               SizedBox(width: 8),
-              Text("Please add photos for all group members"),
+              Text(intl.addPhotosAllMembers),
             ],
           ),
           backgroundColor: Colors.red,
@@ -96,7 +98,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
             children: [
               Icon(Icons.error, color: Colors.white),
               SizedBox(width: 8),
-              Expanded(child: Text("Please add photos and descriptions for all stops")),
+              Expanded(child: Text(intl.pleaseAddAllStopData)),
             ],
           ),
           backgroundColor: Colors.red,
@@ -123,7 +125,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
               CircularProgressIndicator(),
               SizedBox(height: 20),
               Text(
-                "Generating PDF...",
+                intl.generatingPdf,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -221,7 +223,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Text(
-                  "Travel Group",
+                  intl.travelGroup,
                   style: pw.TextStyle(
                     fontSize: 28,
                     fontWeight: pw.FontWeight.bold,
@@ -269,7 +271,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                             textAlign: pw.TextAlign.center,
                           ),
                           pw.Text(
-                            "${person.age} years old",
+                            "${person.age} ${intl.yearsOld}",
                             style: pw.TextStyle(
                               fontSize: 11,
                               color: PdfColors.grey700,
@@ -302,7 +304,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                   child: pw.Row(
                     children: [
                       pw.Text(
-                        "Trip Route",
+                        intl.tripRoute,
                         style: pw.TextStyle(
                           fontSize: 28,
                           fontWeight: pw.FontWeight.bold,
@@ -349,7 +351,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                                   ),
                                   pw.SizedBox(height: 15),
                                   pw.Text(
-                                    "Map not available",
+                                    intl.mapNotAvailable,
                                     style: pw.TextStyle(
                                       fontSize: 16,
                                       color: PdfColors.grey600,
@@ -380,7 +382,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                       pw.Row(
                         children: [
                           pw.Text(
-                            "Cities Visited (${widget.trip.stops!.length})",
+                            intl.citiesVisited(widget.trip.stops!.length),
                             style: pw.TextStyle(
                               fontSize: 16,
                               fontWeight: pw.FontWeight.bold,
@@ -527,7 +529,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                 pw.SizedBox(height: 20),
 
                 pw.Text(
-                  "Our Experience",
+                  intl.ourExperience,
                   style: pw.TextStyle(
                     fontSize: 18,
                     fontWeight: pw.FontWeight.bold,
@@ -553,7 +555,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                 pw.SizedBox(height: 20),
 
                 pw.Text(
-                  "Photo Gallery",
+                  intl.photoGallery,
                   style: pw.TextStyle(
                     fontSize: 18,
                     fontWeight: pw.FontWeight.bold,
@@ -653,7 +655,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                         ),
                         pw.SizedBox(height: 10),
                         pw.Text(
-                          "Uma viagem não se mede em milhas, mas em momentos. Cada página deste livreto guarda mais do que paisagens: são sorrisos espontâneos, descobertas inesperadas, conversas que ficaram na alma e silêncios que falaram mais que palavras.",
+                          intl.quote,
                           style: pw.TextStyle(
                             fontSize: 14,
                             height: 1.8,
@@ -678,7 +680,6 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                   
                   pw.Spacer(flex: 2),
                   
-                  // Rodapé com info da empresa
                   pw.Container(
                     padding: pw.EdgeInsets.all(20),
                     child: pw.Column(
@@ -720,7 +721,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
             children: [
               Icon(Icons.check_circle, color: Colors.white),
               SizedBox(width: 8),
-              Text("PDF generated successfully!"),
+              Text(intl.pdfGeneratedSuccess),
             ],
           ),
           backgroundColor: Colors.green,
@@ -737,7 +738,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
             children: [
               Icon(Icons.error, color: Colors.white),
               SizedBox(width: 8),
-              Expanded(child: Text("Error generating PDF: ${e.toString()}")),
+              Expanded(child: Text(intl.errorGeneratingPdf)),
             ],
           ),
           backgroundColor: Colors.red,
@@ -751,6 +752,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final intl = AppLocalizations.of(context);
 
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
@@ -758,7 +760,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: Colors.white,
         title: Text(
-          "Create Trip Booklet",
+          intl.createBooklet,
           style: TextStyle(
             fontFamily: "Times New Roman",
             fontWeight: FontWeight.w900,
@@ -827,7 +829,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                   Icon(Icons.group, color: theme.colorScheme.primary, size: 22),
                   SizedBox(width: 8),
                   Text(
-                    "Group Members Photos",
+                    intl.groupMembersPhotos,
                     style: TextStyle(
                       fontSize: 18,
                       fontFamily: "Times New Roman",
@@ -903,7 +905,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                                 ),
                                 SizedBox(height: 4),
                                 Text(
-                                  "${person.age} years old",
+                                  "${person.age} ${intl.yearsOld}",
                                   style: TextStyle(
                                     fontSize: 13,
                                     color: Colors.grey[600],
@@ -934,7 +936,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                   Icon(Icons.location_on, color: theme.colorScheme.primary, size: 22),
                   SizedBox(width: 8),
                   Text(
-                    "Trip Stops",
+                    intl.tripStops,
                     style: TextStyle(
                       fontSize: 18,
                       fontFamily: "Times New Roman",
@@ -1020,7 +1022,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                         
                         // Photos
                         Text(
-                          "Photos",
+                          intl.photoGallery,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
@@ -1165,7 +1167,7 @@ class _PDFRegisterScreenState extends State<PDFRegisterScreen> {
                       Icon(Icons.picture_as_pdf, size: 24),
                       SizedBox(width: 10),
                       Text(
-                        "Generate PDF Booklet",
+                        intl.generateBooklet,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w900,

@@ -152,23 +152,39 @@ class AppLocalizations {
       'fieldRequired': 'Field required.',
 
       // Trip Details Screen
-      'editTrip': 'Edit Trip',
-      'editTripQuestion': 'Do you want to edit this trip?',
+      'deleteTrip': 'Delete Trip',
+      'deleteTripConfirm':
+          'Are you sure you want to delete "{0}"? This action cannot be undone.',
+      'deletingTrip': 'Deleting trip...',
+      'tripDeletedSuccess': 'Trip deleted successfully!',
       'tripBooklet': 'Trip Booklet',
-      'createBookletQuestion': 'Would you like to create a booklet for this trip?',
+      'tripBookletQuestion': 'Would you like to create a booklet for this trip?',
       'create': 'Create',
       'concluded': 'Concluded',
       'tripDetails': 'Trip Details',
       'travelGroup': 'Travel Group',
-      'tripStops': 'Trip Stops',
-      'noTravelersAdded': 'No travelers added',
-      'noStopsAdded': 'No stops added',
       'yearsOld': 'years old',
-      'immersionCulture': 'Immersion in a Different Culture',
-      'alternativeCuisines': 'Explore Alternative Cuisines',
-      'historicalSites': 'Visit Historical Sites',
-      'localEstablishments': 'Visit Local Establishments',
-      'contactNature': 'Contact With Nature',
+      'tripStops': 'Trip Stops',
+      'noStopsAdded': 'No stops added',
+      'culture': 'Culture',
+      'cuisine': 'Cuisine',
+      'history': 'History',
+      'local': 'Local',
+      'nature': 'Nature',
+
+      'pleaseAddAllPersonPhotos': 'Please add photos for all group members',
+      'pleaseAddAllStopData': 'Please add photos and descriptions for all stops',
+      'generatingPdf': 'Generating PDF...',
+      'tripRoute': 'Trip Route',
+      'mapNotAvailable': 'Map not available',
+      'citiesVisited': 'Cities Visited ({0})',
+      'ourExperience': 'Our Experience',
+      'photoGallery': 'Photo Gallery',
+      'tripPlanner': 'Trip Planner',
+      'quote':
+          'A trip is not measured in miles, but in moments. Each page of this booklet holds more than landscapes: spontaneous smiles, unexpected discoveries, conversations that touched the soul, and silences that spoke louder than words.',
+      'pdfGeneratedSuccess': 'PDF generated successfully!',
+      'pdfGenerationError': 'Error generating PDF: {0}',
 
       'createBooklet': 'Create Trip Booklet',
       'tripSummary': 'Trip Summary',
@@ -332,23 +348,39 @@ class AppLocalizations {
       'fieldRequired': 'Campo obrigatório.',
 
       // Trip Details Screen
-      'editTrip': 'Editar Viagem',
-      'editTripQuestion': 'Deseja editar esta viagem?',
-      'tripBooklet': 'Caderneta da Viagem',
-      'createBookletQuestion': 'Deseja criar uma caderneta para esta viagem?',
+      'deleteTrip': 'Excluir Viagem',
+      'deleteTripConfirm':
+          'Tem certeza de que deseja excluir "{0}"? Essa ação não pode ser desfeita.',
+      'deletingTrip': 'Excluindo viagem...',
+      'tripDeletedSuccess': 'Viagem excluída com sucesso!',
+      'tripBooklet': 'Caderneta de Viagem',
+      'tripBookletQuestion': 'Deseja criar uma caderneta para esta viagem?',
       'create': 'Criar',
       'concluded': 'Concluída',
       'tripDetails': 'Detalhes da Viagem',
       'travelGroup': 'Grupo de Viagem',
-      'tripStops': 'Paradas da Viagem',
-      'noTravelersAdded': 'Nenhum viajante adicionado',
-      'noStopsAdded': 'Nenhuma parada adicionada',
       'yearsOld': 'anos',
-      'immersionCulture': 'Imersão em Outra Cultura',
-      'alternativeCuisines': 'Explorar Culinárias Alternativas',
-      'historicalSites': 'Visitar Locais Históricos',
-      'localEstablishments': 'Visitar Estabelecimentos Locais',
-      'contactNature': 'Contato com a Natureza',
+      'tripStops': 'Paradas da Viagem',
+      'noStopsAdded': 'Nenhuma parada adicionada',
+      'culture': 'Cultura',
+      'cuisine': 'Culinária',
+      'history': 'História',
+      'local': 'Local',
+      'nature': 'Natureza',
+
+      'pleaseAddAllPersonPhotos': 'Adicione fotos para todos os membros do grupo',
+      'pleaseAddAllStopData': 'Adicione fotos e descrições para todas as paradas',
+      'generatingPdf': 'Gerando PDF...',
+      'tripRoute': 'Rota da Viagem',
+      'mapNotAvailable': 'Mapa não disponível',
+      'citiesVisited': 'Cidades Visitadas ({0})',
+      'ourExperience': 'Nossa Experiência',
+      'photoGallery': 'Galeria de Fotos',
+      'tripPlanner': 'Trip Planner',
+      'quote':
+          'Uma viagem não se mede em milhas, mas em momentos. Cada página deste livreto guarda mais do que paisagens: são sorrisos espontâneos, descobertas inesperadas, conversas que ficaram na alma e silêncios que falaram mais que palavras.',
+      'pdfGeneratedSuccess': 'PDF gerado com sucesso!',
+      'pdfGenerationError': 'Erro ao gerar PDF: {0}',
 
       'createBooklet': 'Criar Caderneta da Viagem',
       'tripSummary': 'Resumo da Viagem',
@@ -514,23 +546,39 @@ class AppLocalizations {
       'fieldRequired': 'Campo obligatorio.',
 
       // Trip Details Screen
-      'editTrip': 'Editar Viaje',
-      'editTripQuestion': '¿Deseas editar este viaje?',
-      'tripBooklet': 'Cuadernillo del Viaje',
-      'createBookletQuestion': '¿Te gustaría crear un cuadernillo para este viaje?',
+      'deleteTrip': 'Eliminar Viaje',
+      'deleteTripConfirm':
+          '¿Estás seguro de que deseas eliminar "{0}"? Esta acción no se puede deshacer.',
+      'deletingTrip': 'Eliminando viaje...',
+      'tripDeletedSuccess': '¡Viaje eliminado exitosamente!',
+      'tripBooklet': 'Libreta de Viaje',
+      'tripBookletQuestion': '¿Deseas crear una libreta para este viaje?',
       'create': 'Crear',
       'concluded': 'Concluido',
       'tripDetails': 'Detalles del Viaje',
       'travelGroup': 'Grupo de Viaje',
-      'tripStops': 'Paradas del Viaje',
-      'noTravelersAdded': 'No se agregaron viajeros',
-      'noStopsAdded': 'No se agregaron paradas',
       'yearsOld': 'años',
-      'immersionCulture': 'Inmersión en Otra Cultura',
-      'alternativeCuisines': 'Explorar Cocinas Alternativas',
-      'historicalSites': 'Visitar Sitios Históricos',
-      'localEstablishments': 'Visitar Establecimientos Locales',
-      'contactNature': 'Contacto con la Naturaleza',
+      'tripStops': 'Paradas del Viaje',
+      'noStopsAdded': 'No se agregaron paradas',
+      'culture': 'Cultura',
+      'cuisine': 'Cocina',
+      'history': 'Historia',
+      'local': 'Local',
+      'nature': 'Naturaleza',
+
+      'pleaseAddAllPersonPhotos': 'Agrega fotos para todos los miembros del grupo',
+      'pleaseAddAllStopData': 'Agrega fotos y descripciones para todas las paradas',
+      'generatingPdf': 'Generando PDF...',
+      'tripRoute': 'Ruta del Viaje',
+      'mapNotAvailable': 'Mapa no disponible',
+      'citiesVisited': 'Ciudades Visitadas ({0})',
+      'ourExperience': 'Nuestra Experiencia',
+      'photoGallery': 'Galería de Fotos',
+      'tripPlanner': 'Trip Planner',
+      'quote':
+          'Un viaje no se mide en millas, sino en momentos. Cada página de este cuaderno guarda más que paisajes: sonrisas espontáneas, descubrimientos inesperados, conversaciones que quedaron en el alma y silencios que hablaron más que las palabras.',
+      'pdfGeneratedSuccess': '¡PDF generado con éxito!',
+      'pdfGenerationError': 'Error al generar el PDF: {0}',
 
       'createBooklet': 'Crear Libreta del Viaje',
       'tripSummary': 'Resumen del Viaje',
@@ -707,23 +755,40 @@ class AppLocalizations {
   String get tripConcludedSuccess => translate('tripConcludedSuccess');
   String get tripConcludedError => translate('tripConcludedError');
   
-  String get editTrip => translate('editTrip');
-  String get editTripQuestion => translate('editTripQuestion');
+  String get deleteTrip => translate('deleteTrip');
+  String deleteTripConfirm(String title) =>
+      translate('deleteTripConfirm', [title]);
+  String get deletingTrip => translate('deletingTrip');
+  String get tripDeletedSuccess => translate('tripDeletedSuccess');
   String get tripBooklet => translate('tripBooklet');
-  String get createBookletQuestion => translate('createBookletQuestion');
+  String get tripBookletQuestion => translate('tripBookletQuestion');
   String get create => translate('create');
   String get concluded => translate('concluded');
   String get tripDetails => translate('tripDetails');
   String get travelGroup => translate('travelGroup');
-  String get tripStops => translate('tripStops');
-  String get noTravelersAdded => translate('noTravelersAdded');
-  String get noStopsAdded => translate('noStopsAdded');
   String get yearsOld => translate('yearsOld');
-  String get immersionCulture => translate('immersionCulture');
-  String get alternativeCuisines => translate('alternativeCuisines');
-  String get historicalSites => translate('historicalSites');
-  String get localEstablishments => translate('localEstablishments');
-  String get contactNature => translate('contactNature');
+  String get tripStops => translate('tripStops');
+  String get noStopsAdded => translate('noStopsAdded');
+  String get culture => translate('culture');
+  String get cuisine => translate('cuisine');
+  String get history => translate('history');
+  String get local => translate('local');
+  String get nature => translate('nature');
+
+  String get pleaseAddAllPersonPhotos => translate('pleaseAddAllPersonPhotos');
+  String get pleaseAddAllStopData => translate('pleaseAddAllStopData');
+  String get generatingPdf => translate('generatingPdf');
+  String get tripRoute => translate('tripRoute');
+  String get mapNotAvailable => translate('mapNotAvailable');
+  String citiesVisited(int count) =>
+      translate('citiesVisited', [count.toString()]);
+  String get ourExperience => translate('ourExperience');
+  String get photoGallery => translate('photoGallery');
+  String get tripPlanner => translate('tripPlanner');
+  String get quote => translate('quote');
+  String get pdfGeneratedSuccess => translate('pdfGeneratedSuccess');
+  String pdfGenerationError(String error) =>
+      translate('pdfGenerationError', [error]);
 
   String get createBooklet => translate('createBooklet');
   String get tripSummary => translate('tripSummary');

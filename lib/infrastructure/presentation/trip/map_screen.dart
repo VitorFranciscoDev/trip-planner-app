@@ -191,7 +191,7 @@ class MapScreenState extends State<MapScreen> {
     
     _differentCulture = stop.stopExperiences!.any((e) => e.experience == intl.immersionDifferentCulture);
     _alternativeCuisine = stop.stopExperiences!.any((e) => e.experience == intl.exploreAlternativeCuisines);
-    _historicalSites = stop.stopExperiences!.any((e) => e.experience == intl.historicalSites);
+    _historicalSites = stop.stopExperiences!.any((e) => e.experience == intl.visitHistoricalSites);
     _localEstablishments = stop.stopExperiences!.any((e) => e.experience == intl.visitLocalEstablishments);
     _contactWithNature = stop.stopExperiences!.any((e) => e.experience == intl.contactWithNature);
 
@@ -334,7 +334,7 @@ class MapScreenState extends State<MapScreen> {
                 }
 
                 if (_historicalSites) {
-                  _experiences.add(StopExperience(experience: intl.historicalSites));
+                  _experiences.add(StopExperience(experience: intl.visitHistoricalSites));
                 }
 
                 if (_localEstablishments) {
@@ -563,7 +563,7 @@ class MapScreenState extends State<MapScreen> {
                 ),
                 CheckboxComponent(
                   value: _historicalSites,
-                  label: intl.historicalSites,
+                  label: intl.visitHistoricalSites,
                   icon: Icons.account_balance,
                   onChanged: (value) {
                     setDialogState(() {
@@ -573,7 +573,7 @@ class MapScreenState extends State<MapScreen> {
                 ),
                 CheckboxComponent(
                   value: _localEstablishments,
-                  label: intl.localEstablishments,
+                  label: intl.visitLocalEstablishments,
                   icon: Icons.store,
                   onChanged: (value) {
                     setDialogState(() {
@@ -620,11 +620,11 @@ class MapScreenState extends State<MapScreen> {
                 }
 
                 if (_historicalSites) {
-                  _experiences.add(StopExperience(experience: intl.historicalSites));
+                  _experiences.add(StopExperience(experience: intl.visitHistoricalSites));
                 }
 
                 if (_localEstablishments) {
-                  _experiences.add(StopExperience(experience: intl.localEstablishments));
+                  _experiences.add(StopExperience(experience: intl.visitLocalEstablishments));
                 }
 
                 if (_contactWithNature) {

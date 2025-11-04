@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner/entities/trip.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/pdf_register_screen.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 
@@ -16,6 +17,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final intl = AppLocalizations.of(context);
     final stops = widget.trip.stops;
 
     return Scaffold(
@@ -54,7 +56,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                             const SizedBox(width: 12),
                             Expanded(
                               child: Text(
-                                "Delete Trip",
+                                intl.deleteTrip,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w700,
@@ -65,14 +67,14 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                           ],
                         ),
                         content: Text(
-                          "Are you sure you want to delete \"${widget.trip.title}\"? This action cannot be undone.",
+                          intl.deleteTripConfirm(widget.trip.title),
                           style: TextStyle(fontSize: 14),
                         ),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.of(dialogContext).pop(),
                             child: Text(
-                              "Cancel",
+                              intl.cancel,
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 color: theme.colorScheme.onSurface,
@@ -100,7 +102,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                     children: [
                                       Icon(Icons.check_circle, color: Colors.white),
                                       SizedBox(width: 8),
-                                      Text("Trip deleted successfully!"),
+                                      Text(intl.tripDeletedSuccess),
                                     ],
                                   ),
                                   backgroundColor: Colors.green,
@@ -119,7 +121,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                               ),
                             ),
                             child: Text(
-                              "Delete",
+                              intl.delete,
                               style: TextStyle(fontWeight: FontWeight.w700),
                             ),
                           ),
@@ -143,7 +145,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                             Icon(Icons.library_books, color: theme.colorScheme.primary),
                             const SizedBox(width: 8),
                             Text(
-                              "Trip Booklet",
+                              intl.tripBooklet,
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
@@ -153,14 +155,14 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                           ],
                         ),
                         content: Text(
-                          "Would you like to create a booklet for this trip?",
+                          intl.tripBookletQuestion,
                           style: TextStyle(fontSize: 14),
                         ),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.of(dialogContext).pop(),
                             child: Text(
-                              "Cancel",
+                              intl.cancel,
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 color: theme.colorScheme.onSurface,
@@ -185,7 +187,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                               ),
                             ),
                             child: Text(
-                              "Create",
+                              intl.create,
                               style: TextStyle(fontWeight: FontWeight.w700),
                             ),
                           ),
@@ -246,7 +248,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                           Icon(Icons.check_circle, color: Colors.white, size: 18),
                           SizedBox(width: 8),
                           Text(
-                            "Concluded",
+                            intl.concluded,
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -259,19 +261,19 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                   SizedBox(height: 20),
 
                   // Details Section
-                  _buildSectionTitle(theme, "Trip Details", Icons.info_outline),
+                  _buildSectionTitle(theme, intl.tripDetails, Icons.info_outline),
                   SizedBox(height: 12),
                   _buildDetailsCard(theme),
                   SizedBox(height: 30),
 
                   // Group Section
-                  _buildSectionTitle(theme, "Travel Group", Icons.group),
+                  _buildSectionTitle(theme, intl.travelGroup, Icons.group),
                   SizedBox(height: 12),
                   _buildGroupSection(theme),
                   SizedBox(height: 30),
 
                   // Stop Section
-                  _buildSectionTitle(theme, "Trip Stops", Icons.location_on),
+                  _buildSectionTitle(theme, intl.tripStops, Icons.location_on),
                   SizedBox(height: 12),
                   _buildStopsSection(theme, stops),
                   SizedBox(height: 20),
@@ -307,6 +309,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
   }
 
   Widget _buildDetailsCard(ThemeData theme) {
+    final intl = AppLocalizations.of(context);
+
     return Container(
       decoration: BoxDecoration(
         color: theme.colorScheme.tertiary,
@@ -323,11 +327,11 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            _buildDetailRow(Icons.calendar_today, "Start Date", widget.trip.start_date, theme),
+            _buildDetailRow(Icons.calendar_today, intl.startDate, widget.trip.start_date, theme),
             Divider(height: 24, color: Colors.grey[600]),
-            _buildDetailRow(Icons.event, "End Date", widget.trip.end_date, theme),
+            _buildDetailRow(Icons.event, intl.endDate, widget.trip.end_date, theme),
             Divider(height: 24, color: Colors.grey[600]),
-            _buildDetailRow(Icons.directions_car, "Transport", widget.trip.transport, theme),
+            _buildDetailRow(Icons.directions_car, intl.transport, widget.trip.transport, theme),
           ],
         ),
       ),
@@ -444,8 +448,9 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
   }
 
   Widget _buildStopsSection(ThemeData theme, List<dynamic>? stops) {
+    final intl = AppLocalizations.of(context);
     if (stops == null || stops.isEmpty) {
-      return _buildEmptyState("No stops added", Icons.location_off);
+      return _buildEmptyState(intl.noStopsAdded, Icons.location_off);
     }
 
     return Container(
