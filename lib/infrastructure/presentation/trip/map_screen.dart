@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -698,11 +699,11 @@ class MapScreenState extends State<MapScreen> {
                   _markers.add(
                     Marker(
                       point: latlng,
-                      width: 80,
-                      height: 80,
+                      width: 50,
+                      height: 50,
                       child: GestureDetector(
                         onTap: () => _onMarkerTap(markerIndex),
-                        child: const Icon(Icons.location_on, color: Colors.red, size: 80),
+                        child: const Icon(Icons.location_on, color: Colors.red, size: 50),
                       ),
                     ),
                   );
@@ -758,11 +759,11 @@ class MapScreenState extends State<MapScreen> {
         _markers.add(
           Marker(
             point: latlng,
-            width: 80,
-            height: 80,
+            width: 50,
+            height: 50,
             child: GestureDetector(
               onTap: () => _onMarkerTap(index),
-              child: Icon(Icons.location_on, color: Colors.red, size: 80),
+              child: Icon(Icons.location_on, color: Colors.red, size: 50),
             ),
           ),
         );
@@ -778,27 +779,43 @@ class MapScreenState extends State<MapScreen> {
 
   Future<Uint8List?> captureMapScreenshot() async {
     try {
-      await Future.delayed(Duration(milliseconds: 300));
+      await Future.delayed(const Duration(milliseconds: 500));
       
-      RenderRepaintBoundary? boundary = 
-          _mapKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      await WidgetsBinding.instance.endOfFrame;
       
-      if (boundary == null) {
-        debugPrint('Error in Capture Image.');
+      final RenderObject? renderObject = _mapKey.currentContext?.findRenderObject();
+      
+      if (renderObject == null) {
+        debugPrint('Error: RenderObject is null');
         return null;
       }
-
-      final image = await boundary.toImage(pixelRatio: 3.0);
-      final byteData = await image.toByteData(format: ImageByteFormat.png);
+      
+      if (renderObject is! RenderRepaintBoundary) {
+        debugPrint('Error: RenderObject is not a RenderRepaintBoundary');
+        return null;
+      }
+      
+      final RenderRepaintBoundary boundary = renderObject;
+      
+      if (boundary.debugNeedsPaint) {
+        debugPrint('Warning: Boundary needs paint, waiting...');
+        await Future.delayed(const Duration(milliseconds: 300));
+      }
+      
+      final ui.Image image = await boundary.toImage(pixelRatio: 2.0);
+      final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       
       if (byteData == null) {
-        debugPrint('Error in Capture Image.');
+        debugPrint('Error: Failed to convert image to ByteData');
         return null;
       }
       
+      debugPrint('Screenshot captured successfully: ${byteData.lengthInBytes} bytes');
       return byteData.buffer.asUint8List();
-    } catch (e) {
-      throw Exception('Error in Capture Image: $e');
+    } catch (e, stackTrace) {
+      debugPrint('Error in captureMapScreenshot: $e');
+      debugPrint('Stack trace: $stackTrace');
+      return null;
     }
   }
 

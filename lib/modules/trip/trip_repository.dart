@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/entities/trip.dart';
@@ -118,6 +120,7 @@ class TripRepository implements ITripRepository {
             transport: map['transport'] as String,
             start_date: map['start_date'] as String,
             end_date: map['end_date'] as String,
+            map_image: map['map_image'] as Uint8List,
             concluded: map['concluded'] == 1,
             group: group,
             stops: stops,

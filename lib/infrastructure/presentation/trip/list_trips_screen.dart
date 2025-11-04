@@ -127,6 +127,7 @@ class _ListTripsScreenState extends State<ListTripsScreen> {
                 transport: trip.transport,
                 start_date: trip.start_date,
                 end_date: trip.end_date,
+                map_image: trip.map_image,
                 concluded: true,
                 group: trip.group,
                 stops: trip.stops,
