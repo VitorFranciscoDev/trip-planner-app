@@ -507,7 +507,9 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: RecomendationsListComponent(
+            child: provider.recomendation1 == null
+            ? Center(child: CircularProgressIndicator())
+            : RecomendationsListComponent(
               tripRecomendation: provider.recomendation1!,
               fn: () {
                 showDialog(
@@ -572,7 +574,9 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: RecomendationsListComponent(
+            child: provider.recomendation1 == null
+            ? Center(child: CircularProgressIndicator())
+            : RecomendationsListComponent(
               tripRecomendation: provider.recomendation2!,
               fn: () {
                 showDialog(

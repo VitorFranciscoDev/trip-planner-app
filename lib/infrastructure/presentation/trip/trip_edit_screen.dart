@@ -27,7 +27,7 @@ class _TripEditScreenState extends State<TripEditScreen> {
     super.initState();
     _controllerTripTitle.text = widget.trip.title;
     _dropdownValue = widget.trip.transport;
-    _groupMembers = List.from(widget.trip.group ?? []);
+    _groupMembers = List.from(widget.trip.group!);
   }
 
   @override
@@ -41,47 +41,9 @@ class _TripEditScreenState extends State<TripEditScreen> {
   Future<void> _saveChanges() async {
     final provider = context.read<TripProvider>();
 
-    if (_controllerTripTitle.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Row(
-            children: [
-              Icon(Icons.error, color: Colors.white),
-              SizedBox(width: 8),
-              Text("Trip title is required"),
-            ],
-          ),
-          backgroundColor: Colors.red,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        ),
-      );
-      return;
-    }
+    final isValid = provider.validateTrip(_controllerTripTitle.text, context);
 
-    if (_groupMembers.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Row(
-            children: [
-              Icon(Icons.error, color: Colors.white),
-              SizedBox(width: 8),
-              Text("Add at least one person to the group"),
-            ],
-          ),
-          backgroundColor: Colors.red,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        ),
-      );
-      return;
-    }
-
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => Center(child: CircularProgressIndicator()),
-    );
+    if(!isValid) return;
 
     final updatedTrip = Trip(
       id: widget.trip.id,
@@ -94,6 +56,12 @@ class _TripEditScreenState extends State<TripEditScreen> {
       concluded: widget.trip.concluded,
       group: _groupMembers,
       stops: widget.trip.stops,
+    );
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => Center(child: CircularProgressIndicator()),
     );
 
     final result = await provider.updateTrip(updatedTrip, context);

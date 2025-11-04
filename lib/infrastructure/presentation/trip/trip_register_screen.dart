@@ -192,7 +192,7 @@ class _TripRegisterScreenState extends State<TripRegisterScreen> {
   void initState() {
     super.initState();
 
-    final provider = context.watch<TripProvider>();
+    final provider = context.read<TripProvider>();
     
     if(provider.trip != null) {
       _controllerTripTitle.text = provider.trip!.title;

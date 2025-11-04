@@ -698,11 +698,11 @@ class MapScreenState extends State<MapScreen> {
                   _markers.add(
                     Marker(
                       point: latlng,
-                      width: 40,
-                      height: 40,
+                      width: 80,
+                      height: 80,
                       child: GestureDetector(
                         onTap: () => _onMarkerTap(markerIndex),
-                        child: const Icon(Icons.location_on, color: Colors.red, size: 40),
+                        child: const Icon(Icons.location_on, color: Colors.red, size: 80),
                       ),
                     ),
                   );
@@ -758,11 +758,11 @@ class MapScreenState extends State<MapScreen> {
         _markers.add(
           Marker(
             point: latlng,
-            width: 40,
-            height: 40,
+            width: 80,
+            height: 80,
             child: GestureDetector(
               onTap: () => _onMarkerTap(index),
-              child: Icon(Icons.location_on, color: Colors.red, size: 40),
+              child: Icon(Icons.location_on, color: Colors.red, size: 80),
             ),
           ),
         );
