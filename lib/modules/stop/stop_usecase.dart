@@ -36,7 +36,7 @@ class StopUseCase {
 
     if (start != null && end != null) {
       if (start.isAfter(end)) {
-        return intl.endDate;
+        return intl.endDateError;
       }
     }
 

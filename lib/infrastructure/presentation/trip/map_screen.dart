@@ -14,6 +14,7 @@ import 'package:trip_planner/entities/stop.dart';
 import 'package:trip_planner/entities/stop_experience.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/checkbox_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_date_component.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 
 class MapScreen extends StatefulWidget {
@@ -85,6 +86,7 @@ class MapScreenState extends State<MapScreen> {
 
   Future<void> _onMarkerTap(int index) async {
     final provider = context.read<TripProvider>();
+    final intl = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final stop = provider.stops[index];
 
@@ -124,7 +126,7 @@ class MapScreenState extends State<MapScreen> {
             const SizedBox(height: 8),
             if (stop.stopExperiences!.isNotEmpty) ...[
               Text(
-                "Experiences:",
+                intl.experiences,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -151,7 +153,7 @@ class MapScreenState extends State<MapScreen> {
             style: TextButton.styleFrom(
               foregroundColor: theme.colorScheme.onSurface,
             ),
-            child: const Text("Cancel", style: TextStyle(fontWeight: FontWeight.w600)),
+            child: Text(intl.cancel, style: TextStyle(fontWeight: FontWeight.w600)),
           ),
           TextButton(
             onPressed: () {
@@ -161,7 +163,7 @@ class MapScreenState extends State<MapScreen> {
             style: TextButton.styleFrom(
               foregroundColor: theme.colorScheme.primary,
             ),
-            child: const Text("Edit", style: TextStyle(fontWeight: FontWeight.w600)),
+            child: Text(intl.edit, style: TextStyle(fontWeight: FontWeight.w600)),
           ),
           TextButton(
             onPressed: () {
@@ -171,7 +173,7 @@ class MapScreenState extends State<MapScreen> {
             style: TextButton.styleFrom(
               foregroundColor: Colors.red,
             ),
-            child: const Text("Delete", style: TextStyle(fontWeight: FontWeight.w600)),
+            child: Text(intl.delete, style: TextStyle(fontWeight: FontWeight.w600)),
           ),
         ],
       ),
@@ -180,17 +182,18 @@ class MapScreenState extends State<MapScreen> {
 
   Future<void> _onEditStop(int index) async {
     final provider = context.read<TripProvider>();
+    final intl = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final stop = provider.stops[index];
 
     _startDateController.text = stop.start_date;
     _endDateController.text = stop.end_date;
     
-    _differentCulture = stop.stopExperiences!.any((e) => e.experience == "Immersion in a Different Culture");
-    _alternativeCuisine = stop.stopExperiences!.any((e) => e.experience == "Explore Alternative Cuisines");
-    _historicalSites = stop.stopExperiences!.any((e) => e.experience == "Visit Historical Sites");
-    _localEstablishments = stop.stopExperiences!.any((e) => e.experience == "Visit Local Establishments");
-    _contactWithNature = stop.stopExperiences!.any((e) => e.experience == "Contact With Nature");
+    _differentCulture = stop.stopExperiences!.any((e) => e.experience == intl.immersionDifferentCulture);
+    _alternativeCuisine = stop.stopExperiences!.any((e) => e.experience == intl.exploreAlternativeCuisines);
+    _historicalSites = stop.stopExperiences!.any((e) => e.experience == intl.historicalSites);
+    _localEstablishments = stop.stopExperiences!.any((e) => e.experience == intl.visitLocalEstablishments);
+    _contactWithNature = stop.stopExperiences!.any((e) => e.experience == intl.contactWithNature);
 
     showDialog(
       context: context,
@@ -221,7 +224,7 @@ class MapScreenState extends State<MapScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Select Dates",
+                  intl.selectDates,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -231,20 +234,20 @@ class MapScreenState extends State<MapScreen> {
                 const SizedBox(height: 12),
                 TextFieldDateComponent(
                   controller: _startDateController,
-                  hint: "Start Date",
+                  hint: intl.startDate,
                   error: provider.errorStartDate,
                   function: () => _selectDate(_startDateController),
                 ),
                 const SizedBox(height: 12),
                 TextFieldDateComponent(
                   controller: _endDateController,
-                  hint: "End Date",
+                  hint: intl.endDate,
                   error: provider.errorEndDate,
                   function: () => _selectDate(_endDateController),
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  "Select Experiences",
+                  intl.selectExperiences,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -254,7 +257,7 @@ class MapScreenState extends State<MapScreen> {
                 const SizedBox(height: 8),
                 CheckboxComponent(
                   value: _differentCulture,
-                  label: "Immersion in a Different Culture",
+                  label: intl.immersionDifferentCulture,
                   icon: Icons.public,
                   onChanged: (value) {
                     setDialogState(() {
@@ -264,7 +267,7 @@ class MapScreenState extends State<MapScreen> {
                 ),
                 CheckboxComponent(
                   value: _alternativeCuisine,
-                  label: "Explore Alternative Cuisines",
+                  label: intl.exploreAlternativeCuisines,
                   icon: Icons.restaurant,
                   onChanged: (value) {
                     setDialogState(() {
@@ -274,7 +277,7 @@ class MapScreenState extends State<MapScreen> {
                 ),
                 CheckboxComponent(
                   value: _historicalSites,
-                  label: "Visit Historical Sites",
+                  label: intl.visitHistoricalSites,
                   icon: Icons.account_balance,
                   onChanged: (value) {
                     setDialogState(() {
@@ -284,7 +287,7 @@ class MapScreenState extends State<MapScreen> {
                 ),
                 CheckboxComponent(
                   value: _localEstablishments,
-                  label: "Visit Local Establishments",
+                  label: intl.visitLocalEstablishments,
                   icon: Icons.store,
                   onChanged: (value) {
                     setDialogState(() {
@@ -294,7 +297,7 @@ class MapScreenState extends State<MapScreen> {
                 ),
                 CheckboxComponent(
                   value: _contactWithNature,
-                  label: "Contact With Nature",
+                  label: intl.contactWithNature,
                   icon: Icons.nature,
                   onChanged: (value) {
                     setDialogState(() {
@@ -311,7 +314,7 @@ class MapScreenState extends State<MapScreen> {
               style: TextButton.styleFrom(
                 foregroundColor: theme.colorScheme.primary,
               ),
-              child: const Text("Cancel", style: TextStyle(fontWeight: FontWeight.w600)),
+              child: Text(intl.cancel, style: TextStyle(fontWeight: FontWeight.w600)),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -323,23 +326,23 @@ class MapScreenState extends State<MapScreen> {
                 final List<StopExperience> _experiences = [];
 
                 if (_differentCulture) {
-                  _experiences.add(StopExperience(experience: "Immersion in a Different Culture"));
+                  _experiences.add(StopExperience(experience: intl.immersionDifferentCulture));
                 }
 
                 if (_alternativeCuisine) {
-                  _experiences.add(StopExperience(experience: "Explore Alternative Cuisines"));
+                  _experiences.add(StopExperience(experience: intl.exploreAlternativeCuisines));
                 }
 
                 if (_historicalSites) {
-                  _experiences.add(StopExperience(experience: "Visit Historical Sites"));
+                  _experiences.add(StopExperience(experience: intl.historicalSites));
                 }
 
                 if (_localEstablishments) {
-                  _experiences.add(StopExperience(experience: "Visit Local Establishments"));
+                  _experiences.add(StopExperience(experience: intl.visitLocalEstablishments));
                 }
 
                 if (_contactWithNature) {
-                  _experiences.add(StopExperience(experience: "Contact With Nature"));
+                  _experiences.add(StopExperience(experience: intl.contactWithNature));
                 }
 
                 final updatedStop = Stop(
@@ -372,7 +375,7 @@ class MapScreenState extends State<MapScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: const Text("Save Changes", style: TextStyle(fontWeight: FontWeight.w700)),
+              child: Text(intl.saveChanges, style: TextStyle(fontWeight: FontWeight.w700)),
             ),
           ],
         ),
@@ -382,6 +385,7 @@ class MapScreenState extends State<MapScreen> {
 
   Future<void> _onDeleteStop(int index) async {
     final provider = context.read<TripProvider>();
+    final intl = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final currentContext = context;
 
@@ -396,7 +400,7 @@ class MapScreenState extends State<MapScreen> {
             Icon(Icons.warning, color: Colors.red),
             const SizedBox(width: 8),
             Text(
-              "Delete Stop",
+              intl.deleteStop,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
@@ -406,7 +410,7 @@ class MapScreenState extends State<MapScreen> {
           ],
         ),
         content: Text(
-          "Are you sure you want to delete this stop? This action cannot be undone.",
+          intl.deleteStopConfirm,
           style: TextStyle(fontSize: 14),
         ),
         actions: [
@@ -415,7 +419,7 @@ class MapScreenState extends State<MapScreen> {
             style: TextButton.styleFrom(
               foregroundColor: theme.colorScheme.onSurface,
             ),
-            child: const Text("Cancel", style: TextStyle(fontWeight: FontWeight.w600)),
+            child: Text(intl.cancel, style: TextStyle(fontWeight: FontWeight.w600)),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -452,7 +456,7 @@ class MapScreenState extends State<MapScreen> {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: const Text("Delete", style: TextStyle(fontWeight: FontWeight.w700)),
+            child: Text(intl.delete, style: TextStyle(fontWeight: FontWeight.w700)),
           ),
         ],
       ),
@@ -461,11 +465,12 @@ class MapScreenState extends State<MapScreen> {
 
   Future<void> _onMapTap(LatLng latlng) async {
     final provider = context.read<TripProvider>();
+    final intl = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final currentContext = context;
 
     final address = await provider.getAddressFromCoordinates(latlng);
-    final locationName = address ?? "Unknown Place";
+    final locationName = address ?? intl.unknownPlace;
 
     _differentCulture = false;
     _alternativeCuisine = false;
@@ -505,7 +510,7 @@ class MapScreenState extends State<MapScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Select Dates",
+                  intl.selectDates,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -515,20 +520,20 @@ class MapScreenState extends State<MapScreen> {
                 const SizedBox(height: 12),
                 TextFieldDateComponent(
                   controller: _startDateController,
-                  hint: "Start Date",
+                  hint: intl.startDate,
                   error: provider.errorStartDate,
                   function: () => _selectDate(_startDateController),
                 ),
                 const SizedBox(height: 12),
                 TextFieldDateComponent(
                   controller: _endDateController,
-                  hint: "End Date",
+                  hint: intl.endDate,
                   error: provider.errorEndDate,
                   function: () => _selectDate(_endDateController),
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  "Select Experiences",
+                  intl.selectExperiences,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -538,7 +543,7 @@ class MapScreenState extends State<MapScreen> {
                 const SizedBox(height: 8),
                 CheckboxComponent(
                   value: _differentCulture,
-                  label: "Immersion in a Different Culture",
+                  label: intl.immersionDifferentCulture,
                   icon: Icons.public,
                   onChanged: (value) {
                     setDialogState(() {
@@ -548,7 +553,7 @@ class MapScreenState extends State<MapScreen> {
                 ),
                 CheckboxComponent(
                   value: _alternativeCuisine,
-                  label: "Explore Alternative Cuisines",
+                  label: intl.exploreAlternativeCuisines,
                   icon: Icons.restaurant,
                   onChanged: (value) {
                     setDialogState(() {
@@ -558,7 +563,7 @@ class MapScreenState extends State<MapScreen> {
                 ),
                 CheckboxComponent(
                   value: _historicalSites,
-                  label: "Visit Historical Sites",
+                  label: intl.historicalSites,
                   icon: Icons.account_balance,
                   onChanged: (value) {
                     setDialogState(() {
@@ -568,7 +573,7 @@ class MapScreenState extends State<MapScreen> {
                 ),
                 CheckboxComponent(
                   value: _localEstablishments,
-                  label: "Visit Local Establishments",
+                  label: intl.localEstablishments,
                   icon: Icons.store,
                   onChanged: (value) {
                     setDialogState(() {
@@ -578,7 +583,7 @@ class MapScreenState extends State<MapScreen> {
                 ),
                 CheckboxComponent(
                   value: _contactWithNature,
-                  label: "Contact With Nature",
+                  label: intl.contactWithNature,
                   icon: Icons.nature,
                   onChanged: (value) {
                     setDialogState(() {
@@ -595,7 +600,7 @@ class MapScreenState extends State<MapScreen> {
               style: TextButton.styleFrom(
                 foregroundColor: theme.colorScheme.primary,
               ),
-              child: const Text("Cancel", style: TextStyle(fontWeight: FontWeight.w600)),
+              child: Text(intl.cancel, style: TextStyle(fontWeight: FontWeight.w600)),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -607,23 +612,23 @@ class MapScreenState extends State<MapScreen> {
                 final List<StopExperience> _experiences = [];
 
                 if (_differentCulture) {
-                  _experiences.add(StopExperience(experience: "Immersion in a Different Culture"));
+                  _experiences.add(StopExperience(experience: intl.immersionDifferentCulture));
                 }
 
                 if (_alternativeCuisine) {
-                  _experiences.add(StopExperience(experience: "Explore Alternative Cuisines"));
+                  _experiences.add(StopExperience(experience: intl.exploreAlternativeCuisines));
                 }
 
                 if (_historicalSites) {
-                  _experiences.add(StopExperience(experience: "Visit Historical Sites"));
+                  _experiences.add(StopExperience(experience: intl.historicalSites));
                 }
 
                 if (_localEstablishments) {
-                  _experiences.add(StopExperience(experience: "Visit Local Establishments"));
+                  _experiences.add(StopExperience(experience: intl.localEstablishments));
                 }
 
                 if (_contactWithNature) {
-                  _experiences.add(StopExperience(experience: "Contact With Nature"));
+                  _experiences.add(StopExperience(experience: intl.contactWithNature));
                 }
 
                 if(_experiences.isEmpty) {
@@ -646,7 +651,7 @@ class MapScreenState extends State<MapScreen> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              "Error in Add Stop",
+                              intl.errorAddStopTitle,
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
@@ -657,7 +662,7 @@ class MapScreenState extends State<MapScreen> {
                         ],
                       ),
                       content: Text(
-                        "You need to have, at least, one experience.",
+                        intl.errorAddStopMsg,
                         style: TextStyle(fontSize: 14),
                       ),
                       actions: [
@@ -672,7 +677,7 @@ class MapScreenState extends State<MapScreen> {
                             ),
                           ),
                           child: Text(
-                            "Ok",
+                            intl.ok,
                             style: TextStyle(fontWeight: FontWeight.w700),
                           ),
                         ),
@@ -735,7 +740,7 @@ class MapScreenState extends State<MapScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: const Text("Add Stop", style: TextStyle(fontWeight: FontWeight.w700)),
+              child: Text(intl.addStop, style: TextStyle(fontWeight: FontWeight.w700)),
             ),
           ],
         ),

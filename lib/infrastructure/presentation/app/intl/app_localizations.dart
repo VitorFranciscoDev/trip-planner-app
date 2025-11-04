@@ -109,22 +109,29 @@ class AppLocalizations {
       'age_invalid': 'Age must be a valid number.',
       'start_date_required': 'Start date is required.',
       'end_date_required': 'End date is required.',
-      'end_date': 'End date cannot be before start date.',
+      'end_date_error': 'End date cannot be before start date.',
 
-      'addStop': 'Add Stop',
-      'saveChanges': 'Save Changes',
-      'deleteStop': 'Delete Stop',
+      // Map Screen
       'selectDates': 'Select Dates',
+      'startDate': 'Start Date',
+      'endDate': 'End Date',
       'selectExperiences': 'Select Experiences',
-      'confirm': 'Confirm',
-      'back': 'Back',
-      'stopLocation': 'Stop Location',
-      'stopDetails': 'Stop Details',
-      'errorAddStop': 'Unable to add stop',
-      'needOneExperience': 'Select at least one experience',
-      'stopAdded': 'Stop successfully added',
-      'stopDeleted': 'Stop deleted',
-      'stopsUpdated': 'Stops updated',
+      'immersionDifferentCulture': 'Immersion in a Different Culture',
+      'exploreAlternativeCuisines': 'Explore Alternative Cuisines',
+      'visitHistoricalSites': 'Visit Historical Sites',
+      'visitLocalEstablishments': 'Visit Local Establishments',
+      'contactWithNature': 'Contact With Nature',
+      'saveChanges': 'Save Changes',
+      'edit': 'Edit',
+      'delete': 'Delete',
+      'addStop': 'Add Stop',
+      'deleteStop': 'Delete Stop',
+      'deleteStopConfirm': 'Are you sure you want to delete this stop? This action cannot be undone.',
+      'errorAddStopTitle': 'Error in Add Stop',
+      'errorAddStopMsg': 'You need to have, at least, one experience.',
+      'dates': 'Dates',
+      'experiences': 'Experiences',
+      'unknownPlace': 'Unknown Place',
       
       // List Trips
       'yourTrips': 'Your Trips',
@@ -147,7 +154,6 @@ class AppLocalizations {
       // Trip Details Screen
       'editTrip': 'Edit Trip',
       'editTripQuestion': 'Do you want to edit this trip?',
-      'edit': 'Edit',
       'tripBooklet': 'Trip Booklet',
       'createBookletQuestion': 'Would you like to create a booklet for this trip?',
       'create': 'Create',
@@ -155,8 +161,6 @@ class AppLocalizations {
       'tripDetails': 'Trip Details',
       'travelGroup': 'Travel Group',
       'tripStops': 'Trip Stops',
-      'startDate': 'Start Date',
-      'endDate': 'End Date',
       'noTravelersAdded': 'No travelers added',
       'noStopsAdded': 'No stops added',
       'yearsOld': 'years old',
@@ -191,7 +195,6 @@ class AppLocalizations {
       'information_updated': 'Information updated successfully!',
       'delete_account': 'Delete Account',
       'delete_account_confirm': 'Delete',
-      'delete': 'Delete',
       'delete_account_question': 'Are you sure you want to delete your account? This action cannot be undone.',
       'log_out': 'Log Out',
       'log_out_confirm': 'Confirm',
@@ -287,22 +290,28 @@ class AppLocalizations {
       'age_invalid': 'A idade deve ser um número válido.',
       'start_date_required': 'A data de início é obrigatória.',
       'end_date_required': 'A data de término é obrigatória.',
-      'end_date': 'A data de término não pode ser anterior à data de início.',
+      'end_date_error': 'A data de término não pode ser anterior à data de início.',
 
-      'addStop': 'Adicionar Parada',
-      'saveChanges': 'Salvar Alterações',
-      'deleteStop': 'Excluir Parada',
       'selectDates': 'Selecionar Datas',
+      'startDate': 'Data de Início',
+      'endDate': 'Data de Término',
       'selectExperiences': 'Selecionar Experiências',
-      'confirm': 'Confirmar',
-      'back': 'Voltar',
-      'stopLocation': 'Local da Parada',
-      'stopDetails': 'Detalhes da Parada',
-      'errorAddStop': 'Não foi possível adicionar a parada',
-      'needOneExperience': 'Selecione pelo menos uma experiência',
-      'stopAdded': 'Parada adicionada com sucesso',
-      'stopDeleted': 'Parada excluída',
-      'stopsUpdated': 'Paradas atualizadas',
+      'immersionDifferentCulture': 'Imersão em uma Cultura Diferente',
+      'exploreAlternativeCuisines': 'Explorar Culinárias Alternativas',
+      'visitHistoricalSites': 'Visitar Locais Históricos',
+      'visitLocalEstablishments': 'Visitar Estabelecimentos Locais',
+      'contactWithNature': 'Contato com a Natureza',
+      'saveChanges': 'Salvar Alterações',
+      'edit': 'Editar',
+      'delete': 'Excluir',
+      'addStop': 'Adicionar Parada',
+      'deleteStop': 'Excluir Parada',
+      'deleteStopConfirm': 'Tem certeza de que deseja excluir esta parada? Essa ação não pode ser desfeita.',
+      'errorAddStopTitle': 'Erro ao Adicionar Parada',
+      'errorAddStopMsg': 'Você precisa ter pelo menos uma experiência selecionada.',
+      'dates': 'Datas',
+      'experiences': 'Experiências',
+      'unknownPlace': 'Local Desconhecido',
       
       // List Trips
       'yourTrips': 'Suas Viagens',
@@ -325,7 +334,6 @@ class AppLocalizations {
       // Trip Details Screen
       'editTrip': 'Editar Viagem',
       'editTripQuestion': 'Deseja editar esta viagem?',
-      'edit': 'Editar',
       'tripBooklet': 'Caderneta da Viagem',
       'createBookletQuestion': 'Deseja criar uma caderneta para esta viagem?',
       'create': 'Criar',
@@ -333,8 +341,6 @@ class AppLocalizations {
       'tripDetails': 'Detalhes da Viagem',
       'travelGroup': 'Grupo de Viagem',
       'tripStops': 'Paradas da Viagem',
-      'startDate': 'Data de Início',
-      'endDate': 'Data de Término',
       'noTravelersAdded': 'Nenhum viajante adicionado',
       'noStopsAdded': 'Nenhuma parada adicionada',
       'yearsOld': 'anos',
@@ -370,7 +376,6 @@ class AppLocalizations {
       'information_updated': 'Informações atualizadas com sucesso!',
       'delete_account': 'Excluir Conta',
       'delete_account_confirm': 'Excluir',
-      'delete': 'Excluir',
       'delete_account_question': 'Tem certeza de que deseja excluir sua conta? Esta ação não pode ser desfeita.',
       'log_out': 'Sair',
       'log_out_confirm': 'Confirmar',
@@ -467,22 +472,28 @@ class AppLocalizations {
       'age_invalid': 'La edad debe ser un número válido.',
       'start_date_required': 'La fecha de inicio es obligatoria.',
       'end_date_required': 'La fecha de finalización es obligatoria.',
-      'end_date': 'La fecha de finalización no puede ser anterior a la fecha de inicio.',
+      'end_date_error': 'La fecha de finalización no puede ser anterior a la fecha de inicio.',
 
-      'addStop': 'Agregar Parada',
-      'saveChanges': 'Guardar Cambios',
-      'deleteStop': 'Eliminar Parada',
       'selectDates': 'Seleccionar Fechas',
+      'startDate': 'Fecha de Inicio',
+      'endDate': 'Fecha de Finalización',
       'selectExperiences': 'Seleccionar Experiencias',
-      'confirm': 'Confirmar',
-      'back': 'Volver',
-      'stopLocation': 'Ubicación de la Parada',
-      'stopDetails': 'Detalles de la Parada',
-      'errorAddStop': 'No se pudo agregar la parada',
-      'needOneExperience': 'Selecciona al menos una experiencia',
-      'stopAdded': 'Parada agregada correctamente',
-      'stopDeleted': 'Parada eliminada',
-      'stopsUpdated': 'Paradas actualizadas',
+      'immersionDifferentCulture': 'Inmersión en una Cultura Diferente',
+      'exploreAlternativeCuisines': 'Explorar Cocinas Alternativas',
+      'visitHistoricalSites': 'Visitar Sitios Históricos',
+      'visitLocalEstablishments': 'Visitar Establecimientos Locales',
+      'contactWithNature': 'Contacto con la Naturaleza',
+      'saveChanges': 'Guardar Cambios',
+      'edit': 'Editar',
+      'delete': 'Eliminar',
+      'addStop': 'Agregar Parada',
+      'deleteStop': 'Eliminar Parada',
+      'deleteStopConfirm': '¿Estás seguro de que deseas eliminar esta parada? Esta acción no se puede deshacer.',
+      'errorAddStopTitle': 'Error al Agregar Parada',
+      'errorAddStopMsg': 'Debes tener al menos una experiencia seleccionada.',
+      'dates': 'Fechas',
+      'experiences': 'Experiencias',
+      'unknownPlace': 'Lugar Desconocido',
       
       // List Trips
       'yourTrips': 'Tus Viajes',
@@ -505,7 +516,6 @@ class AppLocalizations {
       // Trip Details Screen
       'editTrip': 'Editar Viaje',
       'editTripQuestion': '¿Deseas editar este viaje?',
-      'edit': 'Editar',
       'tripBooklet': 'Cuadernillo del Viaje',
       'createBookletQuestion': '¿Te gustaría crear un cuadernillo para este viaje?',
       'create': 'Crear',
@@ -513,8 +523,6 @@ class AppLocalizations {
       'tripDetails': 'Detalles del Viaje',
       'travelGroup': 'Grupo de Viaje',
       'tripStops': 'Paradas del Viaje',
-      'startDate': 'Fecha de Inicio',
-      'endDate': 'Fecha de Finalización',
       'noTravelersAdded': 'No se agregaron viajeros',
       'noStopsAdded': 'No se agregaron paradas',
       'yearsOld': 'años',
@@ -549,7 +557,6 @@ class AppLocalizations {
       'information_updated': '¡Información actualizada con éxito!',
       'delete_account': 'Eliminar Cuenta',
       'delete_account_confirm': 'Eliminar',
-      'delete': 'Eliminar',
       'delete_account_question': '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.',
       'log_out': 'Cerrar Sesión',
       'log_out_confirm': 'Confirmar',
@@ -658,8 +665,29 @@ class AppLocalizations {
   String get ageInvalid => translate('age_invalid');
   String get startDateRequired => translate('start_date_required');
   String get endDateRequired => translate('end_date_required');
-  String get endDate => translate('end_date');
+  String get endDateError => translate('end_date_error');
   String get unexpectedError => translate('unexpected_error');
+
+  String get selectDates => translate('selectDates');
+  String get startDate => translate('startDate');
+  String get endDate => translate('endDate');
+  String get selectExperiences => translate('selectExperiences');
+  String get immersionDifferentCulture => translate('immersionDifferentCulture');
+  String get exploreAlternativeCuisines => translate('exploreAlternativeCuisines');
+  String get visitHistoricalSites => translate('visitHistoricalSites');
+  String get visitLocalEstablishments => translate('visitLocalEstablishments');
+  String get contactWithNature => translate('contactWithNature');
+  String get saveChanges => translate('saveChanges');
+  String get edit => translate('edit');
+  String get delete => translate('delete');
+  String get addStop => translate('addStop');
+  String get deleteStop => translate('deleteStop');
+  String get deleteStopConfirm => translate('deleteStopConfirm');
+  String get errorAddStopTitle => translate('errorAddStopTitle');
+  String get errorAddStopMsg => translate('errorAddStopMsg');
+  String get dates => translate('dates');
+  String get experiences => translate('experiences');
+  String get unknownPlace => translate('unknownPlace');
   
   // Getters for List Trips Screen
   String get yourTrips => translate('yourTrips');
@@ -681,7 +709,6 @@ class AppLocalizations {
   
   String get editTrip => translate('editTrip');
   String get editTripQuestion => translate('editTripQuestion');
-  String get edit => translate('edit');
   String get tripBooklet => translate('tripBooklet');
   String get createBookletQuestion => translate('createBookletQuestion');
   String get create => translate('create');
@@ -689,7 +716,6 @@ class AppLocalizations {
   String get tripDetails => translate('tripDetails');
   String get travelGroup => translate('travelGroup');
   String get tripStops => translate('tripStops');
-  String get startDate => translate('startDate');
   String get noTravelersAdded => translate('noTravelersAdded');
   String get noStopsAdded => translate('noStopsAdded');
   String get yearsOld => translate('yearsOld');
