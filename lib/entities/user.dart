@@ -1,5 +1,6 @@
+// User's Model
 class User {
-  final int? id;
+  final int? id; // User's ID [Auto Increment]
   final String name;
   final String email;
   final String password;

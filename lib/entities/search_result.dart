@@ -1,5 +1,6 @@
 import 'package:latlong2/latlong.dart';
 
+// Search Result's Model
 class SearchResult {
   final String displayName;
   final LatLng position;

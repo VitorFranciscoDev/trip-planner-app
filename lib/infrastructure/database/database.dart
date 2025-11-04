@@ -7,6 +7,7 @@ import 'package:trip_planner/infrastructure/database/trips_table.dart';
 import 'package:trip_planner/infrastructure/database/user_experiences_table.dart';
 import 'package:trip_planner/infrastructure/database/users_table.dart';
 
+// Creation of DB and Tables
 class TripPlannerDatabase {
   // Instances of the DB
   static final TripPlannerDatabase _instance = TripPlannerDatabase._internal();
@@ -14,12 +15,14 @@ class TripPlannerDatabase {
   TripPlannerDatabase._internal();
   static Database? db;
 
+  // DB getter
   Future<Database> get database async {
     if(db != null) return db!;
     db = await _initDatabase();
     return db!;
   }
 
+  // Init DB
   Future<Database> _initDatabase() async {
     final databaseDirPath = await getDatabasesPath();
     final databasePath = join(databaseDirPath, 'trip_planner.db');

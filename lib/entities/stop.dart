@@ -1,15 +1,16 @@
 import 'package:trip_planner/entities/stop_experience.dart';
 
+// Stop's Model
 class Stop {
-  final int? id;
-  final int? trip_id;
+  final int? id; // Stop's ID [Auto Increment]
+  final int? trip_id; // Trip's ID [Related to Stop]
   final String location;
   final String? img;
   final String start_date;
   final String end_date;
   final double latitude;
   final double longitude;
-  final List<StopExperience>? stopExperiences;
+  final List<StopExperience>? stopExperiences; // User's Experiences on Stop
 
   Stop({ this.id, this.trip_id, required this.location, this.img, required this.start_date, required this.end_date, required this.latitude, required this.longitude, this.stopExperiences });
 

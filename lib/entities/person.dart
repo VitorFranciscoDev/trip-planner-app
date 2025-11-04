@@ -1,6 +1,7 @@
+// Person's Model
 class Person {
-  final int? id;
-  final int? trip_id;
+  final int? id; // Person's ID [Auto Increment]
+  final int? trip_id; // Trip's ID [Related to Person]
   final String name;
   final int age;
 
