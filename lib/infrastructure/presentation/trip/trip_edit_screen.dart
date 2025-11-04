@@ -4,6 +4,7 @@ import 'package:trip_planner/entities/person.dart';
 import 'package:trip_planner/entities/trip.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/button_component.dart';
 import 'package:trip_planner/infrastructure/presentation/app/components/text_field_component.dart';
+import 'package:trip_planner/infrastructure/presentation/app/intl/app_localizations.dart';
 import 'package:trip_planner/infrastructure/presentation/trip/trip_state.dart';
 
 class TripEditScreen extends StatefulWidget {
@@ -104,7 +105,9 @@ class _TripEditScreenState extends State<TripEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<TripProvider>();
     final theme = Theme.of(context);
+    final intl = AppLocalizations.of(context);
 
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
@@ -112,7 +115,7 @@ class _TripEditScreenState extends State<TripEditScreen> {
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: Colors.white,
         title: Text(
-          "Edit Trip",
+          intl.editTrip,
           style: TextStyle(
             fontFamily: "Times New Roman",
             fontWeight: FontWeight.w900,
@@ -132,7 +135,7 @@ class _TripEditScreenState extends State<TripEditScreen> {
                   Icon(Icons.edit_note, color: theme.colorScheme.primary, size: 22),
                   const SizedBox(width: 8),
                   Text(
-                    "Trip Data",
+                    intl.tripData,
                     style: TextStyle(
                       fontFamily: "Times New Roman",
                       fontSize: 18,
@@ -161,13 +164,13 @@ class _TripEditScreenState extends State<TripEditScreen> {
                   children: [
                     TextFieldComponent(
                       controller: _controllerTripTitle,
-                      label: "Trip Title",
-                      error: null,
+                      label: intl.tripTitle,
+                      error: provider.errorTripTitle,
                     ),
                     const SizedBox(height: 20),
                     DropdownButtonFormField<String>(
                       decoration: InputDecoration(
-                        labelText: "Transport",
+                        labelText: intl.transport,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide(
@@ -196,7 +199,7 @@ class _TripEditScreenState extends State<TripEditScreen> {
                             children: [
                               Icon(Icons.directions_car, size: 20),
                               const SizedBox(width: 8),
-                              Text("Car"),
+                              Text(intl.car),
                             ],
                           ),
                         ),
@@ -206,7 +209,7 @@ class _TripEditScreenState extends State<TripEditScreen> {
                             children: [
                               Icon(Icons.two_wheeler, size: 20),
                               const SizedBox(width: 8),
-                              Text("Motorcycle"),
+                              Text(intl.motorcycle),
                             ],
                           ),
                         ),
@@ -216,7 +219,7 @@ class _TripEditScreenState extends State<TripEditScreen> {
                             children: [
                               Icon(Icons.directions_bus, size: 20),
                               const SizedBox(width: 8),
-                              Text("Bus"),
+                              Text(intl.bus),
                             ],
                           ),
                         ),
@@ -226,7 +229,7 @@ class _TripEditScreenState extends State<TripEditScreen> {
                             children: [
                               Icon(Icons.flight, size: 20),
                               const SizedBox(width: 8),
-                              Text("Airplane"),
+                              Text(intl.airplane),
                             ],
                           ),
                         ),
@@ -236,7 +239,7 @@ class _TripEditScreenState extends State<TripEditScreen> {
                             children: [
                               Icon(Icons.directions_boat, size: 20),
                               const SizedBox(width: 8),
-                              Text("Ship"),
+                              Text(intl.ship),
                             ],
                           ),
                         ),
@@ -253,7 +256,7 @@ class _TripEditScreenState extends State<TripEditScreen> {
                   Icon(Icons.group, color: theme.colorScheme.primary, size: 22),
                   const SizedBox(width: 8),
                   Text(
-                    "Travel Group",
+                    intl.travelGroup,
                     style: TextStyle(
                       fontFamily: "Times New Roman",
                       fontSize: 18,
@@ -283,42 +286,25 @@ class _TripEditScreenState extends State<TripEditScreen> {
                   children: [
                     TextFieldComponent(
                       controller: _controllerName,
-                      label: "Name",
-                      error: null,
+                      label: intl.name,
+                      error: provider.errorName,
                     ),
                     const SizedBox(height: 15),
                     TextFieldComponent(
                       controller: _controllerAge,
-                      label: "Age",
-                      error: null,
+                      label: intl.age,
+                      error: provider.errorAge,
                     ),
                     const SizedBox(height: 20),
                     ButtonComponent(
                       function: () {
-                        if (_controllerName.text.trim().isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("Name is required"),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
-                          return;
-                        }
+                        final isValid = provider.validatePerson(_controllerName.text, _controllerAge.text, context);
 
-                        final age = int.tryParse(_controllerAge.text);
-                        if (age == null || age <= 0) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("Valid age is required"),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
-                          return;
-                        }
+                        if(!isValid) return;
 
                         setState(() {
                           _groupMembers.add(
-                            Person(name: _controllerName.text, age: age),
+                            Person(name: _controllerName.text, age: int.parse(_controllerAge.text)),
                           );
                         });
 
