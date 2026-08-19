@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:trip_planner/entities/entity_user.dart';
 import 'package:trip_planner/infrastructure/infrastructure.dart';
 
@@ -10,13 +11,30 @@ class AppState with ChangeNotifier {
   }
 
   AppUser? _appUser;
+  var _themeMode = ThemeMode.system;
+  var _locale = Locale('EN');
   var _loading = false;
 
+  /// Represents the current application user.
+  AppUser? get appUser => _appUser;
+
+  /// Represents the selected theme mode for the application.
+  ThemeMode get themeMode => _themeMode;
+
+  /// Represents the selected language for the application.
+  Locale get locale => _locale;
+
+  /// Defines if the state is loading or not.
+  bool get loading => _loading;
+
+  /// Initializes the state.
   Future<void> _init() async {
     _loading = true;
     notifyListeners();
 
     _appUser = await appUserUseCase.getUserInformation();
+    _themeMode = await settingsUseCase.getTheme();
+    _locale = await settingsUseCase.getLanguage();
 
     _loading = false;
     notifyListeners();
